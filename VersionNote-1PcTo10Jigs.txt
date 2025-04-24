@@ -1,0 +1,272 @@
+Release Note of "Lucio EVT ElecTest":
+
+*****2024/03/29**********
+SW: "Mercury_E-Burn_in-v1.2.7.4-1PcTo10"
+FW: "Ver_1.7; Jun_29_2023 15:03:00"(only for Burn-in)
+Builds:
+
+Fucntion:
+1.strComSerial.Add(s); SerailPort(j+1)=strComSerial[j](2024/03/11)，自動偵測幾個連上的COM
+2.List<string> strComNowConnect = new List<string>(); strComNowConnect.Add / strComNowConnect.Remove(2024/03/12->OK)，連上/移除的COM自動偵測
+3.if (VidPidNames.Contains(s)), strComSerial.Add(s); Console.WriteLine("strComSerial[" + (iDvcCnt - 1) + "]= " + strComSerial[iDvcCnt - 1]);  //2024-03-13:根據偵測到的COM找出符合(VID,PID)的device，後續發AT+VER?
+4.serialDvc[iDvcId] = serialPortN[iDvcArrCnt];strComDvc[iDvcId] = strComSerial[iDvcArrCnt];serialPortN[iDvcArrCnt].Close(); //2024-03-19:AT+VER?得知Device_No.之後，紀錄各連接的Device所對應到的SerialPort & ComPort
+5.WndProc\case DBT_DEVICEREMOVECOMPLETE:strComDvc[i] = ""; DvcRemovedUiRefresh();介面顯示更新 //2024-03-22
+6.WndProc\case DBT_DEVICEARRIVAL:if (VidPidNames.Contains(s))->找到那一個SerialDvc[i]=null沒有使用=>serialPortN[i].Write("AT+VER?" + "\r\n"); strComSerial.Add(s);=>得知insert的裝置Dvc No.?再次填入ComDvc[]、SerialDvc[] //2024-03-22
+7.移除device裝置時需更新介面上lblDevIdDvcN、cboComDvcN、cboDevNo、cboComList。 //2024-03-29
+
+*****2023/09/07**********
+SW: "Mercury_E-Burn_in-v1.2.7.3-1PcTo10"
+FW: "Ver_1.7; Jun_29_2023 15:03:00"(only for Burn-in)
+Builds:
+Mercury_E-Burn_in-v1.2.7.3-1PcTo10-exe-20230907.7z
+Fucntion:
+1.溫度與PD測值判斷與測試結果同步做優化，以精確改善測試結果的誤判機率。
+2.因治具回傳的rJD.temps數值有時錯誤，忽略治具回傳的值，根據治具回傳的temperature值判斷更新TMPstatus的值，再做Result結果的呈現。
+3.注意FUNC_TEMP_SENSOR_TEST_UCL、FUNC_TEMP_SENSOR_TEST_LCL都為int格式，主要是配合rJD.temp也是int。
+
+*****2023/08/22**********
+SW: "Mercury_E-Burn_in-v1.2.7.2-1PcTo10"
+FW: "Ver_1.7; Jun_29_2023 15:03:00"(only for Burn-in)
+Builds:
+Mercury_E-Burn_in-v1.2.7.2-1PcTo10-exe-20230822.7z
+Fucntion:
+1.新增FUNC_TEMP_SENSOR_TEST_UCL、FUNC_TEMP_SENSOR_TEST_LCL，修改config.json裡面該值可更改溫度上下限。
+2.新增FUNC_PDP_UCL、FUNC_PDP_LCL、FUNC_PDN_UCL、FUNC_PDN_LCL，修改config.json裡面該值可更改PDP/PDN上下限。
+
+*****2023/08/11**********
+SW: "Mercury_E-Burn_in-v1.2.7.1-1PcTo10"
+FW: "Ver_1.7; Jun_29_2023 15:03:00"(only for Burn-in)
+Builds:
+Mercury_E-Burn_in-v1.2.7.1-1PcTo10-exe-20230811.7z
+Fucntion:
+1.改燒機完畢不清除SN，以防止報表漏掉，點選SN欄位自動全選，不影響BarCode掃描輸入手法
+2.strTMPsta = rJD.temps.ToString()在Station3裡面再擷取以免資料錯誤
+3.加入判斷溫度是否在合理區間10~50。
+4.燒機程序中timer3~timer12，程序跑到case 100改不清掉remark，改在case 1中清除，確保remark在報表中有顯示。
+
+*****2023/07/18**********
+SW: "Mercury_E-Burn_in-v1.2.7-1PcTo10"
+FW: "Ver_1.7; Jun_29_2023 15:03:00"(only for Burn-in)
+Builds:
+Mercury_E-Burn_in-v1.2.7-1PcTo10-exe-20230718.zip
+Fucntion:
+1.File Version與專案版本設定同步 strSwVer = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion.ToString();
+2.版面上加入menuStrip，可查About版本資訊。
+
+*****2023/07/06**********
+SW: "Mercury_E-Burn_in-v1.2.6-1PcTo10"
+FW: "Ver_1.8; Jun_27_2023 13:23:11"(only for Burn-in)、"Ver_1.7; Jun_29_2023 15:03:00"(only for Burn-in)
+Builds:
+Mercury_E-Burn_in-v1.2.6-1PcTo10-exe-20230706.zip
+Fucntion:
+1.改總表路徑&名稱，在"C:\Users\[USER_NAME]\Documents\Burn1to10"，名稱=H4_IQC_LBS_BURN.csv
+2.改每日總表路徑&名稱，在"C:\Users\[USER_NAME]\Documents\Burn1to10\[yyyy]西元年\[MM]月\[dd]日"，名稱=H4_IQC_LBS_BURN_yyyy-MM-dd.csv
+
+*****2023/06/30**********
+SW:Mercury_E-Burn_in-v1.2.5-1PcTo10;
+FW:Mercury Dev0 Station 3 <Ver:1.8> Build Jun 27 2023 17:31:41
+Builds:
+Mercury_E-Burn_in-v1.2.5-1PcTo10-exe-20230630.zip
+Mercury_E-Burn_in-v1.2.5-1PcTo10-exe-20230629.zip
+Fucntion:
+1.修改搭配v1.8的FW版本(固定張角且52度會關閉雷射、40度會重開雷射)的燒機程式，流程做修改。
+2.Add temperature record with interval and output report, click "chkTempRec" to start recording.
+
+*****2023/06/27**********
+SW:Mercury_E-Burn_in-v1.2.4-1PcTo10; (1_To_10 Burn-in test)
+FW:Mercury Dev0 Station 3 <Ver:1.6> Build Jun 27 2022 17:31:41
+Builds:
+Mercury_E-Burn_in-v1.2.4-1PcTo10-exe-20230627.zip.zip
+Fucntion:
+1.修改搭配v1.6的FW版本的燒機程式，流程做修改。
+2.以驗證每device_No都可以單獨測Test與燒機，一次按鈕燒錄需再修改。
+
+*****2023/06/21**********
+SW:Mercury_E-Burn_in-v1.2.3-1PcTo10; (1_To_10 Burn-in test)
+FW:Mercury Dev0 Station 3 <Ver:1.6> Build Jun 27 2022 17:31:41
+Builds:
+Mercury_E-Burn_in-v1.2.3-1PcTo10-exe-20230621.zip.zip
+Fucntion:
+1.修改搭配v1.6的FW版本的燒機程式，流程做修改。
+2.以驗證每device_No都可以單獨測Test與燒機，一次按鈕燒錄需再修改。
+
+*****2023/06/16**********
+SW: Mercury_E:v_1.2.2, 2023-06-16 13:30; (1_To_10 Burn-in test)
+FW:Mercury Dev0 Station 3 <Ver:1.5> Build Jun 27 2022 17:31:41
+Builds:
+Mercury_E-Burn_in-v1.2.2-1PcTo10-exe-20230615.zip.zip
+Fucntion:
+1.Debug Laser didn't shut down when over 50 degrees. AT+BIT shouldn't be 0.
+
+*****2023/05/31**********
+SW: Mercury_E:v_1.0, 2022-12-04 20:40; (1_To_10 Burn-in test)
+FW:Mercury Dev0 Station 3 <Ver:1.4> Build Jun 27 2022 17:31:41
+Builds:
+Mercury_E-Burn_in-v1.2.1-1PcTo10-exe-20230531.zip
+Fucntion:
+1.Add Daily total Log file: PM100USB_YYYYMMDD.csv.	//2023-05-31
+
+*****2022/12/04**********
+SW: Mercury_E:v_1.0, 2022-12-04 20:40; (1_To_10 Burn-in test)
+FW:Mercury Dev0 Station 3 <Ver:1.4> Build Jun 27 2022 17:31:41
+Builds:Mercury_E-Burn_in-v1.0-1PcTo10Jigs-exe-20221204-24hrs.zip
+Fucntion:
+1. Add "Burn-in Finished" messageBox for every device alert.   //2022-11-21
+2. Add "AT+BIT 60" when Burn-in(Sta=3 & BIS=1).   //2022-11-24
+3. Add "bBurnAll2ndTesting" to wait "BurnAll 2nd test" proceed in line.  //2022-11-30
+4. Add delay time between "AT+BIS 0" & "btnTest" for better arangement.	//2022-12-01
+5. Edit for 24hrs burn-in
+6. Add utilDvcxSerialWrite(eCPort port, string strCmd)...abComPortBusyFlag、DiscardInBuffer & DiscardOutBuffer.  //2022-12-04
+
+*****2022/11/18**********
+SW: Mercury_E:v_1.0, 2022-11-18 16:25; (1_To_10 Burn-in test)
+FW:Mercury Dev0 Station 3 <Ver:1.4> Build Jun 27 2022 17:31:41
+Builds:
+Fucntion:
+1. WndProc to set Curr 
+2. IsOpenPort() modified to better.
+3. (Tabpage)Engineer setting edited. //2022-11-17
+4. Close serailPort when form colse. Ask when Form1_Closing & Form1_Closed.   //2022-11-18
+
+*****2022/11/16**********
+SW: Mercury_E:V_1.0, 2022-11-14 17:30; (1_To_10 Burn-in test)
+FW:Mercury Dev0 Station 3 <Ver:1.4> Build Jun 27 2022 17:31:41
+Builds:
+Mecury_E-Burn_in-v1.0-1PcTo10Jigs-exe-20221116
+Fucntion:
+1. Add Device_3~5 ElecTest/Burn1hr function. FullTest strStaId error debug Ok.  //2022-11-15
+2. iBurnMin Math.Ceiling to Math.Floor. Add Device_6~9 ElecTest/Burn1hr function. //2022-11-16
+
+*****2022/11/09**********
+SW: Mercury_E:V_1.0, 2022-11-09 15:00 (1_To_10 Burn-in test)
+FW:Mercury Dev0 Station 3 <Ver:1.4> Build Jun 27 2022 17:31:41
+Builds:
+Fucntion:
+1. Edit to avoid idle when jig no response.    //2022-11-09
+2. Form.Text edit to 1_To_10 Burn-in test.	//2022-11-09
+
+*****2022/11/03 ~ 2022-11-08**********
+SW:V_1.4, 2022-11-08 15:05
+FW:Mercury Dev0 Station 3 <Ver:1.4> Build Jun 27 2022 17:31:41
+Builds:
+Fucntion:
+1. Set Device_0 burn-in procedure in time3(same with Device_1/2)   //2022-11-03 => Test 2 jigs with HUB connection is fine. 
+2. UI Extend connection jigs to 10.    //2022-11-03
+3. cboComList.text changed while cboDevNo_SelectedIndexChanged.    //2022-11-07
+4. cboDevNo.add when Device detected.  Add tabpages and UI for 10 devices.  //2022-11-08
+
+*****2022/10/31**********
+SW:V_1.4, 2022-10-31 16:10 =>產線
+FW:Mercury Dev0 Station 3 <Ver:1.4> Build Jun 27 2022 17:31:41
+Builds:
+ElecTest_v1.4-Burn_1PcTo3Jig-20221031_exe.zip
+Fucntion:
+1. Set "AT+BIS 1" to be after "AT+RET" for MEMS opening could be stop.   //2022-10-31
+
+*****2022/10/05**********
+SW:V_1.4, 2022-10-05 13:20
+FW:Mercury Dev0 Station 3 <Ver:1.4> Build Jun 27 2022 17:31:41
+Builds:
+ElecTest_v1.4-Burn_1PcTo3Jig-20221005_exe.zip
+Fucntion:
+1. btnBurnStopDvc1, btnBurnStopDvc2 enable when burn finished. //2022-09-23
+2. btnTestDvc0~2 enabled when test finished.   //2022-10-05
+
+*****2022/09/19**********
+FW:Mercury Dev0 Station 3 <Ver:1.4> Build Jun 27 2022 17:31:41
+SW:V_1.4, 2022-09-19 11:25
+Builds:
+ElecTest_v1.4-Burn_1PcTo3Jig-20220919_exe.zip
+Fucntion:
+1. SW ver=1.4; 1PC_app to 3 test JIG;  //2022-7-25;    Layout setting  //2022-07-27 
+2. Dvc0/Dvc1/Dvc2 comport auto-detect OK;  //2022-08-18, btnTest function OK;    //2022-08-23
+3. btnTestDvc0, btnTestDvc1, btnTestDvc2 function OK;  station detect more stable;  //2022-08-29
+4. iBurnStopStepDvc1 & bBurnStopAnsDvc1 to the Stop Burn-in procedure thread.  //2022-09-06
+5. iBurnStopStepDvc2 & bBurnStopAnsDvc2 to the Stop Burn-in procedure thread.  //2022-09-07
+6. PDP/PDN criteria edit(not ChkByHJig)    //2022-09-16
+7. No hiding the Tabpages for can't revel it.  Clear the Text when ComPort number changed.  //2022-09-19
+
+*****2022/07/25**********
+FW:Mercury Dev0 Station 3 <Ver:1.4> Build Jun 27 2022 17:31:41
+SW:V_1.3, 2022-07-25 10:40
+Builds:
+ElecTest_v1.3_exe-RD-20220725.zip
+Fucntion:
+1. Add ControlBox to avoid user close the app when do 1 hr burn-in.    //2022-06-30
+2. For customer: add write "AT+BIS 0"; Write different Device_ID when StationID is the same.//2022-07-19
+3. Add "b4MGFelse" For MGF else factory:FLEXium    //2022-07-25 
+
+*****2022/06/28**********
+FW:Mercury Dev0 Station 3 <Ver:1.4> Build Jun 27 2022 17:31:41
+SW:V_1.2, 2022-06-28 14:01
+Builds:
+Lucio_ElecTest_v1.2-RD-20220628.7z
+Fucntion:
+1. Add reoport remark column for sorting.
+
+//2022-06-27  >>Lucio EVT ElecTest-v_1.11 >>> release to PEGATRON
+FW: Mercury Dev0 Station 3 <Ver:1.3> Build Jun  8 2022 17:30:35
+1. Recover to check PDresult, no bypassing.
+
+//2022-06-22  >>Lucio EVT ElecTest-v_1.1 >>> release to PEGATRON
+1. Set if(b4Customer or b4Product Line) to control the function for seperate needs.
+2. if(b4Customer ) { JIG_FW is certain, No Engineer_setting tab, No burn-in 1hr function}
+
+//2022-06-21  >>Lucio EVT ElecTest-v_1.01
+1. Debug: BurnStop sometimes failed for comport not opened.
+
+//2022-06-20 
+1. Create new xls debug & btnBurnStop respone make sure question. 
+
+//2022-06-17
+Add btnBurnStop to interrupt burn-in.   if Sta02 then btnTest.enable=fasle, YesNo messageBox
+
+//2022-06-16 
+1. Add checking if report is opened. Show red "burn-in testing" when brun-in.  
+
+//2022-06-15
+1. JIG_FW update, PDP/PDN value need to be divided 100;    
+
+//2022-06-13
+Move the 'btnTempRead' to Main_tabPage, It is invisible unless station 2.  
+
+//2022-06-09  >>Lucio EVT ElecTest-v_1.0 >>> release to PEGATRON
+1. Jig_FW = Mercury Dev0 Station 3 <Ver:1.3>  Build Jun  8 2022 17:30:35 ;UI reasonable. 
+
+//2022-06-08
+1. Jig_FW = Mercury Dev0 Station 3 <Ver:1.3>  Build Jun  7 2022 15:17:41 ;Burn-in 1hr. 
+
+//2022-06-07
+1. Jig_FW = <Ver:1.2>  Build:Jun 6 2022 14:03:41 ;<3-2> Burn-in 1hr.   
+
+//2022-06-02
+1. Modify sta<3-1> to repeat send "AT+RET" for 1 hr and read PDP/PDN/Temperature before and after 1 hr.   
+
+//2022-05-31
+1. Station id = <0-1>,<0-2>,<2-1>,<2-2>,3,<3-2>;   
+
+//2022-05-27
+1. Checksum rule modified for 4 bytes caculate.    
+
+//2022-05-26
+1. Station 2/3 modified to station <2-1>,<2-2>/<3-1>,<3-2>. FW:Mercury Station 2 <Ver:1.1>, Build May 26 2022 13:00:27 
+
+//2022-05-24
+1. Add temperature reading for every 1 second. 
+
+//2022-05-23
+1. Replace interface into tabControl and add engineer setting tabPages. 
+2. Add command send for testing.
+
+//2022-5-13
+1. Read Ver. when station connected to show F/W ver and Station_No.   
+
+//2022-5-12
+1. Add comboBox to set Station to others                   
+2. Add station3 test, 1st receive LD/PD/Temperature, 2nd receive Birn-in result(cmd:AT+BI)
+
+//2022-05-09  >>Lucio EVT ElecTest-v_1.0
+1. COM port auto-detect
+2. Report .csv file auto-create。
+3. Add PID auto detect: { VID, PID } = ("0416", "B1B2") 
+ 
