@@ -68,7 +68,7 @@
 **  Fix DateTime when Burn-in finish.   //2023-02-17
 **  Remodify details to be more stable. //2023-02-21
 **  Modify { VID, PID } detection method.   //2023-03-30
-**
+**  macAddresses = AddSpaceEveryNChar(macAddresses, 2); //2025-06-19
 ******************************************************************************/
 using System;
 using System.Collections.Generic;
@@ -10326,7 +10326,17 @@ namespace Ado
                     break;
                 }
             }
+            macAddresses = AddSpaceEveryNChar(macAddresses, 2); //2025-06-19
             return macAddresses;
+        }
+        static string AddSpaceEveryNChar(string str, int split)   //2023-08-11
+        {
+            for (int a = 2; a <= str.Length - 1; a = a + split + 1)
+            {
+                str = str.Insert(a, "-");
+            }
+            Console.WriteLine(str);
+            return str;
         }
         public static String GetRebootTime()   //2023-02-03
         {

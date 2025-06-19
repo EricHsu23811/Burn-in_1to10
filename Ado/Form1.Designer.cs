@@ -330,8 +330,8 @@ namespace Ado
             this.saveAsFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadJSONFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer15 = new System.Windows.Forms.Timer(this.components);
@@ -3776,7 +3776,7 @@ namespace Ado
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(939, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(939, 27);
             this.menuStrip1.TabIndex = 80;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -3787,56 +3787,56 @@ namespace Ado
             this.loadJSONFileToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(47, 24);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(47, 23);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // saveAsFileToolStripMenuItem
             // 
             this.saveAsFileToolStripMenuItem.Name = "saveAsFileToolStripMenuItem";
-            this.saveAsFileToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveAsFileToolStripMenuItem.Size = new System.Drawing.Size(198, 26);
             this.saveAsFileToolStripMenuItem.Text = "Save as File";
             this.saveAsFileToolStripMenuItem.Click += new System.EventHandler(this.saveAsFileToolStripMenuItem_Click);
             // 
             // loadJSONFileToolStripMenuItem
             // 
             this.loadJSONFileToolStripMenuItem.Name = "loadJSONFileToolStripMenuItem";
-            this.loadJSONFileToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.loadJSONFileToolStripMenuItem.Size = new System.Drawing.Size(198, 26);
             this.loadJSONFileToolStripMenuItem.Text = "Load JSON File";
             this.loadJSONFileToolStripMenuItem.Click += new System.EventHandler(this.loadJSONFileToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(198, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // toolsToolStripMenuItem
-            // 
-            this.toolsToolStripMenuItem.Enabled = false;
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(60, 24);
-            this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // settingToolStripMenuItem
             // 
             this.settingToolStripMenuItem.Enabled = false;
             this.settingToolStripMenuItem.Name = "settingToolStripMenuItem";
-            this.settingToolStripMenuItem.Size = new System.Drawing.Size(73, 24);
+            this.settingToolStripMenuItem.Size = new System.Drawing.Size(73, 23);
             this.settingToolStripMenuItem.Text = "Setting";
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.Enabled = false;
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(60, 23);
+            this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(55, 23);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(134, 26);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -3854,6 +3854,7 @@ namespace Ado
             this.txtMac.Name = "txtMac";
             this.txtMac.Size = new System.Drawing.Size(151, 25);
             this.txtMac.TabIndex = 90;
+            this.txtMac.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label13
             // 
