@@ -1,28 +1,14 @@
 Release Note of "Lucio EVT ElecTest":
 
-*****2024/03/29**********
-SW: "Mercury_E-Burn_in-v1.2.7.4-1PcTo10"
-FW: "Ver_1.7; Jun_29_2023 15:03:00"(only for Burn-in)
-Builds:
-
-Fucntion:
-1.strComSerial.Add(s); SerailPort(j+1)=strComSerial[j](2024/03/11)¡A¦Û°Ê°»´ú´X­Ó³s¤WªºCOM
-2.List<string> strComNowConnect = new List<string>(); strComNowConnect.Add / strComNowConnect.Remove(2024/03/12->OK)¡A³s¤W/²¾°£ªºCOM¦Û°Ê°»´ú
-3.if (VidPidNames.Contains(s)), strComSerial.Add(s); Console.WriteLine("strComSerial[" + (iDvcCnt - 1) + "]= " + strComSerial[iDvcCnt - 1]);  //2024-03-13:®Ú¾Ú°»´ú¨ìªºCOM§ä¥X²Å¦X(VID,PID)ªºdevice¡A«áÄòµoAT+VER?
-4.serialDvc[iDvcId] = serialPortN[iDvcArrCnt];strComDvc[iDvcId] = strComSerial[iDvcArrCnt];serialPortN[iDvcArrCnt].Close(); //2024-03-19:AT+VER?±oª¾Device_No.¤§«á¡A¬ö¿ı¦U³s±µªºDevice©Ò¹ïÀ³¨ìªºSerialPort & ComPort
-5.WndProc\case DBT_DEVICEREMOVECOMPLETE:strComDvc[i] = ""; DvcRemovedUiRefresh();¤¶­±Åã¥Ü§ó·s //2024-03-22
-6.WndProc\case DBT_DEVICEARRIVAL:if (VidPidNames.Contains(s))->§ä¨ì¨º¤@­ÓSerialDvc[i]=null¨S¦³¨Ï¥Î=>serialPortN[i].Write("AT+VER?" + "\r\n"); strComSerial.Add(s);=>±oª¾insertªº¸Ë¸mDvc No.?¦A¦¸¶ñ¤JComDvc[]¡BSerialDvc[] //2024-03-22
-7.²¾°£device¸Ë¸m®É»İ§ó·s¤¶­±¤WlblDevIdDvcN¡BcboComDvcN¡BcboDevNo¡BcboComList¡C //2024-03-29
-
 *****2023/09/07**********
 SW: "Mercury_E-Burn_in-v1.2.7.3-1PcTo10"
 FW: "Ver_1.7; Jun_29_2023 15:03:00"(only for Burn-in)
 Builds:
 Mercury_E-Burn_in-v1.2.7.3-1PcTo10-exe-20230907.7z
 Fucntion:
-1.·Å«×»PPD´ú­È§PÂ_»P´ú¸Õµ²ªG¦P¨B°µÀu¤Æ¡A¥Hºë½T§ïµ½´ú¸Õµ²ªGªº»~§P¾÷²v¡C
-2.¦]ªv¨ã¦^¶ÇªºrJD.temps¼Æ­È¦³®É¿ù»~¡A©¿²¤ªv¨ã¦^¶Çªº­È¡A®Ú¾Úªv¨ã¦^¶Çªºtemperature­È§PÂ_§ó·sTMPstatusªº­È¡A¦A°µResultµ²ªGªº§e²{¡C
-3.ª`·NFUNC_TEMP_SENSOR_TEST_UCL¡BFUNC_TEMP_SENSOR_TEST_LCL³£¬°int®æ¦¡¡A¥D­n¬O°t¦XrJD.temp¤]¬Oint¡C
+1.æº«åº¦èˆ‡PDæ¸¬å€¼åˆ¤æ–·èˆ‡æ¸¬è©¦çµæœåŒæ­¥åšå„ªåŒ–ï¼Œä»¥ç²¾ç¢ºæ”¹å–„æ¸¬è©¦çµæœçš„èª¤åˆ¤æ©Ÿç‡ã€‚
+2.å› æ²»å…·å›å‚³çš„rJD.tempsæ•¸å€¼æœ‰æ™‚éŒ¯èª¤ï¼Œå¿½ç•¥æ²»å…·å›å‚³çš„å€¼ï¼Œæ ¹æ“šæ²»å…·å›å‚³çš„temperatureå€¼åˆ¤æ–·æ›´æ–°TMPstatusçš„å€¼ï¼Œå†åšResultçµæœçš„å‘ˆç¾ã€‚
+3.æ³¨æ„FUNC_TEMP_SENSOR_TEST_UCLã€FUNC_TEMP_SENSOR_TEST_LCLéƒ½ç‚ºintæ ¼å¼ï¼Œä¸»è¦æ˜¯é…åˆrJD.tempä¹Ÿæ˜¯intã€‚
 
 *****2023/08/22**********
 SW: "Mercury_E-Burn_in-v1.2.7.2-1PcTo10"
@@ -30,8 +16,8 @@ FW: "Ver_1.7; Jun_29_2023 15:03:00"(only for Burn-in)
 Builds:
 Mercury_E-Burn_in-v1.2.7.2-1PcTo10-exe-20230822.7z
 Fucntion:
-1.·s¼WFUNC_TEMP_SENSOR_TEST_UCL¡BFUNC_TEMP_SENSOR_TEST_LCL¡A­×§ïconfig.json¸Ì­±¸Ó­È¥i§ó§ï·Å«×¤W¤U­­¡C
-2.·s¼WFUNC_PDP_UCL¡BFUNC_PDP_LCL¡BFUNC_PDN_UCL¡BFUNC_PDN_LCL¡A­×§ïconfig.json¸Ì­±¸Ó­È¥i§ó§ïPDP/PDN¤W¤U­­¡C
+1.æ–°å¢FUNC_TEMP_SENSOR_TEST_UCLã€FUNC_TEMP_SENSOR_TEST_LCLï¼Œä¿®æ”¹config.jsonè£¡é¢è©²å€¼å¯æ›´æ”¹æº«åº¦ä¸Šä¸‹é™ã€‚
+2.æ–°å¢FUNC_PDP_UCLã€FUNC_PDP_LCLã€FUNC_PDN_UCLã€FUNC_PDN_LCLï¼Œä¿®æ”¹config.jsonè£¡é¢è©²å€¼å¯æ›´æ”¹PDP/PDNä¸Šä¸‹é™ã€‚
 
 *****2023/08/11**********
 SW: "Mercury_E-Burn_in-v1.2.7.1-1PcTo10"
@@ -39,10 +25,10 @@ FW: "Ver_1.7; Jun_29_2023 15:03:00"(only for Burn-in)
 Builds:
 Mercury_E-Burn_in-v1.2.7.1-1PcTo10-exe-20230811.7z
 Fucntion:
-1.§ï¿N¾÷§¹²¦¤£²M°£SN¡A¥H¨¾¤î³øªíº|±¼¡AÂI¿ïSNÄæ¦ì¦Û°Ê¥ş¿ï¡A¤£¼vÅTBarCode±½´y¿é¤J¤âªk
-2.strTMPsta = rJD.temps.ToString()¦bStation3¸Ì­±¦AÂ^¨ú¥H§K¸ê®Æ¿ù»~
-3.¥[¤J§PÂ_·Å«×¬O§_¦b¦X²z°Ï¶¡10~50¡C
-4.¿N¾÷µ{§Ç¤¤timer3~timer12¡Aµ{§Ç¶]¨ìcase 100§ï¤£²M±¼remark¡A§ï¦bcase 1¤¤²M°£¡A½T«Oremark¦b³øªí¤¤¦³Åã¥Ü¡C
+1.æ”¹ç‡’æ©Ÿå®Œç•¢ä¸æ¸…é™¤SNï¼Œä»¥é˜²æ­¢å ±è¡¨æ¼æ‰ï¼Œé»é¸SNæ¬„ä½è‡ªå‹•å…¨é¸ï¼Œä¸å½±éŸ¿BarCodeæƒæè¼¸å…¥æ‰‹æ³•
+2.strTMPsta = rJD.temps.ToString()åœ¨Station3è£¡é¢å†æ“·å–ä»¥å…è³‡æ–™éŒ¯èª¤
+3.åŠ å…¥åˆ¤æ–·æº«åº¦æ˜¯å¦åœ¨åˆç†å€é–“10~50ã€‚
+4.ç‡’æ©Ÿç¨‹åºä¸­timer3~timer12ï¼Œç¨‹åºè·‘åˆ°case 100æ”¹ä¸æ¸…æ‰remarkï¼Œæ”¹åœ¨case 1ä¸­æ¸…é™¤ï¼Œç¢ºä¿remarkåœ¨å ±è¡¨ä¸­æœ‰é¡¯ç¤ºã€‚
 
 *****2023/07/18**********
 SW: "Mercury_E-Burn_in-v1.2.7-1PcTo10"
@@ -50,17 +36,17 @@ FW: "Ver_1.7; Jun_29_2023 15:03:00"(only for Burn-in)
 Builds:
 Mercury_E-Burn_in-v1.2.7-1PcTo10-exe-20230718.zip
 Fucntion:
-1.File Version»P±M®×ª©¥»³]©w¦P¨B strSwVer = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion.ToString();
-2.ª©­±¤W¥[¤JmenuStrip¡A¥i¬dAboutª©¥»¸ê°T¡C
+1.File Versionèˆ‡å°ˆæ¡ˆç‰ˆæœ¬è¨­å®šåŒæ­¥ strSwVer = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion.ToString();
+2.ç‰ˆé¢ä¸ŠåŠ å…¥menuStripï¼Œå¯æŸ¥Aboutç‰ˆæœ¬è³‡è¨Šã€‚
 
 *****2023/07/06**********
 SW: "Mercury_E-Burn_in-v1.2.6-1PcTo10"
-FW: "Ver_1.8; Jun_27_2023 13:23:11"(only for Burn-in)¡B"Ver_1.7; Jun_29_2023 15:03:00"(only for Burn-in)
+FW: "Ver_1.8; Jun_27_2023 13:23:11"(only for Burn-in)ã€"Ver_1.7; Jun_29_2023 15:03:00"(only for Burn-in)
 Builds:
 Mercury_E-Burn_in-v1.2.6-1PcTo10-exe-20230706.zip
 Fucntion:
-1.§ïÁ`ªí¸ô®|&¦WºÙ¡A¦b"C:\Users\[USER_NAME]\Documents\Burn1to10"¡A¦WºÙ=H4_IQC_LBS_BURN.csv
-2.§ï¨C¤éÁ`ªí¸ô®|&¦WºÙ¡A¦b"C:\Users\[USER_NAME]\Documents\Burn1to10\[yyyy]¦è¤¸¦~\[MM]¤ë\[dd]¤é"¡A¦WºÙ=H4_IQC_LBS_BURN_yyyy-MM-dd.csv
+1.æ”¹ç¸½è¡¨è·¯å¾‘&åç¨±ï¼Œåœ¨"C:\Users\[USER_NAME]\Documents\Burn1to10"ï¼Œåç¨±=H4_IQC_LBS_BURN.csv
+2.æ”¹æ¯æ—¥ç¸½è¡¨è·¯å¾‘&åç¨±ï¼Œåœ¨"C:\Users\[USER_NAME]\Documents\Burn1to10\[yyyy]è¥¿å…ƒå¹´\[MM]æœˆ\[dd]æ—¥"ï¼Œåç¨±=H4_IQC_LBS_BURN_yyyy-MM-dd.csv
 
 *****2023/06/30**********
 SW:Mercury_E-Burn_in-v1.2.5-1PcTo10;
@@ -69,7 +55,7 @@ Builds:
 Mercury_E-Burn_in-v1.2.5-1PcTo10-exe-20230630.zip
 Mercury_E-Burn_in-v1.2.5-1PcTo10-exe-20230629.zip
 Fucntion:
-1.­×§ï·f°tv1.8ªºFWª©¥»(©T©w±i¨¤¥B52«×·|Ãö³¬¹p®g¡B40«×·|­«¶}¹p®g)ªº¿N¾÷µ{¦¡¡A¬yµ{°µ­×§ï¡C
+1.ä¿®æ”¹æ­é…v1.8çš„FWç‰ˆæœ¬(å›ºå®šå¼µè§’ä¸”52åº¦æœƒé—œé–‰é›·å°„ã€40åº¦æœƒé‡é–‹é›·å°„)çš„ç‡’æ©Ÿç¨‹å¼ï¼Œæµç¨‹åšä¿®æ”¹ã€‚
 2.Add temperature record with interval and output report, click "chkTempRec" to start recording.
 
 *****2023/06/27**********
@@ -78,8 +64,8 @@ FW:Mercury Dev0 Station 3 <Ver:1.6> Build Jun 27 2022 17:31:41
 Builds:
 Mercury_E-Burn_in-v1.2.4-1PcTo10-exe-20230627.zip.zip
 Fucntion:
-1.­×§ï·f°tv1.6ªºFWª©¥»ªº¿N¾÷µ{¦¡¡A¬yµ{°µ­×§ï¡C
-2.¥HÅçÃÒ¨Cdevice_No³£¥i¥H³æ¿W´úTest»P¿N¾÷¡A¤@¦¸«ö¶s¿N¿ı»İ¦A­×§ï¡C
+1.ä¿®æ”¹æ­é…v1.6çš„FWç‰ˆæœ¬çš„ç‡’æ©Ÿç¨‹å¼ï¼Œæµç¨‹åšä¿®æ”¹ã€‚
+2.ä»¥é©—è­‰æ¯device_Noéƒ½å¯ä»¥å–®ç¨æ¸¬Testèˆ‡ç‡’æ©Ÿï¼Œä¸€æ¬¡æŒ‰éˆ•ç‡’éŒ„éœ€å†ä¿®æ”¹ã€‚
 
 *****2023/06/21**********
 SW:Mercury_E-Burn_in-v1.2.3-1PcTo10; (1_To_10 Burn-in test)
@@ -87,8 +73,8 @@ FW:Mercury Dev0 Station 3 <Ver:1.6> Build Jun 27 2022 17:31:41
 Builds:
 Mercury_E-Burn_in-v1.2.3-1PcTo10-exe-20230621.zip.zip
 Fucntion:
-1.­×§ï·f°tv1.6ªºFWª©¥»ªº¿N¾÷µ{¦¡¡A¬yµ{°µ­×§ï¡C
-2.¥HÅçÃÒ¨Cdevice_No³£¥i¥H³æ¿W´úTest»P¿N¾÷¡A¤@¦¸«ö¶s¿N¿ı»İ¦A­×§ï¡C
+1.ä¿®æ”¹æ­é…v1.6çš„FWç‰ˆæœ¬çš„ç‡’æ©Ÿç¨‹å¼ï¼Œæµç¨‹åšä¿®æ”¹ã€‚
+2.ä»¥é©—è­‰æ¯device_Noéƒ½å¯ä»¥å–®ç¨æ¸¬Testèˆ‡ç‡’æ©Ÿï¼Œä¸€æ¬¡æŒ‰éˆ•ç‡’éŒ„éœ€å†ä¿®æ”¹ã€‚
 
 *****2023/06/16**********
 SW: Mercury_E:v_1.2.2, 2023-06-16 13:30; (1_To_10 Burn-in test)
@@ -116,7 +102,7 @@ Fucntion:
 3. Add "bBurnAll2ndTesting" to wait "BurnAll 2nd test" proceed in line.  //2022-11-30
 4. Add delay time between "AT+BIS 0" & "btnTest" for better arangement.	//2022-12-01
 5. Edit for 24hrs burn-in
-6. Add utilDvcxSerialWrite(eCPort port, string strCmd)...abComPortBusyFlag¡BDiscardInBuffer & DiscardOutBuffer.  //2022-12-04
+6. Add utilDvcxSerialWrite(eCPort port, string strCmd)...abComPortBusyFlagã€DiscardInBuffer & DiscardOutBuffer.  //2022-12-04
 
 *****2022/11/18**********
 SW: Mercury_E:v_1.0, 2022-11-18 16:25; (1_To_10 Burn-in test)
@@ -156,7 +142,7 @@ Fucntion:
 4. cboDevNo.add when Device detected.  Add tabpages and UI for 10 devices.  //2022-11-08
 
 *****2022/10/31**********
-SW:V_1.4, 2022-10-31 16:10 =>²£½u
+SW:V_1.4, 2022-10-31 16:10 =>ç”¢ç·š
 FW:Mercury Dev0 Station 3 <Ver:1.4> Build Jun 27 2022 17:31:41
 Builds:
 ElecTest_v1.4-Burn_1PcTo3Jig-20221031_exe.zip
@@ -267,6 +253,6 @@ Move the 'btnTempRead' to Main_tabPage, It is invisible unless station 2.
 
 //2022-05-09  >>Lucio EVT ElecTest-v_1.0
 1. COM port auto-detect
-2. Report .csv file auto-create¡C
+2. Report .csv file auto-createã€‚
 3. Add PID auto detect: { VID, PID } = ("0416", "B1B2") 
  

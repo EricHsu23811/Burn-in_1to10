@@ -31,6 +31,7 @@ namespace Ado
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.richBox = new System.Windows.Forms.RichTextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
@@ -313,6 +314,8 @@ namespace Ado
             this.btnCmdSend = new System.Windows.Forms.Button();
             this.tbxAtReturn = new System.Windows.Forms.TextBox();
             this.timer3 = new System.Windows.Forms.Timer(this.components);
+            this.serialPort2 = new System.IO.Ports.SerialPort(this.components);
+            this.serialPort3 = new System.IO.Ports.SerialPort(this.components);
             this.timer4 = new System.Windows.Forms.Timer(this.components);
             this.timer5 = new System.Windows.Forms.Timer(this.components);
             this.lblVerPs = new System.Windows.Forms.Label();
@@ -330,15 +333,13 @@ namespace Ado
             this.saveAsFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadJSONFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer15 = new System.Windows.Forms.Timer(this.components);
             this.txtMac = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl1.SuspendLayout();
             this.tabPage_Main.SuspendLayout();
             this.grpStaDvc0.SuspendLayout();
@@ -362,25 +363,28 @@ namespace Ado
             this.grpStaDvc9.SuspendLayout();
             this.tabPage_Test.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // serialPort1
+            // 
+            this.serialPort1.BaudRate = 115200;
             // 
             // richBox
             // 
             this.richBox.BackColor = System.Drawing.SystemColors.InfoText;
             this.richBox.Font = new System.Drawing.Font("新細明體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.richBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.richBox.Location = new System.Drawing.Point(456, 58);
-            this.richBox.Margin = new System.Windows.Forms.Padding(4);
+            this.richBox.Location = new System.Drawing.Point(342, 46);
             this.richBox.Name = "richBox";
             this.richBox.ReadOnly = true;
-            this.richBox.Size = new System.Drawing.Size(469, 439);
+            this.richBox.Size = new System.Drawing.Size(353, 356);
             this.richBox.TabIndex = 11;
             this.richBox.Text = "";
             this.richBox.TextChanged += new System.EventHandler(this.richBox_TextChanged);
             // 
             // timer1
             // 
+            this.timer1.Enabled = true;
             this.timer1.Interval = 200;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
@@ -402,12 +406,12 @@ namespace Ado
             this.tabControl1.Controls.Add(this.tabPage_Device8);
             this.tabControl1.Controls.Add(this.tabPage_Device9);
             this.tabControl1.Controls.Add(this.tabPage_Test);
-            this.tabControl1.Location = new System.Drawing.Point(12, 31);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabControl1.Location = new System.Drawing.Point(9, 25);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(437, 470);
+            this.tabControl1.Size = new System.Drawing.Size(328, 376);
             this.tabControl1.TabIndex = 23;
             // 
             // tabPage_Main
@@ -439,11 +443,11 @@ namespace Ado
             this.tabPage_Main.Controls.Add(this.lblComDvc0);
             this.tabPage_Main.Controls.Add(this.cboBaudDvc0);
             this.tabPage_Main.Controls.Add(this.btnTestDvc0);
-            this.tabPage_Main.Location = new System.Drawing.Point(4, 46);
-            this.tabPage_Main.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage_Main.Location = new System.Drawing.Point(4, 40);
+            this.tabPage_Main.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tabPage_Main.Name = "tabPage_Main";
-            this.tabPage_Main.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage_Main.Size = new System.Drawing.Size(429, 420);
+            this.tabPage_Main.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage_Main.Size = new System.Drawing.Size(320, 332);
             this.tabPage_Main.TabIndex = 0;
             this.tabPage_Main.Text = "Device0";
             this.tabPage_Main.UseVisualStyleBackColor = true;
@@ -451,10 +455,10 @@ namespace Ado
             // btnBurnAll
             // 
             this.btnBurnAll.Enabled = false;
-            this.btnBurnAll.Location = new System.Drawing.Point(48, 220);
-            this.btnBurnAll.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBurnAll.Location = new System.Drawing.Point(36, 176);
+            this.btnBurnAll.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBurnAll.Name = "btnBurnAll";
-            this.btnBurnAll.Size = new System.Drawing.Size(93, 40);
+            this.btnBurnAll.Size = new System.Drawing.Size(70, 32);
             this.btnBurnAll.TabIndex = 80;
             this.btnBurnAll.Text = "Burn-in All";
             this.btnBurnAll.UseVisualStyleBackColor = true;
@@ -463,10 +467,9 @@ namespace Ado
             // cboComDvc0
             // 
             this.cboComDvc0.FormattingEnabled = true;
-            this.cboComDvc0.Location = new System.Drawing.Point(80, 11);
-            this.cboComDvc0.Margin = new System.Windows.Forms.Padding(4);
+            this.cboComDvc0.Location = new System.Drawing.Point(60, 9);
             this.cboComDvc0.Name = "cboComDvc0";
-            this.cboComDvc0.Size = new System.Drawing.Size(100, 23);
+            this.cboComDvc0.Size = new System.Drawing.Size(76, 20);
             this.cboComDvc0.TabIndex = 78;
             // 
             // lblDevIdDvc0
@@ -475,10 +478,11 @@ namespace Ado
             this.lblDevIdDvc0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblDevIdDvc0.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDevIdDvc0.ForeColor = System.Drawing.Color.Blue;
-            this.lblDevIdDvc0.Location = new System.Drawing.Point(11, 345);
+            this.lblDevIdDvc0.Location = new System.Drawing.Point(8, 276);
+            this.lblDevIdDvc0.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDevIdDvc0.Name = "lblDevIdDvc0";
             this.lblDevIdDvc0.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblDevIdDvc0.Size = new System.Drawing.Size(99, 24);
+            this.lblDevIdDvc0.Size = new System.Drawing.Size(77, 21);
             this.lblDevIdDvc0.TabIndex = 77;
             this.lblDevIdDvc0.Text = "Device_ID";
             this.lblDevIdDvc0.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -486,28 +490,26 @@ namespace Ado
             // lblTestRmkDvc0
             // 
             this.lblTestRmkDvc0.AutoSize = true;
-            this.lblTestRmkDvc0.Location = new System.Drawing.Point(157, 380);
-            this.lblTestRmkDvc0.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTestRmkDvc0.Location = new System.Drawing.Point(118, 304);
             this.lblTestRmkDvc0.Name = "lblTestRmkDvc0";
-            this.lblTestRmkDvc0.Size = new System.Drawing.Size(52, 15);
+            this.lblTestRmkDvc0.Size = new System.Drawing.Size(41, 12);
             this.lblTestRmkDvc0.TabIndex = 76;
             this.lblTestRmkDvc0.Text = "備註欄";
             // 
             // txtTestRmkDvc0
             // 
             this.txtTestRmkDvc0.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtTestRmkDvc0.Location = new System.Drawing.Point(215, 378);
-            this.txtTestRmkDvc0.Margin = new System.Windows.Forms.Padding(4);
+            this.txtTestRmkDvc0.Location = new System.Drawing.Point(161, 302);
             this.txtTestRmkDvc0.Name = "txtTestRmkDvc0";
-            this.txtTestRmkDvc0.Size = new System.Drawing.Size(208, 25);
+            this.txtTestRmkDvc0.Size = new System.Drawing.Size(157, 22);
             this.txtTestRmkDvc0.TabIndex = 75;
             // 
             // btnBurnStopDvc0
             // 
-            this.btnBurnStopDvc0.Location = new System.Drawing.Point(215, 330);
-            this.btnBurnStopDvc0.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBurnStopDvc0.Location = new System.Drawing.Point(161, 264);
+            this.btnBurnStopDvc0.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBurnStopDvc0.Name = "btnBurnStopDvc0";
-            this.btnBurnStopDvc0.Size = new System.Drawing.Size(208, 40);
+            this.btnBurnStopDvc0.Size = new System.Drawing.Size(156, 32);
             this.btnBurnStopDvc0.TabIndex = 74;
             this.btnBurnStopDvc0.Text = "Burn-in Stop / 中斷燒機";
             this.btnBurnStopDvc0.UseVisualStyleBackColor = true;
@@ -516,9 +518,10 @@ namespace Ado
             // lblSWver
             // 
             this.lblSWver.AutoSize = true;
-            this.lblSWver.Location = new System.Drawing.Point(11, 395);
+            this.lblSWver.Location = new System.Drawing.Point(8, 316);
+            this.lblSWver.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSWver.Name = "lblSWver";
-            this.lblSWver.Size = new System.Drawing.Size(225, 15);
+            this.lblSWver.Size = new System.Drawing.Size(185, 12);
             this.lblSWver.TabIndex = 72;
             this.lblSWver.Text = "SW_ver_date/matching FW_ver_build";
             this.lblSWver.Visible = false;
@@ -528,10 +531,11 @@ namespace Ado
             this.lblBurnRestDvc0.AutoSize = true;
             this.lblBurnRestDvc0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblBurnRestDvc0.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBurnRestDvc0.Location = new System.Drawing.Point(11, 299);
+            this.lblBurnRestDvc0.Location = new System.Drawing.Point(8, 239);
+            this.lblBurnRestDvc0.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBurnRestDvc0.Name = "lblBurnRestDvc0";
             this.lblBurnRestDvc0.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblBurnRestDvc0.Size = new System.Drawing.Size(132, 28);
+            this.lblBurnRestDvc0.Size = new System.Drawing.Size(103, 23);
             this.lblBurnRestDvc0.TabIndex = 73;
             this.lblBurnRestDvc0.Text = "Burn-in time";
             this.lblBurnRestDvc0.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -539,20 +543,19 @@ namespace Ado
             // lblTempDvc0
             // 
             this.lblTempDvc0.AutoSize = true;
-            this.lblTempDvc0.Location = new System.Drawing.Point(215, 304);
-            this.lblTempDvc0.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTempDvc0.Location = new System.Drawing.Point(161, 243);
             this.lblTempDvc0.Name = "lblTempDvc0";
-            this.lblTempDvc0.Size = new System.Drawing.Size(56, 15);
+            this.lblTempDvc0.Size = new System.Drawing.Size(45, 12);
             this.lblTempDvc0.TabIndex = 64;
             this.lblTempDvc0.Text = "溫度(C)";
             // 
             // btnTempReadDvc0
             // 
             this.btnTempReadDvc0.Enabled = false;
-            this.btnTempReadDvc0.Location = new System.Drawing.Point(351, 298);
-            this.btnTempReadDvc0.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnTempReadDvc0.Location = new System.Drawing.Point(263, 238);
+            this.btnTempReadDvc0.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnTempReadDvc0.Name = "btnTempReadDvc0";
-            this.btnTempReadDvc0.Size = new System.Drawing.Size(72, 26);
+            this.btnTempReadDvc0.Size = new System.Drawing.Size(54, 21);
             this.btnTempReadDvc0.TabIndex = 63;
             this.btnTempReadDvc0.Text = "Start";
             this.btnTempReadDvc0.UseVisualStyleBackColor = true;
@@ -560,10 +563,10 @@ namespace Ado
             // 
             // txtTempDvc0
             // 
-            this.txtTempDvc0.Location = new System.Drawing.Point(277, 299);
-            this.txtTempDvc0.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtTempDvc0.Location = new System.Drawing.Point(208, 239);
+            this.txtTempDvc0.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtTempDvc0.Name = "txtTempDvc0";
-            this.txtTempDvc0.Size = new System.Drawing.Size(67, 25);
+            this.txtTempDvc0.Size = new System.Drawing.Size(51, 22);
             this.txtTempDvc0.TabIndex = 62;
             this.txtTempDvc0.Text = "<temp(C)>";
             this.txtTempDvc0.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -571,10 +574,10 @@ namespace Ado
             // btnBurn1hrDvc0
             // 
             this.btnBurn1hrDvc0.Enabled = false;
-            this.btnBurn1hrDvc0.Location = new System.Drawing.Point(215, 252);
-            this.btnBurn1hrDvc0.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBurn1hrDvc0.Location = new System.Drawing.Point(161, 202);
+            this.btnBurn1hrDvc0.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBurn1hrDvc0.Name = "btnBurn1hrDvc0";
-            this.btnBurn1hrDvc0.Size = new System.Drawing.Size(208, 40);
+            this.btnBurn1hrDvc0.Size = new System.Drawing.Size(156, 32);
             this.btnBurn1hrDvc0.TabIndex = 57;
             this.btnBurn1hrDvc0.Text = "Burn-in 1hr";
             this.btnBurn1hrDvc0.UseVisualStyleBackColor = true;
@@ -583,10 +586,10 @@ namespace Ado
             // btnMemsReadDvc0
             // 
             this.btnMemsReadDvc0.Enabled = false;
-            this.btnMemsReadDvc0.Location = new System.Drawing.Point(215, 214);
-            this.btnMemsReadDvc0.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnMemsReadDvc0.Location = new System.Drawing.Point(161, 171);
+            this.btnMemsReadDvc0.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnMemsReadDvc0.Name = "btnMemsReadDvc0";
-            this.btnMemsReadDvc0.Size = new System.Drawing.Size(105, 32);
+            this.btnMemsReadDvc0.Size = new System.Drawing.Size(79, 26);
             this.btnMemsReadDvc0.TabIndex = 56;
             this.btnMemsReadDvc0.Text = "MEMS_Read";
             this.btnMemsReadDvc0.UseVisualStyleBackColor = true;
@@ -595,10 +598,10 @@ namespace Ado
             // btnMemsSetDvc0
             // 
             this.btnMemsSetDvc0.Enabled = false;
-            this.btnMemsSetDvc0.Location = new System.Drawing.Point(325, 214);
-            this.btnMemsSetDvc0.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnMemsSetDvc0.Location = new System.Drawing.Point(244, 171);
+            this.btnMemsSetDvc0.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnMemsSetDvc0.Name = "btnMemsSetDvc0";
-            this.btnMemsSetDvc0.Size = new System.Drawing.Size(97, 32);
+            this.btnMemsSetDvc0.Size = new System.Drawing.Size(73, 26);
             this.btnMemsSetDvc0.TabIndex = 55;
             this.btnMemsSetDvc0.Text = "MEMS_Set";
             this.btnMemsSetDvc0.UseVisualStyleBackColor = true;
@@ -611,28 +614,30 @@ namespace Ado
             this.cboSta0optDvc0.Items.AddRange(new object[] {
             "0",
             "1"});
-            this.cboSta0optDvc0.Location = new System.Drawing.Point(101, 214);
-            this.cboSta0optDvc0.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cboSta0optDvc0.Location = new System.Drawing.Point(76, 171);
+            this.cboSta0optDvc0.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cboSta0optDvc0.Name = "cboSta0optDvc0";
-            this.cboSta0optDvc0.Size = new System.Drawing.Size(107, 23);
+            this.cboSta0optDvc0.Size = new System.Drawing.Size(81, 20);
             this.cboSta0optDvc0.TabIndex = 52;
             this.cboSta0optDvc0.Text = "0";
             // 
             // lblSta0optDvc0
             // 
             this.lblSta0optDvc0.AutoSize = true;
-            this.lblSta0optDvc0.Location = new System.Drawing.Point(13, 218);
+            this.lblSta0optDvc0.Location = new System.Drawing.Point(10, 174);
+            this.lblSta0optDvc0.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSta0optDvc0.Name = "lblSta0optDvc0";
-            this.lblSta0optDvc0.Size = new System.Drawing.Size(86, 15);
+            this.lblSta0optDvc0.Size = new System.Drawing.Size(67, 12);
             this.lblSta0optDvc0.TabIndex = 51;
             this.lblSta0optDvc0.Text = "Sta_0 MEMS";
             // 
             // lblPdGainSetD0
             // 
             this.lblPdGainSetD0.AutoSize = true;
-            this.lblPdGainSetD0.Location = new System.Drawing.Point(11, 244);
+            this.lblPdGainSetD0.Location = new System.Drawing.Point(8, 195);
+            this.lblPdGainSetD0.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblPdGainSetD0.Name = "lblPdGainSetD0";
-            this.lblPdGainSetD0.Size = new System.Drawing.Size(89, 15);
+            this.lblPdGainSetD0.Size = new System.Drawing.Size(70, 12);
             this.lblPdGainSetD0.TabIndex = 50;
             this.lblPdGainSetD0.Text = "PD_GAIN Set";
             this.lblPdGainSetD0.Visible = false;
@@ -643,10 +648,10 @@ namespace Ado
             this.cboPdGainSetDvc0.Items.AddRange(new object[] {
             "0",
             "7"});
-            this.cboPdGainSetDvc0.Location = new System.Drawing.Point(101, 241);
-            this.cboPdGainSetDvc0.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cboPdGainSetDvc0.Location = new System.Drawing.Point(76, 193);
+            this.cboPdGainSetDvc0.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cboPdGainSetDvc0.Name = "cboPdGainSetDvc0";
-            this.cboPdGainSetDvc0.Size = new System.Drawing.Size(107, 23);
+            this.cboPdGainSetDvc0.Size = new System.Drawing.Size(81, 20);
             this.cboPdGainSetDvc0.TabIndex = 49;
             this.cboPdGainSetDvc0.Text = "0";
             this.cboPdGainSetDvc0.Visible = false;
@@ -661,11 +666,11 @@ namespace Ado
             this.grpStaDvc0.Controls.Add(this.button2);
             this.grpStaDvc0.Controls.Add(this.button1);
             this.grpStaDvc0.Enabled = false;
-            this.grpStaDvc0.Location = new System.Drawing.Point(7, 139);
-            this.grpStaDvc0.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grpStaDvc0.Location = new System.Drawing.Point(5, 111);
+            this.grpStaDvc0.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.grpStaDvc0.Name = "grpStaDvc0";
-            this.grpStaDvc0.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.grpStaDvc0.Size = new System.Drawing.Size(407, 71);
+            this.grpStaDvc0.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grpStaDvc0.Size = new System.Drawing.Size(305, 57);
             this.grpStaDvc0.TabIndex = 48;
             this.grpStaDvc0.TabStop = false;
             this.grpStaDvc0.Text = "station 站別";
@@ -673,10 +678,10 @@ namespace Ado
             // radSta4Dvc0
             // 
             this.radSta4Dvc0.AutoSize = true;
-            this.radSta4Dvc0.Location = new System.Drawing.Point(13, 44);
-            this.radSta4Dvc0.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta4Dvc0.Location = new System.Drawing.Point(10, 35);
+            this.radSta4Dvc0.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta4Dvc0.Name = "radSta4Dvc0";
-            this.radSta4Dvc0.Size = new System.Drawing.Size(79, 19);
+            this.radSta4Dvc0.Size = new System.Drawing.Size(64, 16);
             this.radSta4Dvc0.TabIndex = 5;
             this.radSta4Dvc0.Text = "Station 4";
             this.radSta4Dvc0.UseVisualStyleBackColor = true;
@@ -684,10 +689,10 @@ namespace Ado
             // radSta3Dvc0
             // 
             this.radSta3Dvc0.AutoSize = true;
-            this.radSta3Dvc0.Location = new System.Drawing.Point(309, 21);
-            this.radSta3Dvc0.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta3Dvc0.Location = new System.Drawing.Point(232, 17);
+            this.radSta3Dvc0.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta3Dvc0.Name = "radSta3Dvc0";
-            this.radSta3Dvc0.Size = new System.Drawing.Size(79, 19);
+            this.radSta3Dvc0.Size = new System.Drawing.Size(64, 16);
             this.radSta3Dvc0.TabIndex = 4;
             this.radSta3Dvc0.Text = "Station 3";
             this.radSta3Dvc0.UseVisualStyleBackColor = true;
@@ -695,10 +700,10 @@ namespace Ado
             // radSta2Dvc0
             // 
             this.radSta2Dvc0.AutoSize = true;
-            this.radSta2Dvc0.Location = new System.Drawing.Point(211, 21);
-            this.radSta2Dvc0.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta2Dvc0.Location = new System.Drawing.Point(158, 17);
+            this.radSta2Dvc0.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta2Dvc0.Name = "radSta2Dvc0";
-            this.radSta2Dvc0.Size = new System.Drawing.Size(79, 19);
+            this.radSta2Dvc0.Size = new System.Drawing.Size(64, 16);
             this.radSta2Dvc0.TabIndex = 3;
             this.radSta2Dvc0.Text = "Station 2";
             this.radSta2Dvc0.UseVisualStyleBackColor = true;
@@ -706,10 +711,10 @@ namespace Ado
             // radSta1Dvc0
             // 
             this.radSta1Dvc0.AutoSize = true;
-            this.radSta1Dvc0.Location = new System.Drawing.Point(112, 21);
-            this.radSta1Dvc0.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta1Dvc0.Location = new System.Drawing.Point(84, 17);
+            this.radSta1Dvc0.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta1Dvc0.Name = "radSta1Dvc0";
-            this.radSta1Dvc0.Size = new System.Drawing.Size(79, 19);
+            this.radSta1Dvc0.Size = new System.Drawing.Size(64, 16);
             this.radSta1Dvc0.TabIndex = 2;
             this.radSta1Dvc0.Text = "Station 1";
             this.radSta1Dvc0.UseVisualStyleBackColor = true;
@@ -717,30 +722,28 @@ namespace Ado
             // radSta0Dvc0
             // 
             this.radSta0Dvc0.AutoSize = true;
-            this.radSta0Dvc0.Location = new System.Drawing.Point(13, 21);
-            this.radSta0Dvc0.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta0Dvc0.Location = new System.Drawing.Point(10, 17);
+            this.radSta0Dvc0.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta0Dvc0.Name = "radSta0Dvc0";
-            this.radSta0Dvc0.Size = new System.Drawing.Size(79, 19);
+            this.radSta0Dvc0.Size = new System.Drawing.Size(64, 16);
             this.radSta0Dvc0.TabIndex = 0;
             this.radSta0Dvc0.Text = "Station 0";
             this.radSta0Dvc0.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(212, -64);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
+            this.button2.Location = new System.Drawing.Point(159, -51);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(195, 58);
+            this.button2.Size = new System.Drawing.Size(146, 46);
             this.button2.TabIndex = 10;
             this.button2.Text = "Clear";
             this.button2.UseVisualStyleBackColor = true;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(0, -64);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Location = new System.Drawing.Point(0, -51);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(195, 58);
+            this.button1.Size = new System.Drawing.Size(146, 46);
             this.button1.TabIndex = 0;
             this.button1.Text = "OpenPort";
             this.button1.UseVisualStyleBackColor = true;
@@ -749,19 +752,19 @@ namespace Ado
             // 
             this.lblFinalDvc0.AutoSize = true;
             this.lblFinalDvc0.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFinalDvc0.Location = new System.Drawing.Point(11, 270);
+            this.lblFinalDvc0.Location = new System.Drawing.Point(8, 216);
+            this.lblFinalDvc0.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFinalDvc0.Name = "lblFinalDvc0";
-            this.lblFinalDvc0.Size = new System.Drawing.Size(116, 26);
+            this.lblFinalDvc0.Size = new System.Drawing.Size(91, 21);
             this.lblFinalDvc0.TabIndex = 47;
             this.lblFinalDvc0.Text = "Final result";
             // 
             // lblSnoDvc0
             // 
             this.lblSnoDvc0.AutoSize = true;
-            this.lblSnoDvc0.Location = new System.Drawing.Point(7, 45);
-            this.lblSnoDvc0.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSnoDvc0.Location = new System.Drawing.Point(5, 36);
             this.lblSnoDvc0.Name = "lblSnoDvc0";
-            this.lblSnoDvc0.Size = new System.Drawing.Size(65, 15);
+            this.lblSnoDvc0.Size = new System.Drawing.Size(51, 12);
             this.lblSnoDvc0.TabIndex = 46;
             this.lblSnoDvc0.Text = "Serial No.";
             // 
@@ -769,20 +772,18 @@ namespace Ado
             // 
             this.txtSnoDvc0.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtSnoDvc0.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtSnoDvc0.Location = new System.Drawing.Point(80, 42);
-            this.txtSnoDvc0.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSnoDvc0.Location = new System.Drawing.Point(60, 34);
             this.txtSnoDvc0.Name = "txtSnoDvc0";
-            this.txtSnoDvc0.Size = new System.Drawing.Size(335, 25);
+            this.txtSnoDvc0.Size = new System.Drawing.Size(252, 22);
             this.txtSnoDvc0.TabIndex = 39;
             this.txtSnoDvc0.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtSnoDvc0_MouseClick);
             this.txtSnoDvc0.KeyDown += new System.Windows.Forms.KeyEventHandler(this.barcode_KeyDown);
             // 
             // btnClearDvc0
             // 
-            this.btnClearDvc0.Location = new System.Drawing.Point(219, 75);
-            this.btnClearDvc0.Margin = new System.Windows.Forms.Padding(4);
+            this.btnClearDvc0.Location = new System.Drawing.Point(164, 60);
             this.btnClearDvc0.Name = "btnClearDvc0";
-            this.btnClearDvc0.Size = new System.Drawing.Size(195, 58);
+            this.btnClearDvc0.Size = new System.Drawing.Size(146, 46);
             this.btnClearDvc0.TabIndex = 45;
             this.btnClearDvc0.Text = "Clear";
             this.btnClearDvc0.UseVisualStyleBackColor = true;
@@ -791,20 +792,18 @@ namespace Ado
             // lblBaudDvc0
             // 
             this.lblBaudDvc0.AutoSize = true;
-            this.lblBaudDvc0.Location = new System.Drawing.Point(211, 14);
-            this.lblBaudDvc0.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBaudDvc0.Location = new System.Drawing.Point(158, 11);
             this.lblBaudDvc0.Name = "lblBaudDvc0";
-            this.lblBaudDvc0.Size = new System.Drawing.Size(61, 15);
+            this.lblBaudDvc0.Size = new System.Drawing.Size(51, 12);
             this.lblBaudDvc0.TabIndex = 44;
             this.lblBaudDvc0.Text = "BaudRate";
             // 
             // lblComDvc0
             // 
             this.lblComDvc0.AutoSize = true;
-            this.lblComDvc0.Location = new System.Drawing.Point(7, 14);
-            this.lblComDvc0.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblComDvc0.Location = new System.Drawing.Point(5, 11);
             this.lblComDvc0.Name = "lblComDvc0";
-            this.lblComDvc0.Size = new System.Drawing.Size(39, 15);
+            this.lblComDvc0.Size = new System.Drawing.Size(31, 12);
             this.lblComDvc0.TabIndex = 43;
             this.lblComDvc0.Text = "COM";
             // 
@@ -812,18 +811,16 @@ namespace Ado
             // 
             this.cboBaudDvc0.Enabled = false;
             this.cboBaudDvc0.FormattingEnabled = true;
-            this.cboBaudDvc0.Location = new System.Drawing.Point(284, 11);
-            this.cboBaudDvc0.Margin = new System.Windows.Forms.Padding(4);
+            this.cboBaudDvc0.Location = new System.Drawing.Point(213, 9);
             this.cboBaudDvc0.Name = "cboBaudDvc0";
-            this.cboBaudDvc0.Size = new System.Drawing.Size(129, 23);
+            this.cboBaudDvc0.Size = new System.Drawing.Size(98, 20);
             this.cboBaudDvc0.TabIndex = 42;
             // 
             // btnTestDvc0
             // 
-            this.btnTestDvc0.Location = new System.Drawing.Point(7, 75);
-            this.btnTestDvc0.Margin = new System.Windows.Forms.Padding(4);
+            this.btnTestDvc0.Location = new System.Drawing.Point(5, 60);
             this.btnTestDvc0.Name = "btnTestDvc0";
-            this.btnTestDvc0.Size = new System.Drawing.Size(195, 58);
+            this.btnTestDvc0.Size = new System.Drawing.Size(146, 46);
             this.btnTestDvc0.TabIndex = 40;
             this.btnTestDvc0.Text = "Test";
             this.btnTestDvc0.UseVisualStyleBackColor = true;
@@ -847,10 +844,10 @@ namespace Ado
             this.tabPage_Device1.Controls.Add(this.cboBaudDvc1);
             this.tabPage_Device1.Controls.Add(this.cboComDvc1);
             this.tabPage_Device1.Controls.Add(this.btnTestDvc1);
-            this.tabPage_Device1.Location = new System.Drawing.Point(4, 46);
-            this.tabPage_Device1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage_Device1.Location = new System.Drawing.Point(4, 40);
+            this.tabPage_Device1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tabPage_Device1.Name = "tabPage_Device1";
-            this.tabPage_Device1.Size = new System.Drawing.Size(429, 420);
+            this.tabPage_Device1.Size = new System.Drawing.Size(320, 332);
             this.tabPage_Device1.TabIndex = 2;
             this.tabPage_Device1.Text = "Device1";
             this.tabPage_Device1.UseVisualStyleBackColor = true;
@@ -858,28 +855,26 @@ namespace Ado
             // lblTestRmkDvc1
             // 
             this.lblTestRmkDvc1.AutoSize = true;
-            this.lblTestRmkDvc1.Location = new System.Drawing.Point(157, 380);
-            this.lblTestRmkDvc1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTestRmkDvc1.Location = new System.Drawing.Point(118, 304);
             this.lblTestRmkDvc1.Name = "lblTestRmkDvc1";
-            this.lblTestRmkDvc1.Size = new System.Drawing.Size(52, 15);
+            this.lblTestRmkDvc1.Size = new System.Drawing.Size(41, 12);
             this.lblTestRmkDvc1.TabIndex = 93;
             this.lblTestRmkDvc1.Text = "備註欄";
             // 
             // txtTestRmkDvc1
             // 
             this.txtTestRmkDvc1.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtTestRmkDvc1.Location = new System.Drawing.Point(215, 378);
-            this.txtTestRmkDvc1.Margin = new System.Windows.Forms.Padding(4);
+            this.txtTestRmkDvc1.Location = new System.Drawing.Point(161, 302);
             this.txtTestRmkDvc1.Name = "txtTestRmkDvc1";
-            this.txtTestRmkDvc1.Size = new System.Drawing.Size(208, 25);
+            this.txtTestRmkDvc1.Size = new System.Drawing.Size(157, 22);
             this.txtTestRmkDvc1.TabIndex = 92;
             // 
             // btnBurnStopDvc1
             // 
-            this.btnBurnStopDvc1.Location = new System.Drawing.Point(215, 330);
-            this.btnBurnStopDvc1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBurnStopDvc1.Location = new System.Drawing.Point(161, 264);
+            this.btnBurnStopDvc1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBurnStopDvc1.Name = "btnBurnStopDvc1";
-            this.btnBurnStopDvc1.Size = new System.Drawing.Size(208, 40);
+            this.btnBurnStopDvc1.Size = new System.Drawing.Size(156, 32);
             this.btnBurnStopDvc1.TabIndex = 91;
             this.btnBurnStopDvc1.Text = "Burn-in Stop / 中斷燒機";
             this.btnBurnStopDvc1.UseVisualStyleBackColor = true;
@@ -887,10 +882,10 @@ namespace Ado
             // 
             // btnBurn1hrDvc1
             // 
-            this.btnBurn1hrDvc1.Location = new System.Drawing.Point(215, 252);
-            this.btnBurn1hrDvc1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBurn1hrDvc1.Location = new System.Drawing.Point(161, 202);
+            this.btnBurn1hrDvc1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBurn1hrDvc1.Name = "btnBurn1hrDvc1";
-            this.btnBurn1hrDvc1.Size = new System.Drawing.Size(208, 40);
+            this.btnBurn1hrDvc1.Size = new System.Drawing.Size(156, 32);
             this.btnBurn1hrDvc1.TabIndex = 90;
             this.btnBurn1hrDvc1.Text = "Burn-in 1hr";
             this.btnBurn1hrDvc1.UseVisualStyleBackColor = true;
@@ -901,10 +896,11 @@ namespace Ado
             this.lblBurnRestDvc1.AutoSize = true;
             this.lblBurnRestDvc1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblBurnRestDvc1.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBurnRestDvc1.Location = new System.Drawing.Point(11, 299);
+            this.lblBurnRestDvc1.Location = new System.Drawing.Point(8, 239);
+            this.lblBurnRestDvc1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBurnRestDvc1.Name = "lblBurnRestDvc1";
             this.lblBurnRestDvc1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblBurnRestDvc1.Size = new System.Drawing.Size(132, 28);
+            this.lblBurnRestDvc1.Size = new System.Drawing.Size(103, 23);
             this.lblBurnRestDvc1.TabIndex = 89;
             this.lblBurnRestDvc1.Text = "Burn-in time";
             this.lblBurnRestDvc1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -913,9 +909,10 @@ namespace Ado
             // 
             this.lblFinalDvc1.AutoSize = true;
             this.lblFinalDvc1.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFinalDvc1.Location = new System.Drawing.Point(11, 270);
+            this.lblFinalDvc1.Location = new System.Drawing.Point(8, 216);
+            this.lblFinalDvc1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFinalDvc1.Name = "lblFinalDvc1";
-            this.lblFinalDvc1.Size = new System.Drawing.Size(116, 26);
+            this.lblFinalDvc1.Size = new System.Drawing.Size(91, 21);
             this.lblFinalDvc1.TabIndex = 88;
             this.lblFinalDvc1.Text = "Final result";
             // 
@@ -925,10 +922,11 @@ namespace Ado
             this.lblDevIdDvc1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblDevIdDvc1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDevIdDvc1.ForeColor = System.Drawing.Color.Blue;
-            this.lblDevIdDvc1.Location = new System.Drawing.Point(11, 345);
+            this.lblDevIdDvc1.Location = new System.Drawing.Point(8, 276);
+            this.lblDevIdDvc1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDevIdDvc1.Name = "lblDevIdDvc1";
             this.lblDevIdDvc1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblDevIdDvc1.Size = new System.Drawing.Size(99, 24);
+            this.lblDevIdDvc1.Size = new System.Drawing.Size(77, 21);
             this.lblDevIdDvc1.TabIndex = 87;
             this.lblDevIdDvc1.Text = "Device_ID";
             this.lblDevIdDvc1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -943,11 +941,11 @@ namespace Ado
             this.grpStaDvc1.Controls.Add(this.button3);
             this.grpStaDvc1.Controls.Add(this.button4);
             this.grpStaDvc1.Enabled = false;
-            this.grpStaDvc1.Location = new System.Drawing.Point(7, 139);
-            this.grpStaDvc1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grpStaDvc1.Location = new System.Drawing.Point(5, 111);
+            this.grpStaDvc1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.grpStaDvc1.Name = "grpStaDvc1";
-            this.grpStaDvc1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.grpStaDvc1.Size = new System.Drawing.Size(407, 71);
+            this.grpStaDvc1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grpStaDvc1.Size = new System.Drawing.Size(305, 57);
             this.grpStaDvc1.TabIndex = 86;
             this.grpStaDvc1.TabStop = false;
             this.grpStaDvc1.Text = "station 站別";
@@ -955,10 +953,10 @@ namespace Ado
             // radSta4Dvc1
             // 
             this.radSta4Dvc1.AutoSize = true;
-            this.radSta4Dvc1.Location = new System.Drawing.Point(13, 44);
-            this.radSta4Dvc1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta4Dvc1.Location = new System.Drawing.Point(10, 35);
+            this.radSta4Dvc1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta4Dvc1.Name = "radSta4Dvc1";
-            this.radSta4Dvc1.Size = new System.Drawing.Size(79, 19);
+            this.radSta4Dvc1.Size = new System.Drawing.Size(64, 16);
             this.radSta4Dvc1.TabIndex = 5;
             this.radSta4Dvc1.Text = "Station 4";
             this.radSta4Dvc1.UseVisualStyleBackColor = true;
@@ -966,10 +964,10 @@ namespace Ado
             // radSta3Dvc1
             // 
             this.radSta3Dvc1.AutoSize = true;
-            this.radSta3Dvc1.Location = new System.Drawing.Point(309, 21);
-            this.radSta3Dvc1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta3Dvc1.Location = new System.Drawing.Point(232, 17);
+            this.radSta3Dvc1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta3Dvc1.Name = "radSta3Dvc1";
-            this.radSta3Dvc1.Size = new System.Drawing.Size(79, 19);
+            this.radSta3Dvc1.Size = new System.Drawing.Size(64, 16);
             this.radSta3Dvc1.TabIndex = 4;
             this.radSta3Dvc1.Text = "Station 3";
             this.radSta3Dvc1.UseVisualStyleBackColor = true;
@@ -977,10 +975,10 @@ namespace Ado
             // radSta2Dvc1
             // 
             this.radSta2Dvc1.AutoSize = true;
-            this.radSta2Dvc1.Location = new System.Drawing.Point(211, 21);
-            this.radSta2Dvc1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta2Dvc1.Location = new System.Drawing.Point(158, 17);
+            this.radSta2Dvc1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta2Dvc1.Name = "radSta2Dvc1";
-            this.radSta2Dvc1.Size = new System.Drawing.Size(79, 19);
+            this.radSta2Dvc1.Size = new System.Drawing.Size(64, 16);
             this.radSta2Dvc1.TabIndex = 3;
             this.radSta2Dvc1.Text = "Station 2";
             this.radSta2Dvc1.UseVisualStyleBackColor = true;
@@ -988,10 +986,10 @@ namespace Ado
             // radSta1Dvc1
             // 
             this.radSta1Dvc1.AutoSize = true;
-            this.radSta1Dvc1.Location = new System.Drawing.Point(112, 21);
-            this.radSta1Dvc1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta1Dvc1.Location = new System.Drawing.Point(84, 17);
+            this.radSta1Dvc1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta1Dvc1.Name = "radSta1Dvc1";
-            this.radSta1Dvc1.Size = new System.Drawing.Size(79, 19);
+            this.radSta1Dvc1.Size = new System.Drawing.Size(64, 16);
             this.radSta1Dvc1.TabIndex = 2;
             this.radSta1Dvc1.Text = "Station 1";
             this.radSta1Dvc1.UseVisualStyleBackColor = true;
@@ -999,30 +997,28 @@ namespace Ado
             // radSta0Dvc1
             // 
             this.radSta0Dvc1.AutoSize = true;
-            this.radSta0Dvc1.Location = new System.Drawing.Point(13, 21);
-            this.radSta0Dvc1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta0Dvc1.Location = new System.Drawing.Point(10, 17);
+            this.radSta0Dvc1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta0Dvc1.Name = "radSta0Dvc1";
-            this.radSta0Dvc1.Size = new System.Drawing.Size(79, 19);
+            this.radSta0Dvc1.Size = new System.Drawing.Size(64, 16);
             this.radSta0Dvc1.TabIndex = 0;
             this.radSta0Dvc1.Text = "Station 0";
             this.radSta0Dvc1.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(212, -64);
-            this.button3.Margin = new System.Windows.Forms.Padding(4);
+            this.button3.Location = new System.Drawing.Point(159, -51);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(195, 58);
+            this.button3.Size = new System.Drawing.Size(146, 46);
             this.button3.TabIndex = 10;
             this.button3.Text = "Clear";
             this.button3.UseVisualStyleBackColor = true;
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(0, -64);
-            this.button4.Margin = new System.Windows.Forms.Padding(4);
+            this.button4.Location = new System.Drawing.Point(0, -51);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(195, 58);
+            this.button4.Size = new System.Drawing.Size(146, 46);
             this.button4.TabIndex = 0;
             this.button4.Text = "OpenPort";
             this.button4.UseVisualStyleBackColor = true;
@@ -1030,10 +1026,9 @@ namespace Ado
             // lblSnoDvc1
             // 
             this.lblSnoDvc1.AutoSize = true;
-            this.lblSnoDvc1.Location = new System.Drawing.Point(7, 45);
-            this.lblSnoDvc1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSnoDvc1.Location = new System.Drawing.Point(5, 36);
             this.lblSnoDvc1.Name = "lblSnoDvc1";
-            this.lblSnoDvc1.Size = new System.Drawing.Size(65, 15);
+            this.lblSnoDvc1.Size = new System.Drawing.Size(51, 12);
             this.lblSnoDvc1.TabIndex = 85;
             this.lblSnoDvc1.Text = "Serial No.";
             // 
@@ -1041,19 +1036,17 @@ namespace Ado
             // 
             this.txtSnoDvc1.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtSnoDvc1.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtSnoDvc1.Location = new System.Drawing.Point(80, 42);
-            this.txtSnoDvc1.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSnoDvc1.Location = new System.Drawing.Point(60, 34);
             this.txtSnoDvc1.Name = "txtSnoDvc1";
-            this.txtSnoDvc1.Size = new System.Drawing.Size(335, 25);
+            this.txtSnoDvc1.Size = new System.Drawing.Size(252, 22);
             this.txtSnoDvc1.TabIndex = 78;
             this.txtSnoDvc1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtSnoDvc1_MouseClick);
             // 
             // btnClearDvc1
             // 
-            this.btnClearDvc1.Location = new System.Drawing.Point(219, 75);
-            this.btnClearDvc1.Margin = new System.Windows.Forms.Padding(4);
+            this.btnClearDvc1.Location = new System.Drawing.Point(164, 60);
             this.btnClearDvc1.Name = "btnClearDvc1";
-            this.btnClearDvc1.Size = new System.Drawing.Size(195, 58);
+            this.btnClearDvc1.Size = new System.Drawing.Size(146, 46);
             this.btnClearDvc1.TabIndex = 84;
             this.btnClearDvc1.Text = "Clear";
             this.btnClearDvc1.UseVisualStyleBackColor = true;
@@ -1061,20 +1054,18 @@ namespace Ado
             // lblBaudDvc1
             // 
             this.lblBaudDvc1.AutoSize = true;
-            this.lblBaudDvc1.Location = new System.Drawing.Point(211, 14);
-            this.lblBaudDvc1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBaudDvc1.Location = new System.Drawing.Point(158, 11);
             this.lblBaudDvc1.Name = "lblBaudDvc1";
-            this.lblBaudDvc1.Size = new System.Drawing.Size(61, 15);
+            this.lblBaudDvc1.Size = new System.Drawing.Size(51, 12);
             this.lblBaudDvc1.TabIndex = 83;
             this.lblBaudDvc1.Text = "BaudRate";
             // 
             // lblComDvc1
             // 
             this.lblComDvc1.AutoSize = true;
-            this.lblComDvc1.Location = new System.Drawing.Point(7, 14);
-            this.lblComDvc1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblComDvc1.Location = new System.Drawing.Point(5, 11);
             this.lblComDvc1.Name = "lblComDvc1";
-            this.lblComDvc1.Size = new System.Drawing.Size(39, 15);
+            this.lblComDvc1.Size = new System.Drawing.Size(31, 12);
             this.lblComDvc1.TabIndex = 82;
             this.lblComDvc1.Text = "COM";
             // 
@@ -1082,27 +1073,24 @@ namespace Ado
             // 
             this.cboBaudDvc1.Enabled = false;
             this.cboBaudDvc1.FormattingEnabled = true;
-            this.cboBaudDvc1.Location = new System.Drawing.Point(284, 11);
-            this.cboBaudDvc1.Margin = new System.Windows.Forms.Padding(4);
+            this.cboBaudDvc1.Location = new System.Drawing.Point(213, 9);
             this.cboBaudDvc1.Name = "cboBaudDvc1";
-            this.cboBaudDvc1.Size = new System.Drawing.Size(129, 23);
+            this.cboBaudDvc1.Size = new System.Drawing.Size(98, 20);
             this.cboBaudDvc1.TabIndex = 81;
             // 
             // cboComDvc1
             // 
             this.cboComDvc1.FormattingEnabled = true;
-            this.cboComDvc1.Location = new System.Drawing.Point(80, 11);
-            this.cboComDvc1.Margin = new System.Windows.Forms.Padding(4);
+            this.cboComDvc1.Location = new System.Drawing.Point(60, 9);
             this.cboComDvc1.Name = "cboComDvc1";
-            this.cboComDvc1.Size = new System.Drawing.Size(100, 23);
+            this.cboComDvc1.Size = new System.Drawing.Size(76, 20);
             this.cboComDvc1.TabIndex = 80;
             // 
             // btnTestDvc1
             // 
-            this.btnTestDvc1.Location = new System.Drawing.Point(7, 75);
-            this.btnTestDvc1.Margin = new System.Windows.Forms.Padding(4);
+            this.btnTestDvc1.Location = new System.Drawing.Point(5, 60);
             this.btnTestDvc1.Name = "btnTestDvc1";
-            this.btnTestDvc1.Size = new System.Drawing.Size(195, 58);
+            this.btnTestDvc1.Size = new System.Drawing.Size(146, 46);
             this.btnTestDvc1.TabIndex = 79;
             this.btnTestDvc1.Text = "Test";
             this.btnTestDvc1.UseVisualStyleBackColor = true;
@@ -1126,10 +1114,10 @@ namespace Ado
             this.tabPage_Device2.Controls.Add(this.cboBaudDvc2);
             this.tabPage_Device2.Controls.Add(this.cboComDvc2);
             this.tabPage_Device2.Controls.Add(this.btnTestDvc2);
-            this.tabPage_Device2.Location = new System.Drawing.Point(4, 46);
-            this.tabPage_Device2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage_Device2.Location = new System.Drawing.Point(4, 40);
+            this.tabPage_Device2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tabPage_Device2.Name = "tabPage_Device2";
-            this.tabPage_Device2.Size = new System.Drawing.Size(429, 420);
+            this.tabPage_Device2.Size = new System.Drawing.Size(320, 332);
             this.tabPage_Device2.TabIndex = 3;
             this.tabPage_Device2.Text = "Device2";
             this.tabPage_Device2.UseVisualStyleBackColor = true;
@@ -1137,28 +1125,26 @@ namespace Ado
             // lblTestRmkDvc2
             // 
             this.lblTestRmkDvc2.AutoSize = true;
-            this.lblTestRmkDvc2.Location = new System.Drawing.Point(157, 380);
-            this.lblTestRmkDvc2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTestRmkDvc2.Location = new System.Drawing.Point(118, 304);
             this.lblTestRmkDvc2.Name = "lblTestRmkDvc2";
-            this.lblTestRmkDvc2.Size = new System.Drawing.Size(52, 15);
+            this.lblTestRmkDvc2.Size = new System.Drawing.Size(41, 12);
             this.lblTestRmkDvc2.TabIndex = 109;
             this.lblTestRmkDvc2.Text = "備註欄";
             // 
             // txtTestRmkDvc2
             // 
             this.txtTestRmkDvc2.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtTestRmkDvc2.Location = new System.Drawing.Point(215, 378);
-            this.txtTestRmkDvc2.Margin = new System.Windows.Forms.Padding(4);
+            this.txtTestRmkDvc2.Location = new System.Drawing.Point(161, 302);
             this.txtTestRmkDvc2.Name = "txtTestRmkDvc2";
-            this.txtTestRmkDvc2.Size = new System.Drawing.Size(208, 25);
+            this.txtTestRmkDvc2.Size = new System.Drawing.Size(157, 22);
             this.txtTestRmkDvc2.TabIndex = 108;
             // 
             // btnBurnStopDvc2
             // 
-            this.btnBurnStopDvc2.Location = new System.Drawing.Point(215, 330);
-            this.btnBurnStopDvc2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBurnStopDvc2.Location = new System.Drawing.Point(161, 264);
+            this.btnBurnStopDvc2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBurnStopDvc2.Name = "btnBurnStopDvc2";
-            this.btnBurnStopDvc2.Size = new System.Drawing.Size(208, 40);
+            this.btnBurnStopDvc2.Size = new System.Drawing.Size(156, 32);
             this.btnBurnStopDvc2.TabIndex = 107;
             this.btnBurnStopDvc2.Text = "Burn-in Stop / 中斷燒機";
             this.btnBurnStopDvc2.UseVisualStyleBackColor = true;
@@ -1166,10 +1152,10 @@ namespace Ado
             // 
             // btnBurn1hrDvc2
             // 
-            this.btnBurn1hrDvc2.Location = new System.Drawing.Point(215, 252);
-            this.btnBurn1hrDvc2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBurn1hrDvc2.Location = new System.Drawing.Point(161, 202);
+            this.btnBurn1hrDvc2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBurn1hrDvc2.Name = "btnBurn1hrDvc2";
-            this.btnBurn1hrDvc2.Size = new System.Drawing.Size(208, 40);
+            this.btnBurn1hrDvc2.Size = new System.Drawing.Size(156, 32);
             this.btnBurn1hrDvc2.TabIndex = 106;
             this.btnBurn1hrDvc2.Text = "Burn-in 1hr";
             this.btnBurn1hrDvc2.UseVisualStyleBackColor = true;
@@ -1180,10 +1166,11 @@ namespace Ado
             this.lblBurnRestDvc2.AutoSize = true;
             this.lblBurnRestDvc2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblBurnRestDvc2.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBurnRestDvc2.Location = new System.Drawing.Point(11, 299);
+            this.lblBurnRestDvc2.Location = new System.Drawing.Point(8, 239);
+            this.lblBurnRestDvc2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBurnRestDvc2.Name = "lblBurnRestDvc2";
             this.lblBurnRestDvc2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblBurnRestDvc2.Size = new System.Drawing.Size(132, 28);
+            this.lblBurnRestDvc2.Size = new System.Drawing.Size(103, 23);
             this.lblBurnRestDvc2.TabIndex = 105;
             this.lblBurnRestDvc2.Text = "Burn-in time";
             this.lblBurnRestDvc2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1192,9 +1179,10 @@ namespace Ado
             // 
             this.lblFinalDvc2.AutoSize = true;
             this.lblFinalDvc2.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFinalDvc2.Location = new System.Drawing.Point(11, 270);
+            this.lblFinalDvc2.Location = new System.Drawing.Point(8, 216);
+            this.lblFinalDvc2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFinalDvc2.Name = "lblFinalDvc2";
-            this.lblFinalDvc2.Size = new System.Drawing.Size(116, 26);
+            this.lblFinalDvc2.Size = new System.Drawing.Size(91, 21);
             this.lblFinalDvc2.TabIndex = 104;
             this.lblFinalDvc2.Text = "Final result";
             // 
@@ -1204,10 +1192,11 @@ namespace Ado
             this.lblDevIdDvc2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblDevIdDvc2.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDevIdDvc2.ForeColor = System.Drawing.Color.Blue;
-            this.lblDevIdDvc2.Location = new System.Drawing.Point(11, 345);
+            this.lblDevIdDvc2.Location = new System.Drawing.Point(8, 276);
+            this.lblDevIdDvc2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDevIdDvc2.Name = "lblDevIdDvc2";
             this.lblDevIdDvc2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblDevIdDvc2.Size = new System.Drawing.Size(99, 24);
+            this.lblDevIdDvc2.Size = new System.Drawing.Size(77, 21);
             this.lblDevIdDvc2.TabIndex = 103;
             this.lblDevIdDvc2.Text = "Device_ID";
             this.lblDevIdDvc2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1222,11 +1211,11 @@ namespace Ado
             this.grpStaDvc2.Controls.Add(this.button7);
             this.grpStaDvc2.Controls.Add(this.button8);
             this.grpStaDvc2.Enabled = false;
-            this.grpStaDvc2.Location = new System.Drawing.Point(7, 139);
-            this.grpStaDvc2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grpStaDvc2.Location = new System.Drawing.Point(5, 111);
+            this.grpStaDvc2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.grpStaDvc2.Name = "grpStaDvc2";
-            this.grpStaDvc2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.grpStaDvc2.Size = new System.Drawing.Size(407, 71);
+            this.grpStaDvc2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grpStaDvc2.Size = new System.Drawing.Size(305, 57);
             this.grpStaDvc2.TabIndex = 102;
             this.grpStaDvc2.TabStop = false;
             this.grpStaDvc2.Text = "station 站別";
@@ -1234,10 +1223,10 @@ namespace Ado
             // radSta4Dvc2
             // 
             this.radSta4Dvc2.AutoSize = true;
-            this.radSta4Dvc2.Location = new System.Drawing.Point(13, 44);
-            this.radSta4Dvc2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta4Dvc2.Location = new System.Drawing.Point(10, 35);
+            this.radSta4Dvc2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta4Dvc2.Name = "radSta4Dvc2";
-            this.radSta4Dvc2.Size = new System.Drawing.Size(79, 19);
+            this.radSta4Dvc2.Size = new System.Drawing.Size(64, 16);
             this.radSta4Dvc2.TabIndex = 5;
             this.radSta4Dvc2.Text = "Station 4";
             this.radSta4Dvc2.UseVisualStyleBackColor = true;
@@ -1245,10 +1234,10 @@ namespace Ado
             // radSta3Dvc2
             // 
             this.radSta3Dvc2.AutoSize = true;
-            this.radSta3Dvc2.Location = new System.Drawing.Point(309, 21);
-            this.radSta3Dvc2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta3Dvc2.Location = new System.Drawing.Point(232, 17);
+            this.radSta3Dvc2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta3Dvc2.Name = "radSta3Dvc2";
-            this.radSta3Dvc2.Size = new System.Drawing.Size(79, 19);
+            this.radSta3Dvc2.Size = new System.Drawing.Size(64, 16);
             this.radSta3Dvc2.TabIndex = 4;
             this.radSta3Dvc2.Text = "Station 3";
             this.radSta3Dvc2.UseVisualStyleBackColor = true;
@@ -1256,10 +1245,10 @@ namespace Ado
             // radSta2Dvc2
             // 
             this.radSta2Dvc2.AutoSize = true;
-            this.radSta2Dvc2.Location = new System.Drawing.Point(211, 21);
-            this.radSta2Dvc2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta2Dvc2.Location = new System.Drawing.Point(158, 17);
+            this.radSta2Dvc2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta2Dvc2.Name = "radSta2Dvc2";
-            this.radSta2Dvc2.Size = new System.Drawing.Size(79, 19);
+            this.radSta2Dvc2.Size = new System.Drawing.Size(64, 16);
             this.radSta2Dvc2.TabIndex = 3;
             this.radSta2Dvc2.Text = "Station 2";
             this.radSta2Dvc2.UseVisualStyleBackColor = true;
@@ -1267,10 +1256,10 @@ namespace Ado
             // radSta1Dvc2
             // 
             this.radSta1Dvc2.AutoSize = true;
-            this.radSta1Dvc2.Location = new System.Drawing.Point(112, 21);
-            this.radSta1Dvc2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta1Dvc2.Location = new System.Drawing.Point(84, 17);
+            this.radSta1Dvc2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta1Dvc2.Name = "radSta1Dvc2";
-            this.radSta1Dvc2.Size = new System.Drawing.Size(79, 19);
+            this.radSta1Dvc2.Size = new System.Drawing.Size(64, 16);
             this.radSta1Dvc2.TabIndex = 2;
             this.radSta1Dvc2.Text = "Station 1";
             this.radSta1Dvc2.UseVisualStyleBackColor = true;
@@ -1278,30 +1267,28 @@ namespace Ado
             // radSta0Dvc2
             // 
             this.radSta0Dvc2.AutoSize = true;
-            this.radSta0Dvc2.Location = new System.Drawing.Point(13, 21);
-            this.radSta0Dvc2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta0Dvc2.Location = new System.Drawing.Point(10, 17);
+            this.radSta0Dvc2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta0Dvc2.Name = "radSta0Dvc2";
-            this.radSta0Dvc2.Size = new System.Drawing.Size(79, 19);
+            this.radSta0Dvc2.Size = new System.Drawing.Size(64, 16);
             this.radSta0Dvc2.TabIndex = 0;
             this.radSta0Dvc2.Text = "Station 0";
             this.radSta0Dvc2.UseVisualStyleBackColor = true;
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(212, -64);
-            this.button7.Margin = new System.Windows.Forms.Padding(4);
+            this.button7.Location = new System.Drawing.Point(159, -51);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(195, 58);
+            this.button7.Size = new System.Drawing.Size(146, 46);
             this.button7.TabIndex = 10;
             this.button7.Text = "Clear";
             this.button7.UseVisualStyleBackColor = true;
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(0, -64);
-            this.button8.Margin = new System.Windows.Forms.Padding(4);
+            this.button8.Location = new System.Drawing.Point(0, -51);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(195, 58);
+            this.button8.Size = new System.Drawing.Size(146, 46);
             this.button8.TabIndex = 0;
             this.button8.Text = "OpenPort";
             this.button8.UseVisualStyleBackColor = true;
@@ -1309,10 +1296,9 @@ namespace Ado
             // lblSnoDvc2
             // 
             this.lblSnoDvc2.AutoSize = true;
-            this.lblSnoDvc2.Location = new System.Drawing.Point(7, 45);
-            this.lblSnoDvc2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSnoDvc2.Location = new System.Drawing.Point(5, 36);
             this.lblSnoDvc2.Name = "lblSnoDvc2";
-            this.lblSnoDvc2.Size = new System.Drawing.Size(65, 15);
+            this.lblSnoDvc2.Size = new System.Drawing.Size(51, 12);
             this.lblSnoDvc2.TabIndex = 101;
             this.lblSnoDvc2.Text = "Serial No.";
             // 
@@ -1320,19 +1306,17 @@ namespace Ado
             // 
             this.txtSnoDvc2.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtSnoDvc2.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtSnoDvc2.Location = new System.Drawing.Point(80, 42);
-            this.txtSnoDvc2.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSnoDvc2.Location = new System.Drawing.Point(60, 34);
             this.txtSnoDvc2.Name = "txtSnoDvc2";
-            this.txtSnoDvc2.Size = new System.Drawing.Size(335, 25);
+            this.txtSnoDvc2.Size = new System.Drawing.Size(252, 22);
             this.txtSnoDvc2.TabIndex = 94;
             this.txtSnoDvc2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtSnoDvc2_MouseClick);
             // 
             // btnClearDvc2
             // 
-            this.btnClearDvc2.Location = new System.Drawing.Point(219, 75);
-            this.btnClearDvc2.Margin = new System.Windows.Forms.Padding(4);
+            this.btnClearDvc2.Location = new System.Drawing.Point(164, 60);
             this.btnClearDvc2.Name = "btnClearDvc2";
-            this.btnClearDvc2.Size = new System.Drawing.Size(195, 58);
+            this.btnClearDvc2.Size = new System.Drawing.Size(146, 46);
             this.btnClearDvc2.TabIndex = 100;
             this.btnClearDvc2.Text = "Clear";
             this.btnClearDvc2.UseVisualStyleBackColor = true;
@@ -1340,20 +1324,18 @@ namespace Ado
             // lblBaudDvc2
             // 
             this.lblBaudDvc2.AutoSize = true;
-            this.lblBaudDvc2.Location = new System.Drawing.Point(211, 14);
-            this.lblBaudDvc2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBaudDvc2.Location = new System.Drawing.Point(158, 11);
             this.lblBaudDvc2.Name = "lblBaudDvc2";
-            this.lblBaudDvc2.Size = new System.Drawing.Size(61, 15);
+            this.lblBaudDvc2.Size = new System.Drawing.Size(51, 12);
             this.lblBaudDvc2.TabIndex = 99;
             this.lblBaudDvc2.Text = "BaudRate";
             // 
             // lblComDvc2
             // 
             this.lblComDvc2.AutoSize = true;
-            this.lblComDvc2.Location = new System.Drawing.Point(7, 14);
-            this.lblComDvc2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblComDvc2.Location = new System.Drawing.Point(5, 11);
             this.lblComDvc2.Name = "lblComDvc2";
-            this.lblComDvc2.Size = new System.Drawing.Size(39, 15);
+            this.lblComDvc2.Size = new System.Drawing.Size(31, 12);
             this.lblComDvc2.TabIndex = 98;
             this.lblComDvc2.Text = "COM";
             // 
@@ -1361,27 +1343,24 @@ namespace Ado
             // 
             this.cboBaudDvc2.Enabled = false;
             this.cboBaudDvc2.FormattingEnabled = true;
-            this.cboBaudDvc2.Location = new System.Drawing.Point(284, 11);
-            this.cboBaudDvc2.Margin = new System.Windows.Forms.Padding(4);
+            this.cboBaudDvc2.Location = new System.Drawing.Point(213, 9);
             this.cboBaudDvc2.Name = "cboBaudDvc2";
-            this.cboBaudDvc2.Size = new System.Drawing.Size(129, 23);
+            this.cboBaudDvc2.Size = new System.Drawing.Size(98, 20);
             this.cboBaudDvc2.TabIndex = 97;
             // 
             // cboComDvc2
             // 
             this.cboComDvc2.FormattingEnabled = true;
-            this.cboComDvc2.Location = new System.Drawing.Point(80, 11);
-            this.cboComDvc2.Margin = new System.Windows.Forms.Padding(4);
+            this.cboComDvc2.Location = new System.Drawing.Point(60, 9);
             this.cboComDvc2.Name = "cboComDvc2";
-            this.cboComDvc2.Size = new System.Drawing.Size(100, 23);
+            this.cboComDvc2.Size = new System.Drawing.Size(76, 20);
             this.cboComDvc2.TabIndex = 96;
             // 
             // btnTestDvc2
             // 
-            this.btnTestDvc2.Location = new System.Drawing.Point(7, 75);
-            this.btnTestDvc2.Margin = new System.Windows.Forms.Padding(4);
+            this.btnTestDvc2.Location = new System.Drawing.Point(5, 60);
             this.btnTestDvc2.Name = "btnTestDvc2";
-            this.btnTestDvc2.Size = new System.Drawing.Size(195, 58);
+            this.btnTestDvc2.Size = new System.Drawing.Size(146, 46);
             this.btnTestDvc2.TabIndex = 95;
             this.btnTestDvc2.Text = "Test";
             this.btnTestDvc2.UseVisualStyleBackColor = true;
@@ -1405,10 +1384,10 @@ namespace Ado
             this.tabPage_Device3.Controls.Add(this.cboBaudDvc3);
             this.tabPage_Device3.Controls.Add(this.cboComDvc3);
             this.tabPage_Device3.Controls.Add(this.btnTestDvc3);
-            this.tabPage_Device3.Location = new System.Drawing.Point(4, 46);
-            this.tabPage_Device3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage_Device3.Location = new System.Drawing.Point(4, 40);
+            this.tabPage_Device3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tabPage_Device3.Name = "tabPage_Device3";
-            this.tabPage_Device3.Size = new System.Drawing.Size(429, 420);
+            this.tabPage_Device3.Size = new System.Drawing.Size(320, 332);
             this.tabPage_Device3.TabIndex = 4;
             this.tabPage_Device3.Text = "Device3";
             this.tabPage_Device3.UseVisualStyleBackColor = true;
@@ -1416,28 +1395,26 @@ namespace Ado
             // lblTestRmkDvc3
             // 
             this.lblTestRmkDvc3.AutoSize = true;
-            this.lblTestRmkDvc3.Location = new System.Drawing.Point(156, 380);
-            this.lblTestRmkDvc3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTestRmkDvc3.Location = new System.Drawing.Point(117, 304);
             this.lblTestRmkDvc3.Name = "lblTestRmkDvc3";
-            this.lblTestRmkDvc3.Size = new System.Drawing.Size(52, 15);
+            this.lblTestRmkDvc3.Size = new System.Drawing.Size(41, 12);
             this.lblTestRmkDvc3.TabIndex = 125;
             this.lblTestRmkDvc3.Text = "備註欄";
             // 
             // txtTestRmkDvc3
             // 
             this.txtTestRmkDvc3.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtTestRmkDvc3.Location = new System.Drawing.Point(215, 378);
-            this.txtTestRmkDvc3.Margin = new System.Windows.Forms.Padding(4);
+            this.txtTestRmkDvc3.Location = new System.Drawing.Point(161, 302);
             this.txtTestRmkDvc3.Name = "txtTestRmkDvc3";
-            this.txtTestRmkDvc3.Size = new System.Drawing.Size(208, 25);
+            this.txtTestRmkDvc3.Size = new System.Drawing.Size(157, 22);
             this.txtTestRmkDvc3.TabIndex = 124;
             // 
             // btnBurnStopDvc3
             // 
-            this.btnBurnStopDvc3.Location = new System.Drawing.Point(215, 330);
-            this.btnBurnStopDvc3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBurnStopDvc3.Location = new System.Drawing.Point(161, 264);
+            this.btnBurnStopDvc3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBurnStopDvc3.Name = "btnBurnStopDvc3";
-            this.btnBurnStopDvc3.Size = new System.Drawing.Size(208, 40);
+            this.btnBurnStopDvc3.Size = new System.Drawing.Size(156, 32);
             this.btnBurnStopDvc3.TabIndex = 123;
             this.btnBurnStopDvc3.Text = "Burn-in Stop / 中斷燒機";
             this.btnBurnStopDvc3.UseVisualStyleBackColor = true;
@@ -1445,10 +1422,10 @@ namespace Ado
             // 
             // btnBurn1hrDvc3
             // 
-            this.btnBurn1hrDvc3.Location = new System.Drawing.Point(215, 252);
-            this.btnBurn1hrDvc3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBurn1hrDvc3.Location = new System.Drawing.Point(161, 202);
+            this.btnBurn1hrDvc3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBurn1hrDvc3.Name = "btnBurn1hrDvc3";
-            this.btnBurn1hrDvc3.Size = new System.Drawing.Size(208, 40);
+            this.btnBurn1hrDvc3.Size = new System.Drawing.Size(156, 32);
             this.btnBurn1hrDvc3.TabIndex = 122;
             this.btnBurn1hrDvc3.Text = "Burn-in 1hr";
             this.btnBurn1hrDvc3.UseVisualStyleBackColor = true;
@@ -1459,10 +1436,11 @@ namespace Ado
             this.lblBurnRestDvc3.AutoSize = true;
             this.lblBurnRestDvc3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblBurnRestDvc3.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBurnRestDvc3.Location = new System.Drawing.Point(11, 299);
+            this.lblBurnRestDvc3.Location = new System.Drawing.Point(8, 239);
+            this.lblBurnRestDvc3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBurnRestDvc3.Name = "lblBurnRestDvc3";
             this.lblBurnRestDvc3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblBurnRestDvc3.Size = new System.Drawing.Size(132, 28);
+            this.lblBurnRestDvc3.Size = new System.Drawing.Size(103, 23);
             this.lblBurnRestDvc3.TabIndex = 121;
             this.lblBurnRestDvc3.Text = "Burn-in time";
             this.lblBurnRestDvc3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1471,9 +1449,10 @@ namespace Ado
             // 
             this.lblFinalDvc3.AutoSize = true;
             this.lblFinalDvc3.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFinalDvc3.Location = new System.Drawing.Point(11, 270);
+            this.lblFinalDvc3.Location = new System.Drawing.Point(8, 216);
+            this.lblFinalDvc3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFinalDvc3.Name = "lblFinalDvc3";
-            this.lblFinalDvc3.Size = new System.Drawing.Size(116, 26);
+            this.lblFinalDvc3.Size = new System.Drawing.Size(91, 21);
             this.lblFinalDvc3.TabIndex = 120;
             this.lblFinalDvc3.Text = "Final result";
             // 
@@ -1483,10 +1462,11 @@ namespace Ado
             this.lblDevIdDvc3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblDevIdDvc3.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDevIdDvc3.ForeColor = System.Drawing.Color.Blue;
-            this.lblDevIdDvc3.Location = new System.Drawing.Point(11, 345);
+            this.lblDevIdDvc3.Location = new System.Drawing.Point(8, 276);
+            this.lblDevIdDvc3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDevIdDvc3.Name = "lblDevIdDvc3";
             this.lblDevIdDvc3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblDevIdDvc3.Size = new System.Drawing.Size(99, 24);
+            this.lblDevIdDvc3.Size = new System.Drawing.Size(77, 21);
             this.lblDevIdDvc3.TabIndex = 119;
             this.lblDevIdDvc3.Text = "Device_ID";
             this.lblDevIdDvc3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1501,11 +1481,11 @@ namespace Ado
             this.grpStaDvc3.Controls.Add(this.button9);
             this.grpStaDvc3.Controls.Add(this.button10);
             this.grpStaDvc3.Enabled = false;
-            this.grpStaDvc3.Location = new System.Drawing.Point(7, 139);
-            this.grpStaDvc3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grpStaDvc3.Location = new System.Drawing.Point(5, 111);
+            this.grpStaDvc3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.grpStaDvc3.Name = "grpStaDvc3";
-            this.grpStaDvc3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.grpStaDvc3.Size = new System.Drawing.Size(407, 71);
+            this.grpStaDvc3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grpStaDvc3.Size = new System.Drawing.Size(305, 57);
             this.grpStaDvc3.TabIndex = 118;
             this.grpStaDvc3.TabStop = false;
             this.grpStaDvc3.Text = "station 站別";
@@ -1513,10 +1493,10 @@ namespace Ado
             // radSta4Dvc3
             // 
             this.radSta4Dvc3.AutoSize = true;
-            this.radSta4Dvc3.Location = new System.Drawing.Point(13, 44);
-            this.radSta4Dvc3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta4Dvc3.Location = new System.Drawing.Point(10, 35);
+            this.radSta4Dvc3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta4Dvc3.Name = "radSta4Dvc3";
-            this.radSta4Dvc3.Size = new System.Drawing.Size(79, 19);
+            this.radSta4Dvc3.Size = new System.Drawing.Size(64, 16);
             this.radSta4Dvc3.TabIndex = 5;
             this.radSta4Dvc3.Text = "Station 4";
             this.radSta4Dvc3.UseVisualStyleBackColor = true;
@@ -1524,10 +1504,10 @@ namespace Ado
             // radSta3Dvc3
             // 
             this.radSta3Dvc3.AutoSize = true;
-            this.radSta3Dvc3.Location = new System.Drawing.Point(309, 21);
-            this.radSta3Dvc3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta3Dvc3.Location = new System.Drawing.Point(232, 17);
+            this.radSta3Dvc3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta3Dvc3.Name = "radSta3Dvc3";
-            this.radSta3Dvc3.Size = new System.Drawing.Size(79, 19);
+            this.radSta3Dvc3.Size = new System.Drawing.Size(64, 16);
             this.radSta3Dvc3.TabIndex = 4;
             this.radSta3Dvc3.Text = "Station 3";
             this.radSta3Dvc3.UseVisualStyleBackColor = true;
@@ -1535,10 +1515,10 @@ namespace Ado
             // radSta2Dvc3
             // 
             this.radSta2Dvc3.AutoSize = true;
-            this.radSta2Dvc3.Location = new System.Drawing.Point(211, 21);
-            this.radSta2Dvc3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta2Dvc3.Location = new System.Drawing.Point(158, 17);
+            this.radSta2Dvc3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta2Dvc3.Name = "radSta2Dvc3";
-            this.radSta2Dvc3.Size = new System.Drawing.Size(79, 19);
+            this.radSta2Dvc3.Size = new System.Drawing.Size(64, 16);
             this.radSta2Dvc3.TabIndex = 3;
             this.radSta2Dvc3.Text = "Station 2";
             this.radSta2Dvc3.UseVisualStyleBackColor = true;
@@ -1546,10 +1526,10 @@ namespace Ado
             // radSta1Dvc3
             // 
             this.radSta1Dvc3.AutoSize = true;
-            this.radSta1Dvc3.Location = new System.Drawing.Point(112, 21);
-            this.radSta1Dvc3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta1Dvc3.Location = new System.Drawing.Point(84, 17);
+            this.radSta1Dvc3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta1Dvc3.Name = "radSta1Dvc3";
-            this.radSta1Dvc3.Size = new System.Drawing.Size(79, 19);
+            this.radSta1Dvc3.Size = new System.Drawing.Size(64, 16);
             this.radSta1Dvc3.TabIndex = 2;
             this.radSta1Dvc3.Text = "Station 1";
             this.radSta1Dvc3.UseVisualStyleBackColor = true;
@@ -1557,30 +1537,28 @@ namespace Ado
             // radSta0Dvc3
             // 
             this.radSta0Dvc3.AutoSize = true;
-            this.radSta0Dvc3.Location = new System.Drawing.Point(13, 21);
-            this.radSta0Dvc3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta0Dvc3.Location = new System.Drawing.Point(10, 17);
+            this.radSta0Dvc3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta0Dvc3.Name = "radSta0Dvc3";
-            this.radSta0Dvc3.Size = new System.Drawing.Size(79, 19);
+            this.radSta0Dvc3.Size = new System.Drawing.Size(64, 16);
             this.radSta0Dvc3.TabIndex = 0;
             this.radSta0Dvc3.Text = "Station 0";
             this.radSta0Dvc3.UseVisualStyleBackColor = true;
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(212, -64);
-            this.button9.Margin = new System.Windows.Forms.Padding(4);
+            this.button9.Location = new System.Drawing.Point(159, -51);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(195, 58);
+            this.button9.Size = new System.Drawing.Size(146, 46);
             this.button9.TabIndex = 10;
             this.button9.Text = "Clear";
             this.button9.UseVisualStyleBackColor = true;
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(0, -64);
-            this.button10.Margin = new System.Windows.Forms.Padding(4);
+            this.button10.Location = new System.Drawing.Point(0, -51);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(195, 58);
+            this.button10.Size = new System.Drawing.Size(146, 46);
             this.button10.TabIndex = 0;
             this.button10.Text = "OpenPort";
             this.button10.UseVisualStyleBackColor = true;
@@ -1588,10 +1566,9 @@ namespace Ado
             // lblSnoDvc3
             // 
             this.lblSnoDvc3.AutoSize = true;
-            this.lblSnoDvc3.Location = new System.Drawing.Point(7, 45);
-            this.lblSnoDvc3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSnoDvc3.Location = new System.Drawing.Point(5, 36);
             this.lblSnoDvc3.Name = "lblSnoDvc3";
-            this.lblSnoDvc3.Size = new System.Drawing.Size(65, 15);
+            this.lblSnoDvc3.Size = new System.Drawing.Size(51, 12);
             this.lblSnoDvc3.TabIndex = 117;
             this.lblSnoDvc3.Text = "Serial No.";
             // 
@@ -1599,19 +1576,17 @@ namespace Ado
             // 
             this.txtSnoDvc3.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtSnoDvc3.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtSnoDvc3.Location = new System.Drawing.Point(80, 42);
-            this.txtSnoDvc3.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSnoDvc3.Location = new System.Drawing.Point(60, 34);
             this.txtSnoDvc3.Name = "txtSnoDvc3";
-            this.txtSnoDvc3.Size = new System.Drawing.Size(335, 25);
+            this.txtSnoDvc3.Size = new System.Drawing.Size(252, 22);
             this.txtSnoDvc3.TabIndex = 110;
             this.txtSnoDvc3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtSnoDvc3_MouseClick);
             // 
             // btnClearDvc3
             // 
-            this.btnClearDvc3.Location = new System.Drawing.Point(219, 75);
-            this.btnClearDvc3.Margin = new System.Windows.Forms.Padding(4);
+            this.btnClearDvc3.Location = new System.Drawing.Point(164, 60);
             this.btnClearDvc3.Name = "btnClearDvc3";
-            this.btnClearDvc3.Size = new System.Drawing.Size(195, 58);
+            this.btnClearDvc3.Size = new System.Drawing.Size(146, 46);
             this.btnClearDvc3.TabIndex = 116;
             this.btnClearDvc3.Text = "Clear";
             this.btnClearDvc3.UseVisualStyleBackColor = true;
@@ -1619,20 +1594,18 @@ namespace Ado
             // lblBaudDvc3
             // 
             this.lblBaudDvc3.AutoSize = true;
-            this.lblBaudDvc3.Location = new System.Drawing.Point(211, 14);
-            this.lblBaudDvc3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBaudDvc3.Location = new System.Drawing.Point(158, 11);
             this.lblBaudDvc3.Name = "lblBaudDvc3";
-            this.lblBaudDvc3.Size = new System.Drawing.Size(61, 15);
+            this.lblBaudDvc3.Size = new System.Drawing.Size(51, 12);
             this.lblBaudDvc3.TabIndex = 115;
             this.lblBaudDvc3.Text = "BaudRate";
             // 
             // lblComDvc3
             // 
             this.lblComDvc3.AutoSize = true;
-            this.lblComDvc3.Location = new System.Drawing.Point(7, 14);
-            this.lblComDvc3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblComDvc3.Location = new System.Drawing.Point(5, 11);
             this.lblComDvc3.Name = "lblComDvc3";
-            this.lblComDvc3.Size = new System.Drawing.Size(39, 15);
+            this.lblComDvc3.Size = new System.Drawing.Size(31, 12);
             this.lblComDvc3.TabIndex = 114;
             this.lblComDvc3.Text = "COM";
             // 
@@ -1640,27 +1613,24 @@ namespace Ado
             // 
             this.cboBaudDvc3.Enabled = false;
             this.cboBaudDvc3.FormattingEnabled = true;
-            this.cboBaudDvc3.Location = new System.Drawing.Point(284, 11);
-            this.cboBaudDvc3.Margin = new System.Windows.Forms.Padding(4);
+            this.cboBaudDvc3.Location = new System.Drawing.Point(213, 9);
             this.cboBaudDvc3.Name = "cboBaudDvc3";
-            this.cboBaudDvc3.Size = new System.Drawing.Size(129, 23);
+            this.cboBaudDvc3.Size = new System.Drawing.Size(98, 20);
             this.cboBaudDvc3.TabIndex = 113;
             // 
             // cboComDvc3
             // 
             this.cboComDvc3.FormattingEnabled = true;
-            this.cboComDvc3.Location = new System.Drawing.Point(80, 11);
-            this.cboComDvc3.Margin = new System.Windows.Forms.Padding(4);
+            this.cboComDvc3.Location = new System.Drawing.Point(60, 9);
             this.cboComDvc3.Name = "cboComDvc3";
-            this.cboComDvc3.Size = new System.Drawing.Size(100, 23);
+            this.cboComDvc3.Size = new System.Drawing.Size(76, 20);
             this.cboComDvc3.TabIndex = 112;
             // 
             // btnTestDvc3
             // 
-            this.btnTestDvc3.Location = new System.Drawing.Point(7, 75);
-            this.btnTestDvc3.Margin = new System.Windows.Forms.Padding(4);
+            this.btnTestDvc3.Location = new System.Drawing.Point(5, 60);
             this.btnTestDvc3.Name = "btnTestDvc3";
-            this.btnTestDvc3.Size = new System.Drawing.Size(195, 58);
+            this.btnTestDvc3.Size = new System.Drawing.Size(146, 46);
             this.btnTestDvc3.TabIndex = 111;
             this.btnTestDvc3.Text = "Test";
             this.btnTestDvc3.UseVisualStyleBackColor = true;
@@ -1684,10 +1654,10 @@ namespace Ado
             this.tabPage_Device4.Controls.Add(this.cboBaudDvc4);
             this.tabPage_Device4.Controls.Add(this.cboComDvc4);
             this.tabPage_Device4.Controls.Add(this.btnTestDvc4);
-            this.tabPage_Device4.Location = new System.Drawing.Point(4, 46);
-            this.tabPage_Device4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage_Device4.Location = new System.Drawing.Point(4, 40);
+            this.tabPage_Device4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tabPage_Device4.Name = "tabPage_Device4";
-            this.tabPage_Device4.Size = new System.Drawing.Size(429, 420);
+            this.tabPage_Device4.Size = new System.Drawing.Size(320, 332);
             this.tabPage_Device4.TabIndex = 5;
             this.tabPage_Device4.Text = "Device4";
             this.tabPage_Device4.UseVisualStyleBackColor = true;
@@ -1695,38 +1665,35 @@ namespace Ado
             // lblSnoDvc4
             // 
             this.lblSnoDvc4.AutoSize = true;
-            this.lblSnoDvc4.Location = new System.Drawing.Point(7, 45);
-            this.lblSnoDvc4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSnoDvc4.Location = new System.Drawing.Point(5, 36);
             this.lblSnoDvc4.Name = "lblSnoDvc4";
-            this.lblSnoDvc4.Size = new System.Drawing.Size(65, 15);
+            this.lblSnoDvc4.Size = new System.Drawing.Size(51, 12);
             this.lblSnoDvc4.TabIndex = 125;
             this.lblSnoDvc4.Text = "Serial No.";
             // 
             // lblTestRmkDvc4
             // 
             this.lblTestRmkDvc4.AutoSize = true;
-            this.lblTestRmkDvc4.Location = new System.Drawing.Point(157, 379);
-            this.lblTestRmkDvc4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTestRmkDvc4.Location = new System.Drawing.Point(118, 303);
             this.lblTestRmkDvc4.Name = "lblTestRmkDvc4";
-            this.lblTestRmkDvc4.Size = new System.Drawing.Size(52, 15);
+            this.lblTestRmkDvc4.Size = new System.Drawing.Size(41, 12);
             this.lblTestRmkDvc4.TabIndex = 124;
             this.lblTestRmkDvc4.Text = "備註欄";
             // 
             // txtTestRmkDvc4
             // 
             this.txtTestRmkDvc4.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtTestRmkDvc4.Location = new System.Drawing.Point(215, 378);
-            this.txtTestRmkDvc4.Margin = new System.Windows.Forms.Padding(4);
+            this.txtTestRmkDvc4.Location = new System.Drawing.Point(161, 302);
             this.txtTestRmkDvc4.Name = "txtTestRmkDvc4";
-            this.txtTestRmkDvc4.Size = new System.Drawing.Size(208, 25);
+            this.txtTestRmkDvc4.Size = new System.Drawing.Size(157, 22);
             this.txtTestRmkDvc4.TabIndex = 123;
             // 
             // btnBurnStopDvc4
             // 
-            this.btnBurnStopDvc4.Location = new System.Drawing.Point(215, 330);
-            this.btnBurnStopDvc4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBurnStopDvc4.Location = new System.Drawing.Point(161, 264);
+            this.btnBurnStopDvc4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBurnStopDvc4.Name = "btnBurnStopDvc4";
-            this.btnBurnStopDvc4.Size = new System.Drawing.Size(208, 40);
+            this.btnBurnStopDvc4.Size = new System.Drawing.Size(156, 32);
             this.btnBurnStopDvc4.TabIndex = 122;
             this.btnBurnStopDvc4.Text = "Burn-in Stop / 中斷燒機";
             this.btnBurnStopDvc4.UseVisualStyleBackColor = true;
@@ -1734,10 +1701,10 @@ namespace Ado
             // 
             // btnBurn1hrDvc4
             // 
-            this.btnBurn1hrDvc4.Location = new System.Drawing.Point(215, 252);
-            this.btnBurn1hrDvc4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBurn1hrDvc4.Location = new System.Drawing.Point(161, 202);
+            this.btnBurn1hrDvc4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBurn1hrDvc4.Name = "btnBurn1hrDvc4";
-            this.btnBurn1hrDvc4.Size = new System.Drawing.Size(208, 40);
+            this.btnBurn1hrDvc4.Size = new System.Drawing.Size(156, 32);
             this.btnBurn1hrDvc4.TabIndex = 121;
             this.btnBurn1hrDvc4.Text = "Burn-in 1hr";
             this.btnBurn1hrDvc4.UseVisualStyleBackColor = true;
@@ -1748,10 +1715,11 @@ namespace Ado
             this.lblBurnRestDvc4.AutoSize = true;
             this.lblBurnRestDvc4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblBurnRestDvc4.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBurnRestDvc4.Location = new System.Drawing.Point(11, 299);
+            this.lblBurnRestDvc4.Location = new System.Drawing.Point(8, 239);
+            this.lblBurnRestDvc4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBurnRestDvc4.Name = "lblBurnRestDvc4";
             this.lblBurnRestDvc4.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblBurnRestDvc4.Size = new System.Drawing.Size(132, 28);
+            this.lblBurnRestDvc4.Size = new System.Drawing.Size(103, 23);
             this.lblBurnRestDvc4.TabIndex = 120;
             this.lblBurnRestDvc4.Text = "Burn-in time";
             this.lblBurnRestDvc4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1760,9 +1728,10 @@ namespace Ado
             // 
             this.lblFinalDvc4.AutoSize = true;
             this.lblFinalDvc4.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFinalDvc4.Location = new System.Drawing.Point(11, 270);
+            this.lblFinalDvc4.Location = new System.Drawing.Point(8, 216);
+            this.lblFinalDvc4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFinalDvc4.Name = "lblFinalDvc4";
-            this.lblFinalDvc4.Size = new System.Drawing.Size(116, 26);
+            this.lblFinalDvc4.Size = new System.Drawing.Size(91, 21);
             this.lblFinalDvc4.TabIndex = 119;
             this.lblFinalDvc4.Text = "Final result";
             // 
@@ -1772,10 +1741,11 @@ namespace Ado
             this.lblDevIdDvc4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblDevIdDvc4.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDevIdDvc4.ForeColor = System.Drawing.Color.Blue;
-            this.lblDevIdDvc4.Location = new System.Drawing.Point(11, 345);
+            this.lblDevIdDvc4.Location = new System.Drawing.Point(8, 276);
+            this.lblDevIdDvc4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDevIdDvc4.Name = "lblDevIdDvc4";
             this.lblDevIdDvc4.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblDevIdDvc4.Size = new System.Drawing.Size(99, 24);
+            this.lblDevIdDvc4.Size = new System.Drawing.Size(77, 21);
             this.lblDevIdDvc4.TabIndex = 118;
             this.lblDevIdDvc4.Text = "Device_ID";
             this.lblDevIdDvc4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1790,11 +1760,11 @@ namespace Ado
             this.grpStaDvc4.Controls.Add(this.button15);
             this.grpStaDvc4.Controls.Add(this.button16);
             this.grpStaDvc4.Enabled = false;
-            this.grpStaDvc4.Location = new System.Drawing.Point(7, 139);
-            this.grpStaDvc4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grpStaDvc4.Location = new System.Drawing.Point(5, 111);
+            this.grpStaDvc4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.grpStaDvc4.Name = "grpStaDvc4";
-            this.grpStaDvc4.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.grpStaDvc4.Size = new System.Drawing.Size(407, 71);
+            this.grpStaDvc4.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grpStaDvc4.Size = new System.Drawing.Size(305, 57);
             this.grpStaDvc4.TabIndex = 117;
             this.grpStaDvc4.TabStop = false;
             this.grpStaDvc4.Text = "station 站別";
@@ -1802,10 +1772,10 @@ namespace Ado
             // radSta4Dvc4
             // 
             this.radSta4Dvc4.AutoSize = true;
-            this.radSta4Dvc4.Location = new System.Drawing.Point(13, 44);
-            this.radSta4Dvc4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta4Dvc4.Location = new System.Drawing.Point(10, 35);
+            this.radSta4Dvc4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta4Dvc4.Name = "radSta4Dvc4";
-            this.radSta4Dvc4.Size = new System.Drawing.Size(79, 19);
+            this.radSta4Dvc4.Size = new System.Drawing.Size(64, 16);
             this.radSta4Dvc4.TabIndex = 5;
             this.radSta4Dvc4.Text = "Station 4";
             this.radSta4Dvc4.UseVisualStyleBackColor = true;
@@ -1813,10 +1783,10 @@ namespace Ado
             // radSta3Dvc4
             // 
             this.radSta3Dvc4.AutoSize = true;
-            this.radSta3Dvc4.Location = new System.Drawing.Point(309, 21);
-            this.radSta3Dvc4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta3Dvc4.Location = new System.Drawing.Point(232, 17);
+            this.radSta3Dvc4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta3Dvc4.Name = "radSta3Dvc4";
-            this.radSta3Dvc4.Size = new System.Drawing.Size(79, 19);
+            this.radSta3Dvc4.Size = new System.Drawing.Size(64, 16);
             this.radSta3Dvc4.TabIndex = 4;
             this.radSta3Dvc4.Text = "Station 3";
             this.radSta3Dvc4.UseVisualStyleBackColor = true;
@@ -1824,10 +1794,10 @@ namespace Ado
             // radSta2Dvc4
             // 
             this.radSta2Dvc4.AutoSize = true;
-            this.radSta2Dvc4.Location = new System.Drawing.Point(211, 21);
-            this.radSta2Dvc4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta2Dvc4.Location = new System.Drawing.Point(158, 17);
+            this.radSta2Dvc4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta2Dvc4.Name = "radSta2Dvc4";
-            this.radSta2Dvc4.Size = new System.Drawing.Size(79, 19);
+            this.radSta2Dvc4.Size = new System.Drawing.Size(64, 16);
             this.radSta2Dvc4.TabIndex = 3;
             this.radSta2Dvc4.Text = "Station 2";
             this.radSta2Dvc4.UseVisualStyleBackColor = true;
@@ -1835,10 +1805,10 @@ namespace Ado
             // radSta1Dvc4
             // 
             this.radSta1Dvc4.AutoSize = true;
-            this.radSta1Dvc4.Location = new System.Drawing.Point(112, 21);
-            this.radSta1Dvc4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta1Dvc4.Location = new System.Drawing.Point(84, 17);
+            this.radSta1Dvc4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta1Dvc4.Name = "radSta1Dvc4";
-            this.radSta1Dvc4.Size = new System.Drawing.Size(79, 19);
+            this.radSta1Dvc4.Size = new System.Drawing.Size(64, 16);
             this.radSta1Dvc4.TabIndex = 2;
             this.radSta1Dvc4.Text = "Station 1";
             this.radSta1Dvc4.UseVisualStyleBackColor = true;
@@ -1846,30 +1816,28 @@ namespace Ado
             // radSta0Dvc4
             // 
             this.radSta0Dvc4.AutoSize = true;
-            this.radSta0Dvc4.Location = new System.Drawing.Point(13, 21);
-            this.radSta0Dvc4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta0Dvc4.Location = new System.Drawing.Point(10, 17);
+            this.radSta0Dvc4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta0Dvc4.Name = "radSta0Dvc4";
-            this.radSta0Dvc4.Size = new System.Drawing.Size(79, 19);
+            this.radSta0Dvc4.Size = new System.Drawing.Size(64, 16);
             this.radSta0Dvc4.TabIndex = 0;
             this.radSta0Dvc4.Text = "Station 0";
             this.radSta0Dvc4.UseVisualStyleBackColor = true;
             // 
             // button15
             // 
-            this.button15.Location = new System.Drawing.Point(212, -64);
-            this.button15.Margin = new System.Windows.Forms.Padding(4);
+            this.button15.Location = new System.Drawing.Point(159, -51);
             this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(195, 58);
+            this.button15.Size = new System.Drawing.Size(146, 46);
             this.button15.TabIndex = 10;
             this.button15.Text = "Clear";
             this.button15.UseVisualStyleBackColor = true;
             // 
             // button16
             // 
-            this.button16.Location = new System.Drawing.Point(0, -64);
-            this.button16.Margin = new System.Windows.Forms.Padding(4);
+            this.button16.Location = new System.Drawing.Point(0, -51);
             this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(195, 58);
+            this.button16.Size = new System.Drawing.Size(146, 46);
             this.button16.TabIndex = 0;
             this.button16.Text = "OpenPort";
             this.button16.UseVisualStyleBackColor = true;
@@ -1878,19 +1846,17 @@ namespace Ado
             // 
             this.txtSnoDvc4.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtSnoDvc4.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtSnoDvc4.Location = new System.Drawing.Point(80, 42);
-            this.txtSnoDvc4.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSnoDvc4.Location = new System.Drawing.Point(60, 34);
             this.txtSnoDvc4.Name = "txtSnoDvc4";
-            this.txtSnoDvc4.Size = new System.Drawing.Size(335, 25);
+            this.txtSnoDvc4.Size = new System.Drawing.Size(252, 22);
             this.txtSnoDvc4.TabIndex = 110;
             this.txtSnoDvc4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtSnoDvc4_MouseClick);
             // 
             // btnClearDvc4
             // 
-            this.btnClearDvc4.Location = new System.Drawing.Point(219, 75);
-            this.btnClearDvc4.Margin = new System.Windows.Forms.Padding(4);
+            this.btnClearDvc4.Location = new System.Drawing.Point(164, 60);
             this.btnClearDvc4.Name = "btnClearDvc4";
-            this.btnClearDvc4.Size = new System.Drawing.Size(195, 58);
+            this.btnClearDvc4.Size = new System.Drawing.Size(146, 46);
             this.btnClearDvc4.TabIndex = 116;
             this.btnClearDvc4.Text = "Clear";
             this.btnClearDvc4.UseVisualStyleBackColor = true;
@@ -1898,20 +1864,18 @@ namespace Ado
             // lblBaudDvc4
             // 
             this.lblBaudDvc4.AutoSize = true;
-            this.lblBaudDvc4.Location = new System.Drawing.Point(211, 14);
-            this.lblBaudDvc4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBaudDvc4.Location = new System.Drawing.Point(158, 11);
             this.lblBaudDvc4.Name = "lblBaudDvc4";
-            this.lblBaudDvc4.Size = new System.Drawing.Size(61, 15);
+            this.lblBaudDvc4.Size = new System.Drawing.Size(51, 12);
             this.lblBaudDvc4.TabIndex = 115;
             this.lblBaudDvc4.Text = "BaudRate";
             // 
             // lblComDvc4
             // 
             this.lblComDvc4.AutoSize = true;
-            this.lblComDvc4.Location = new System.Drawing.Point(7, 14);
-            this.lblComDvc4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblComDvc4.Location = new System.Drawing.Point(5, 11);
             this.lblComDvc4.Name = "lblComDvc4";
-            this.lblComDvc4.Size = new System.Drawing.Size(39, 15);
+            this.lblComDvc4.Size = new System.Drawing.Size(31, 12);
             this.lblComDvc4.TabIndex = 114;
             this.lblComDvc4.Text = "COM";
             // 
@@ -1919,27 +1883,24 @@ namespace Ado
             // 
             this.cboBaudDvc4.Enabled = false;
             this.cboBaudDvc4.FormattingEnabled = true;
-            this.cboBaudDvc4.Location = new System.Drawing.Point(284, 11);
-            this.cboBaudDvc4.Margin = new System.Windows.Forms.Padding(4);
+            this.cboBaudDvc4.Location = new System.Drawing.Point(213, 9);
             this.cboBaudDvc4.Name = "cboBaudDvc4";
-            this.cboBaudDvc4.Size = new System.Drawing.Size(129, 23);
+            this.cboBaudDvc4.Size = new System.Drawing.Size(98, 20);
             this.cboBaudDvc4.TabIndex = 113;
             // 
             // cboComDvc4
             // 
             this.cboComDvc4.FormattingEnabled = true;
-            this.cboComDvc4.Location = new System.Drawing.Point(80, 11);
-            this.cboComDvc4.Margin = new System.Windows.Forms.Padding(4);
+            this.cboComDvc4.Location = new System.Drawing.Point(60, 9);
             this.cboComDvc4.Name = "cboComDvc4";
-            this.cboComDvc4.Size = new System.Drawing.Size(100, 23);
+            this.cboComDvc4.Size = new System.Drawing.Size(76, 20);
             this.cboComDvc4.TabIndex = 112;
             // 
             // btnTestDvc4
             // 
-            this.btnTestDvc4.Location = new System.Drawing.Point(7, 75);
-            this.btnTestDvc4.Margin = new System.Windows.Forms.Padding(4);
+            this.btnTestDvc4.Location = new System.Drawing.Point(5, 60);
             this.btnTestDvc4.Name = "btnTestDvc4";
-            this.btnTestDvc4.Size = new System.Drawing.Size(195, 58);
+            this.btnTestDvc4.Size = new System.Drawing.Size(146, 46);
             this.btnTestDvc4.TabIndex = 111;
             this.btnTestDvc4.Text = "Test";
             this.btnTestDvc4.UseVisualStyleBackColor = true;
@@ -1963,10 +1924,10 @@ namespace Ado
             this.tabPage_Device5.Controls.Add(this.cboBaudDvc5);
             this.tabPage_Device5.Controls.Add(this.cboComDvc5);
             this.tabPage_Device5.Controls.Add(this.btnTestDvc5);
-            this.tabPage_Device5.Location = new System.Drawing.Point(4, 46);
-            this.tabPage_Device5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage_Device5.Location = new System.Drawing.Point(4, 40);
+            this.tabPage_Device5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tabPage_Device5.Name = "tabPage_Device5";
-            this.tabPage_Device5.Size = new System.Drawing.Size(429, 420);
+            this.tabPage_Device5.Size = new System.Drawing.Size(320, 332);
             this.tabPage_Device5.TabIndex = 6;
             this.tabPage_Device5.Text = "Device5";
             this.tabPage_Device5.UseVisualStyleBackColor = true;
@@ -1974,38 +1935,35 @@ namespace Ado
             // lblSnoDvc5
             // 
             this.lblSnoDvc5.AutoSize = true;
-            this.lblSnoDvc5.Location = new System.Drawing.Point(7, 45);
-            this.lblSnoDvc5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSnoDvc5.Location = new System.Drawing.Point(5, 36);
             this.lblSnoDvc5.Name = "lblSnoDvc5";
-            this.lblSnoDvc5.Size = new System.Drawing.Size(65, 15);
+            this.lblSnoDvc5.Size = new System.Drawing.Size(51, 12);
             this.lblSnoDvc5.TabIndex = 141;
             this.lblSnoDvc5.Text = "Serial No.";
             // 
             // lblTestRmkDvc5
             // 
             this.lblTestRmkDvc5.AutoSize = true;
-            this.lblTestRmkDvc5.Location = new System.Drawing.Point(157, 379);
-            this.lblTestRmkDvc5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTestRmkDvc5.Location = new System.Drawing.Point(118, 303);
             this.lblTestRmkDvc5.Name = "lblTestRmkDvc5";
-            this.lblTestRmkDvc5.Size = new System.Drawing.Size(52, 15);
+            this.lblTestRmkDvc5.Size = new System.Drawing.Size(41, 12);
             this.lblTestRmkDvc5.TabIndex = 140;
             this.lblTestRmkDvc5.Text = "備註欄";
             // 
             // txtTestRmkDvc5
             // 
             this.txtTestRmkDvc5.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtTestRmkDvc5.Location = new System.Drawing.Point(215, 378);
-            this.txtTestRmkDvc5.Margin = new System.Windows.Forms.Padding(4);
+            this.txtTestRmkDvc5.Location = new System.Drawing.Point(161, 302);
             this.txtTestRmkDvc5.Name = "txtTestRmkDvc5";
-            this.txtTestRmkDvc5.Size = new System.Drawing.Size(208, 25);
+            this.txtTestRmkDvc5.Size = new System.Drawing.Size(157, 22);
             this.txtTestRmkDvc5.TabIndex = 139;
             // 
             // btnBurnStopDvc5
             // 
-            this.btnBurnStopDvc5.Location = new System.Drawing.Point(215, 330);
-            this.btnBurnStopDvc5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBurnStopDvc5.Location = new System.Drawing.Point(161, 264);
+            this.btnBurnStopDvc5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBurnStopDvc5.Name = "btnBurnStopDvc5";
-            this.btnBurnStopDvc5.Size = new System.Drawing.Size(208, 40);
+            this.btnBurnStopDvc5.Size = new System.Drawing.Size(156, 32);
             this.btnBurnStopDvc5.TabIndex = 138;
             this.btnBurnStopDvc5.Text = "Burn-in Stop / 中斷燒機";
             this.btnBurnStopDvc5.UseVisualStyleBackColor = true;
@@ -2013,10 +1971,10 @@ namespace Ado
             // 
             // btnBurn1hrDvc5
             // 
-            this.btnBurn1hrDvc5.Location = new System.Drawing.Point(215, 252);
-            this.btnBurn1hrDvc5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBurn1hrDvc5.Location = new System.Drawing.Point(161, 202);
+            this.btnBurn1hrDvc5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBurn1hrDvc5.Name = "btnBurn1hrDvc5";
-            this.btnBurn1hrDvc5.Size = new System.Drawing.Size(208, 40);
+            this.btnBurn1hrDvc5.Size = new System.Drawing.Size(156, 32);
             this.btnBurn1hrDvc5.TabIndex = 137;
             this.btnBurn1hrDvc5.Text = "Burn-in 1hr";
             this.btnBurn1hrDvc5.UseVisualStyleBackColor = true;
@@ -2027,10 +1985,11 @@ namespace Ado
             this.lblBurnRestDvc5.AutoSize = true;
             this.lblBurnRestDvc5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblBurnRestDvc5.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBurnRestDvc5.Location = new System.Drawing.Point(11, 299);
+            this.lblBurnRestDvc5.Location = new System.Drawing.Point(8, 239);
+            this.lblBurnRestDvc5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBurnRestDvc5.Name = "lblBurnRestDvc5";
             this.lblBurnRestDvc5.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblBurnRestDvc5.Size = new System.Drawing.Size(132, 28);
+            this.lblBurnRestDvc5.Size = new System.Drawing.Size(103, 23);
             this.lblBurnRestDvc5.TabIndex = 136;
             this.lblBurnRestDvc5.Text = "Burn-in time";
             this.lblBurnRestDvc5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -2039,9 +1998,10 @@ namespace Ado
             // 
             this.lblFinalDvc5.AutoSize = true;
             this.lblFinalDvc5.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFinalDvc5.Location = new System.Drawing.Point(11, 266);
+            this.lblFinalDvc5.Location = new System.Drawing.Point(8, 213);
+            this.lblFinalDvc5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFinalDvc5.Name = "lblFinalDvc5";
-            this.lblFinalDvc5.Size = new System.Drawing.Size(116, 26);
+            this.lblFinalDvc5.Size = new System.Drawing.Size(91, 21);
             this.lblFinalDvc5.TabIndex = 135;
             this.lblFinalDvc5.Text = "Final result";
             // 
@@ -2051,10 +2011,11 @@ namespace Ado
             this.lblDevIdDvc5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblDevIdDvc5.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDevIdDvc5.ForeColor = System.Drawing.Color.Blue;
-            this.lblDevIdDvc5.Location = new System.Drawing.Point(11, 345);
+            this.lblDevIdDvc5.Location = new System.Drawing.Point(8, 276);
+            this.lblDevIdDvc5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDevIdDvc5.Name = "lblDevIdDvc5";
             this.lblDevIdDvc5.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblDevIdDvc5.Size = new System.Drawing.Size(99, 24);
+            this.lblDevIdDvc5.Size = new System.Drawing.Size(77, 21);
             this.lblDevIdDvc5.TabIndex = 134;
             this.lblDevIdDvc5.Text = "Device_ID";
             this.lblDevIdDvc5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -2069,11 +2030,11 @@ namespace Ado
             this.grpStaDvc5.Controls.Add(this.button21);
             this.grpStaDvc5.Controls.Add(this.button22);
             this.grpStaDvc5.Enabled = false;
-            this.grpStaDvc5.Location = new System.Drawing.Point(7, 139);
-            this.grpStaDvc5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grpStaDvc5.Location = new System.Drawing.Point(5, 111);
+            this.grpStaDvc5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.grpStaDvc5.Name = "grpStaDvc5";
-            this.grpStaDvc5.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.grpStaDvc5.Size = new System.Drawing.Size(407, 71);
+            this.grpStaDvc5.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grpStaDvc5.Size = new System.Drawing.Size(305, 57);
             this.grpStaDvc5.TabIndex = 133;
             this.grpStaDvc5.TabStop = false;
             this.grpStaDvc5.Text = "station 站別";
@@ -2081,10 +2042,10 @@ namespace Ado
             // radSta4Dvc5
             // 
             this.radSta4Dvc5.AutoSize = true;
-            this.radSta4Dvc5.Location = new System.Drawing.Point(13, 44);
-            this.radSta4Dvc5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta4Dvc5.Location = new System.Drawing.Point(10, 35);
+            this.radSta4Dvc5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta4Dvc5.Name = "radSta4Dvc5";
-            this.radSta4Dvc5.Size = new System.Drawing.Size(79, 19);
+            this.radSta4Dvc5.Size = new System.Drawing.Size(64, 16);
             this.radSta4Dvc5.TabIndex = 5;
             this.radSta4Dvc5.Text = "Station 4";
             this.radSta4Dvc5.UseVisualStyleBackColor = true;
@@ -2092,10 +2053,10 @@ namespace Ado
             // radSta3Dvc5
             // 
             this.radSta3Dvc5.AutoSize = true;
-            this.radSta3Dvc5.Location = new System.Drawing.Point(309, 21);
-            this.radSta3Dvc5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta3Dvc5.Location = new System.Drawing.Point(232, 17);
+            this.radSta3Dvc5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta3Dvc5.Name = "radSta3Dvc5";
-            this.radSta3Dvc5.Size = new System.Drawing.Size(79, 19);
+            this.radSta3Dvc5.Size = new System.Drawing.Size(64, 16);
             this.radSta3Dvc5.TabIndex = 4;
             this.radSta3Dvc5.Text = "Station 3";
             this.radSta3Dvc5.UseVisualStyleBackColor = true;
@@ -2103,10 +2064,10 @@ namespace Ado
             // radSta2Dvc5
             // 
             this.radSta2Dvc5.AutoSize = true;
-            this.radSta2Dvc5.Location = new System.Drawing.Point(211, 21);
-            this.radSta2Dvc5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta2Dvc5.Location = new System.Drawing.Point(158, 17);
+            this.radSta2Dvc5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta2Dvc5.Name = "radSta2Dvc5";
-            this.radSta2Dvc5.Size = new System.Drawing.Size(79, 19);
+            this.radSta2Dvc5.Size = new System.Drawing.Size(64, 16);
             this.radSta2Dvc5.TabIndex = 3;
             this.radSta2Dvc5.Text = "Station 2";
             this.radSta2Dvc5.UseVisualStyleBackColor = true;
@@ -2114,10 +2075,10 @@ namespace Ado
             // radSta1Dvc5
             // 
             this.radSta1Dvc5.AutoSize = true;
-            this.radSta1Dvc5.Location = new System.Drawing.Point(112, 21);
-            this.radSta1Dvc5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta1Dvc5.Location = new System.Drawing.Point(84, 17);
+            this.radSta1Dvc5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta1Dvc5.Name = "radSta1Dvc5";
-            this.radSta1Dvc5.Size = new System.Drawing.Size(79, 19);
+            this.radSta1Dvc5.Size = new System.Drawing.Size(64, 16);
             this.radSta1Dvc5.TabIndex = 2;
             this.radSta1Dvc5.Text = "Station 1";
             this.radSta1Dvc5.UseVisualStyleBackColor = true;
@@ -2125,30 +2086,28 @@ namespace Ado
             // radSta0Dvc5
             // 
             this.radSta0Dvc5.AutoSize = true;
-            this.radSta0Dvc5.Location = new System.Drawing.Point(13, 21);
-            this.radSta0Dvc5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta0Dvc5.Location = new System.Drawing.Point(10, 17);
+            this.radSta0Dvc5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta0Dvc5.Name = "radSta0Dvc5";
-            this.radSta0Dvc5.Size = new System.Drawing.Size(79, 19);
+            this.radSta0Dvc5.Size = new System.Drawing.Size(64, 16);
             this.radSta0Dvc5.TabIndex = 0;
             this.radSta0Dvc5.Text = "Station 0";
             this.radSta0Dvc5.UseVisualStyleBackColor = true;
             // 
             // button21
             // 
-            this.button21.Location = new System.Drawing.Point(212, -64);
-            this.button21.Margin = new System.Windows.Forms.Padding(4);
+            this.button21.Location = new System.Drawing.Point(159, -51);
             this.button21.Name = "button21";
-            this.button21.Size = new System.Drawing.Size(195, 58);
+            this.button21.Size = new System.Drawing.Size(146, 46);
             this.button21.TabIndex = 10;
             this.button21.Text = "Clear";
             this.button21.UseVisualStyleBackColor = true;
             // 
             // button22
             // 
-            this.button22.Location = new System.Drawing.Point(0, -64);
-            this.button22.Margin = new System.Windows.Forms.Padding(4);
+            this.button22.Location = new System.Drawing.Point(0, -51);
             this.button22.Name = "button22";
-            this.button22.Size = new System.Drawing.Size(195, 58);
+            this.button22.Size = new System.Drawing.Size(146, 46);
             this.button22.TabIndex = 0;
             this.button22.Text = "OpenPort";
             this.button22.UseVisualStyleBackColor = true;
@@ -2157,19 +2116,17 @@ namespace Ado
             // 
             this.txtSnoDvc5.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtSnoDvc5.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtSnoDvc5.Location = new System.Drawing.Point(80, 42);
-            this.txtSnoDvc5.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSnoDvc5.Location = new System.Drawing.Point(60, 34);
             this.txtSnoDvc5.Name = "txtSnoDvc5";
-            this.txtSnoDvc5.Size = new System.Drawing.Size(335, 25);
+            this.txtSnoDvc5.Size = new System.Drawing.Size(252, 22);
             this.txtSnoDvc5.TabIndex = 126;
             this.txtSnoDvc5.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtSnoDvc5_MouseClick);
             // 
             // btnClearDvc5
             // 
-            this.btnClearDvc5.Location = new System.Drawing.Point(219, 75);
-            this.btnClearDvc5.Margin = new System.Windows.Forms.Padding(4);
+            this.btnClearDvc5.Location = new System.Drawing.Point(164, 60);
             this.btnClearDvc5.Name = "btnClearDvc5";
-            this.btnClearDvc5.Size = new System.Drawing.Size(195, 58);
+            this.btnClearDvc5.Size = new System.Drawing.Size(146, 46);
             this.btnClearDvc5.TabIndex = 132;
             this.btnClearDvc5.Text = "Clear";
             this.btnClearDvc5.UseVisualStyleBackColor = true;
@@ -2177,20 +2134,18 @@ namespace Ado
             // lblBaudDvc5
             // 
             this.lblBaudDvc5.AutoSize = true;
-            this.lblBaudDvc5.Location = new System.Drawing.Point(211, 14);
-            this.lblBaudDvc5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBaudDvc5.Location = new System.Drawing.Point(158, 11);
             this.lblBaudDvc5.Name = "lblBaudDvc5";
-            this.lblBaudDvc5.Size = new System.Drawing.Size(61, 15);
+            this.lblBaudDvc5.Size = new System.Drawing.Size(51, 12);
             this.lblBaudDvc5.TabIndex = 131;
             this.lblBaudDvc5.Text = "BaudRate";
             // 
             // lblComDvc5
             // 
             this.lblComDvc5.AutoSize = true;
-            this.lblComDvc5.Location = new System.Drawing.Point(7, 14);
-            this.lblComDvc5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblComDvc5.Location = new System.Drawing.Point(5, 11);
             this.lblComDvc5.Name = "lblComDvc5";
-            this.lblComDvc5.Size = new System.Drawing.Size(39, 15);
+            this.lblComDvc5.Size = new System.Drawing.Size(31, 12);
             this.lblComDvc5.TabIndex = 130;
             this.lblComDvc5.Text = "COM";
             // 
@@ -2198,27 +2153,24 @@ namespace Ado
             // 
             this.cboBaudDvc5.Enabled = false;
             this.cboBaudDvc5.FormattingEnabled = true;
-            this.cboBaudDvc5.Location = new System.Drawing.Point(284, 11);
-            this.cboBaudDvc5.Margin = new System.Windows.Forms.Padding(4);
+            this.cboBaudDvc5.Location = new System.Drawing.Point(213, 9);
             this.cboBaudDvc5.Name = "cboBaudDvc5";
-            this.cboBaudDvc5.Size = new System.Drawing.Size(129, 23);
+            this.cboBaudDvc5.Size = new System.Drawing.Size(98, 20);
             this.cboBaudDvc5.TabIndex = 129;
             // 
             // cboComDvc5
             // 
             this.cboComDvc5.FormattingEnabled = true;
-            this.cboComDvc5.Location = new System.Drawing.Point(80, 11);
-            this.cboComDvc5.Margin = new System.Windows.Forms.Padding(4);
+            this.cboComDvc5.Location = new System.Drawing.Point(60, 9);
             this.cboComDvc5.Name = "cboComDvc5";
-            this.cboComDvc5.Size = new System.Drawing.Size(100, 23);
+            this.cboComDvc5.Size = new System.Drawing.Size(76, 20);
             this.cboComDvc5.TabIndex = 128;
             // 
             // btnTestDvc5
             // 
-            this.btnTestDvc5.Location = new System.Drawing.Point(7, 75);
-            this.btnTestDvc5.Margin = new System.Windows.Forms.Padding(4);
+            this.btnTestDvc5.Location = new System.Drawing.Point(5, 60);
             this.btnTestDvc5.Name = "btnTestDvc5";
-            this.btnTestDvc5.Size = new System.Drawing.Size(195, 58);
+            this.btnTestDvc5.Size = new System.Drawing.Size(146, 46);
             this.btnTestDvc5.TabIndex = 127;
             this.btnTestDvc5.Text = "Test";
             this.btnTestDvc5.UseVisualStyleBackColor = true;
@@ -2242,10 +2194,10 @@ namespace Ado
             this.tabPage_Device6.Controls.Add(this.cboBaudDvc6);
             this.tabPage_Device6.Controls.Add(this.cboComDvc6);
             this.tabPage_Device6.Controls.Add(this.btnTestDvc6);
-            this.tabPage_Device6.Location = new System.Drawing.Point(4, 46);
-            this.tabPage_Device6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage_Device6.Location = new System.Drawing.Point(4, 40);
+            this.tabPage_Device6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tabPage_Device6.Name = "tabPage_Device6";
-            this.tabPage_Device6.Size = new System.Drawing.Size(429, 420);
+            this.tabPage_Device6.Size = new System.Drawing.Size(320, 332);
             this.tabPage_Device6.TabIndex = 7;
             this.tabPage_Device6.Text = "Device6";
             this.tabPage_Device6.UseVisualStyleBackColor = true;
@@ -2253,38 +2205,35 @@ namespace Ado
             // lblSnoDvc6
             // 
             this.lblSnoDvc6.AutoSize = true;
-            this.lblSnoDvc6.Location = new System.Drawing.Point(7, 45);
-            this.lblSnoDvc6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSnoDvc6.Location = new System.Drawing.Point(5, 36);
             this.lblSnoDvc6.Name = "lblSnoDvc6";
-            this.lblSnoDvc6.Size = new System.Drawing.Size(65, 15);
+            this.lblSnoDvc6.Size = new System.Drawing.Size(51, 12);
             this.lblSnoDvc6.TabIndex = 141;
             this.lblSnoDvc6.Text = "Serial No.";
             // 
             // lblTestRmkDvc6
             // 
             this.lblTestRmkDvc6.AutoSize = true;
-            this.lblTestRmkDvc6.Location = new System.Drawing.Point(157, 379);
-            this.lblTestRmkDvc6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTestRmkDvc6.Location = new System.Drawing.Point(118, 303);
             this.lblTestRmkDvc6.Name = "lblTestRmkDvc6";
-            this.lblTestRmkDvc6.Size = new System.Drawing.Size(52, 15);
+            this.lblTestRmkDvc6.Size = new System.Drawing.Size(41, 12);
             this.lblTestRmkDvc6.TabIndex = 140;
             this.lblTestRmkDvc6.Text = "備註欄";
             // 
             // txtTestRmkDvc6
             // 
             this.txtTestRmkDvc6.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtTestRmkDvc6.Location = new System.Drawing.Point(215, 378);
-            this.txtTestRmkDvc6.Margin = new System.Windows.Forms.Padding(4);
+            this.txtTestRmkDvc6.Location = new System.Drawing.Point(161, 302);
             this.txtTestRmkDvc6.Name = "txtTestRmkDvc6";
-            this.txtTestRmkDvc6.Size = new System.Drawing.Size(208, 25);
+            this.txtTestRmkDvc6.Size = new System.Drawing.Size(157, 22);
             this.txtTestRmkDvc6.TabIndex = 139;
             // 
             // btnBurnStopDvc6
             // 
-            this.btnBurnStopDvc6.Location = new System.Drawing.Point(215, 330);
-            this.btnBurnStopDvc6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBurnStopDvc6.Location = new System.Drawing.Point(161, 264);
+            this.btnBurnStopDvc6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBurnStopDvc6.Name = "btnBurnStopDvc6";
-            this.btnBurnStopDvc6.Size = new System.Drawing.Size(208, 40);
+            this.btnBurnStopDvc6.Size = new System.Drawing.Size(156, 32);
             this.btnBurnStopDvc6.TabIndex = 138;
             this.btnBurnStopDvc6.Text = "Burn-in Stop / 中斷燒機";
             this.btnBurnStopDvc6.UseVisualStyleBackColor = true;
@@ -2292,10 +2241,10 @@ namespace Ado
             // 
             // btnBurn1hrDvc6
             // 
-            this.btnBurn1hrDvc6.Location = new System.Drawing.Point(215, 252);
-            this.btnBurn1hrDvc6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBurn1hrDvc6.Location = new System.Drawing.Point(161, 202);
+            this.btnBurn1hrDvc6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBurn1hrDvc6.Name = "btnBurn1hrDvc6";
-            this.btnBurn1hrDvc6.Size = new System.Drawing.Size(208, 40);
+            this.btnBurn1hrDvc6.Size = new System.Drawing.Size(156, 32);
             this.btnBurn1hrDvc6.TabIndex = 137;
             this.btnBurn1hrDvc6.Text = "Burn-in 1hr";
             this.btnBurn1hrDvc6.UseVisualStyleBackColor = true;
@@ -2306,10 +2255,11 @@ namespace Ado
             this.lblBurnRestDvc6.AutoSize = true;
             this.lblBurnRestDvc6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblBurnRestDvc6.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBurnRestDvc6.Location = new System.Drawing.Point(11, 299);
+            this.lblBurnRestDvc6.Location = new System.Drawing.Point(8, 239);
+            this.lblBurnRestDvc6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBurnRestDvc6.Name = "lblBurnRestDvc6";
             this.lblBurnRestDvc6.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblBurnRestDvc6.Size = new System.Drawing.Size(132, 28);
+            this.lblBurnRestDvc6.Size = new System.Drawing.Size(103, 23);
             this.lblBurnRestDvc6.TabIndex = 136;
             this.lblBurnRestDvc6.Text = "Burn-in time";
             this.lblBurnRestDvc6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -2318,9 +2268,10 @@ namespace Ado
             // 
             this.lblFinalDvc6.AutoSize = true;
             this.lblFinalDvc6.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFinalDvc6.Location = new System.Drawing.Point(11, 270);
+            this.lblFinalDvc6.Location = new System.Drawing.Point(8, 216);
+            this.lblFinalDvc6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFinalDvc6.Name = "lblFinalDvc6";
-            this.lblFinalDvc6.Size = new System.Drawing.Size(116, 26);
+            this.lblFinalDvc6.Size = new System.Drawing.Size(91, 21);
             this.lblFinalDvc6.TabIndex = 135;
             this.lblFinalDvc6.Text = "Final result";
             // 
@@ -2330,10 +2281,11 @@ namespace Ado
             this.lblDevIdDvc6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblDevIdDvc6.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDevIdDvc6.ForeColor = System.Drawing.Color.Blue;
-            this.lblDevIdDvc6.Location = new System.Drawing.Point(11, 345);
+            this.lblDevIdDvc6.Location = new System.Drawing.Point(8, 276);
+            this.lblDevIdDvc6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDevIdDvc6.Name = "lblDevIdDvc6";
             this.lblDevIdDvc6.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblDevIdDvc6.Size = new System.Drawing.Size(99, 24);
+            this.lblDevIdDvc6.Size = new System.Drawing.Size(77, 21);
             this.lblDevIdDvc6.TabIndex = 134;
             this.lblDevIdDvc6.Text = "Device_ID";
             this.lblDevIdDvc6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -2348,11 +2300,11 @@ namespace Ado
             this.grpStaDvc6.Controls.Add(this.button27);
             this.grpStaDvc6.Controls.Add(this.button28);
             this.grpStaDvc6.Enabled = false;
-            this.grpStaDvc6.Location = new System.Drawing.Point(7, 139);
-            this.grpStaDvc6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grpStaDvc6.Location = new System.Drawing.Point(5, 111);
+            this.grpStaDvc6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.grpStaDvc6.Name = "grpStaDvc6";
-            this.grpStaDvc6.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.grpStaDvc6.Size = new System.Drawing.Size(407, 71);
+            this.grpStaDvc6.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grpStaDvc6.Size = new System.Drawing.Size(305, 57);
             this.grpStaDvc6.TabIndex = 133;
             this.grpStaDvc6.TabStop = false;
             this.grpStaDvc6.Text = "station 站別";
@@ -2360,10 +2312,10 @@ namespace Ado
             // radSta4Dvc6
             // 
             this.radSta4Dvc6.AutoSize = true;
-            this.radSta4Dvc6.Location = new System.Drawing.Point(13, 44);
-            this.radSta4Dvc6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta4Dvc6.Location = new System.Drawing.Point(10, 35);
+            this.radSta4Dvc6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta4Dvc6.Name = "radSta4Dvc6";
-            this.radSta4Dvc6.Size = new System.Drawing.Size(79, 19);
+            this.radSta4Dvc6.Size = new System.Drawing.Size(64, 16);
             this.radSta4Dvc6.TabIndex = 5;
             this.radSta4Dvc6.Text = "Station 4";
             this.radSta4Dvc6.UseVisualStyleBackColor = true;
@@ -2371,10 +2323,10 @@ namespace Ado
             // radSta3Dvc6
             // 
             this.radSta3Dvc6.AutoSize = true;
-            this.radSta3Dvc6.Location = new System.Drawing.Point(309, 21);
-            this.radSta3Dvc6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta3Dvc6.Location = new System.Drawing.Point(232, 17);
+            this.radSta3Dvc6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta3Dvc6.Name = "radSta3Dvc6";
-            this.radSta3Dvc6.Size = new System.Drawing.Size(79, 19);
+            this.radSta3Dvc6.Size = new System.Drawing.Size(64, 16);
             this.radSta3Dvc6.TabIndex = 4;
             this.radSta3Dvc6.Text = "Station 3";
             this.radSta3Dvc6.UseVisualStyleBackColor = true;
@@ -2382,10 +2334,10 @@ namespace Ado
             // radSta2Dvc6
             // 
             this.radSta2Dvc6.AutoSize = true;
-            this.radSta2Dvc6.Location = new System.Drawing.Point(211, 21);
-            this.radSta2Dvc6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta2Dvc6.Location = new System.Drawing.Point(158, 17);
+            this.radSta2Dvc6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta2Dvc6.Name = "radSta2Dvc6";
-            this.radSta2Dvc6.Size = new System.Drawing.Size(79, 19);
+            this.radSta2Dvc6.Size = new System.Drawing.Size(64, 16);
             this.radSta2Dvc6.TabIndex = 3;
             this.radSta2Dvc6.Text = "Station 2";
             this.radSta2Dvc6.UseVisualStyleBackColor = true;
@@ -2393,10 +2345,10 @@ namespace Ado
             // radSta1Dvc6
             // 
             this.radSta1Dvc6.AutoSize = true;
-            this.radSta1Dvc6.Location = new System.Drawing.Point(112, 21);
-            this.radSta1Dvc6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta1Dvc6.Location = new System.Drawing.Point(84, 17);
+            this.radSta1Dvc6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta1Dvc6.Name = "radSta1Dvc6";
-            this.radSta1Dvc6.Size = new System.Drawing.Size(79, 19);
+            this.radSta1Dvc6.Size = new System.Drawing.Size(64, 16);
             this.radSta1Dvc6.TabIndex = 2;
             this.radSta1Dvc6.Text = "Station 1";
             this.radSta1Dvc6.UseVisualStyleBackColor = true;
@@ -2404,30 +2356,28 @@ namespace Ado
             // radSta0Dvc6
             // 
             this.radSta0Dvc6.AutoSize = true;
-            this.radSta0Dvc6.Location = new System.Drawing.Point(13, 21);
-            this.radSta0Dvc6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta0Dvc6.Location = new System.Drawing.Point(10, 17);
+            this.radSta0Dvc6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta0Dvc6.Name = "radSta0Dvc6";
-            this.radSta0Dvc6.Size = new System.Drawing.Size(79, 19);
+            this.radSta0Dvc6.Size = new System.Drawing.Size(64, 16);
             this.radSta0Dvc6.TabIndex = 0;
             this.radSta0Dvc6.Text = "Station 0";
             this.radSta0Dvc6.UseVisualStyleBackColor = true;
             // 
             // button27
             // 
-            this.button27.Location = new System.Drawing.Point(212, -64);
-            this.button27.Margin = new System.Windows.Forms.Padding(4);
+            this.button27.Location = new System.Drawing.Point(159, -51);
             this.button27.Name = "button27";
-            this.button27.Size = new System.Drawing.Size(195, 58);
+            this.button27.Size = new System.Drawing.Size(146, 46);
             this.button27.TabIndex = 10;
             this.button27.Text = "Clear";
             this.button27.UseVisualStyleBackColor = true;
             // 
             // button28
             // 
-            this.button28.Location = new System.Drawing.Point(0, -64);
-            this.button28.Margin = new System.Windows.Forms.Padding(4);
+            this.button28.Location = new System.Drawing.Point(0, -51);
             this.button28.Name = "button28";
-            this.button28.Size = new System.Drawing.Size(195, 58);
+            this.button28.Size = new System.Drawing.Size(146, 46);
             this.button28.TabIndex = 0;
             this.button28.Text = "OpenPort";
             this.button28.UseVisualStyleBackColor = true;
@@ -2436,19 +2386,17 @@ namespace Ado
             // 
             this.txtSnoDvc6.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtSnoDvc6.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtSnoDvc6.Location = new System.Drawing.Point(80, 42);
-            this.txtSnoDvc6.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSnoDvc6.Location = new System.Drawing.Point(60, 34);
             this.txtSnoDvc6.Name = "txtSnoDvc6";
-            this.txtSnoDvc6.Size = new System.Drawing.Size(335, 25);
+            this.txtSnoDvc6.Size = new System.Drawing.Size(252, 22);
             this.txtSnoDvc6.TabIndex = 126;
             this.txtSnoDvc6.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtSnoDvc6_MouseClick);
             // 
             // btnClearDvc6
             // 
-            this.btnClearDvc6.Location = new System.Drawing.Point(219, 75);
-            this.btnClearDvc6.Margin = new System.Windows.Forms.Padding(4);
+            this.btnClearDvc6.Location = new System.Drawing.Point(164, 60);
             this.btnClearDvc6.Name = "btnClearDvc6";
-            this.btnClearDvc6.Size = new System.Drawing.Size(195, 58);
+            this.btnClearDvc6.Size = new System.Drawing.Size(146, 46);
             this.btnClearDvc6.TabIndex = 132;
             this.btnClearDvc6.Text = "Clear";
             this.btnClearDvc6.UseVisualStyleBackColor = true;
@@ -2456,20 +2404,18 @@ namespace Ado
             // lblBaudDvc6
             // 
             this.lblBaudDvc6.AutoSize = true;
-            this.lblBaudDvc6.Location = new System.Drawing.Point(211, 14);
-            this.lblBaudDvc6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBaudDvc6.Location = new System.Drawing.Point(158, 11);
             this.lblBaudDvc6.Name = "lblBaudDvc6";
-            this.lblBaudDvc6.Size = new System.Drawing.Size(61, 15);
+            this.lblBaudDvc6.Size = new System.Drawing.Size(51, 12);
             this.lblBaudDvc6.TabIndex = 131;
             this.lblBaudDvc6.Text = "BaudRate";
             // 
             // lblComDvc6
             // 
             this.lblComDvc6.AutoSize = true;
-            this.lblComDvc6.Location = new System.Drawing.Point(7, 14);
-            this.lblComDvc6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblComDvc6.Location = new System.Drawing.Point(5, 11);
             this.lblComDvc6.Name = "lblComDvc6";
-            this.lblComDvc6.Size = new System.Drawing.Size(39, 15);
+            this.lblComDvc6.Size = new System.Drawing.Size(31, 12);
             this.lblComDvc6.TabIndex = 130;
             this.lblComDvc6.Text = "COM";
             // 
@@ -2477,27 +2423,24 @@ namespace Ado
             // 
             this.cboBaudDvc6.Enabled = false;
             this.cboBaudDvc6.FormattingEnabled = true;
-            this.cboBaudDvc6.Location = new System.Drawing.Point(284, 11);
-            this.cboBaudDvc6.Margin = new System.Windows.Forms.Padding(4);
+            this.cboBaudDvc6.Location = new System.Drawing.Point(213, 9);
             this.cboBaudDvc6.Name = "cboBaudDvc6";
-            this.cboBaudDvc6.Size = new System.Drawing.Size(129, 23);
+            this.cboBaudDvc6.Size = new System.Drawing.Size(98, 20);
             this.cboBaudDvc6.TabIndex = 129;
             // 
             // cboComDvc6
             // 
             this.cboComDvc6.FormattingEnabled = true;
-            this.cboComDvc6.Location = new System.Drawing.Point(80, 11);
-            this.cboComDvc6.Margin = new System.Windows.Forms.Padding(4);
+            this.cboComDvc6.Location = new System.Drawing.Point(60, 9);
             this.cboComDvc6.Name = "cboComDvc6";
-            this.cboComDvc6.Size = new System.Drawing.Size(100, 23);
+            this.cboComDvc6.Size = new System.Drawing.Size(76, 20);
             this.cboComDvc6.TabIndex = 128;
             // 
             // btnTestDvc6
             // 
-            this.btnTestDvc6.Location = new System.Drawing.Point(7, 75);
-            this.btnTestDvc6.Margin = new System.Windows.Forms.Padding(4);
+            this.btnTestDvc6.Location = new System.Drawing.Point(5, 60);
             this.btnTestDvc6.Name = "btnTestDvc6";
-            this.btnTestDvc6.Size = new System.Drawing.Size(195, 58);
+            this.btnTestDvc6.Size = new System.Drawing.Size(146, 46);
             this.btnTestDvc6.TabIndex = 127;
             this.btnTestDvc6.Text = "Test";
             this.btnTestDvc6.UseVisualStyleBackColor = true;
@@ -2521,10 +2464,10 @@ namespace Ado
             this.tabPage_Device7.Controls.Add(this.cboBaudDvc7);
             this.tabPage_Device7.Controls.Add(this.cboComDvc7);
             this.tabPage_Device7.Controls.Add(this.btnTestDvc7);
-            this.tabPage_Device7.Location = new System.Drawing.Point(4, 46);
-            this.tabPage_Device7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage_Device7.Location = new System.Drawing.Point(4, 40);
+            this.tabPage_Device7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tabPage_Device7.Name = "tabPage_Device7";
-            this.tabPage_Device7.Size = new System.Drawing.Size(429, 420);
+            this.tabPage_Device7.Size = new System.Drawing.Size(320, 332);
             this.tabPage_Device7.TabIndex = 8;
             this.tabPage_Device7.Text = "Device7";
             this.tabPage_Device7.UseVisualStyleBackColor = true;
@@ -2532,38 +2475,35 @@ namespace Ado
             // lblSnoDvc7
             // 
             this.lblSnoDvc7.AutoSize = true;
-            this.lblSnoDvc7.Location = new System.Drawing.Point(7, 45);
-            this.lblSnoDvc7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSnoDvc7.Location = new System.Drawing.Point(5, 36);
             this.lblSnoDvc7.Name = "lblSnoDvc7";
-            this.lblSnoDvc7.Size = new System.Drawing.Size(65, 15);
+            this.lblSnoDvc7.Size = new System.Drawing.Size(51, 12);
             this.lblSnoDvc7.TabIndex = 141;
             this.lblSnoDvc7.Text = "Serial No.";
             // 
             // lblTestRmkDvc7
             // 
             this.lblTestRmkDvc7.AutoSize = true;
-            this.lblTestRmkDvc7.Location = new System.Drawing.Point(157, 379);
-            this.lblTestRmkDvc7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTestRmkDvc7.Location = new System.Drawing.Point(118, 303);
             this.lblTestRmkDvc7.Name = "lblTestRmkDvc7";
-            this.lblTestRmkDvc7.Size = new System.Drawing.Size(52, 15);
+            this.lblTestRmkDvc7.Size = new System.Drawing.Size(41, 12);
             this.lblTestRmkDvc7.TabIndex = 140;
             this.lblTestRmkDvc7.Text = "備註欄";
             // 
             // txtTestRmkDvc7
             // 
             this.txtTestRmkDvc7.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtTestRmkDvc7.Location = new System.Drawing.Point(215, 378);
-            this.txtTestRmkDvc7.Margin = new System.Windows.Forms.Padding(4);
+            this.txtTestRmkDvc7.Location = new System.Drawing.Point(161, 302);
             this.txtTestRmkDvc7.Name = "txtTestRmkDvc7";
-            this.txtTestRmkDvc7.Size = new System.Drawing.Size(208, 25);
+            this.txtTestRmkDvc7.Size = new System.Drawing.Size(157, 22);
             this.txtTestRmkDvc7.TabIndex = 139;
             // 
             // btnBurnStopDvc7
             // 
-            this.btnBurnStopDvc7.Location = new System.Drawing.Point(215, 330);
-            this.btnBurnStopDvc7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBurnStopDvc7.Location = new System.Drawing.Point(161, 264);
+            this.btnBurnStopDvc7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBurnStopDvc7.Name = "btnBurnStopDvc7";
-            this.btnBurnStopDvc7.Size = new System.Drawing.Size(208, 40);
+            this.btnBurnStopDvc7.Size = new System.Drawing.Size(156, 32);
             this.btnBurnStopDvc7.TabIndex = 138;
             this.btnBurnStopDvc7.Text = "Burn-in Stop / 中斷燒機";
             this.btnBurnStopDvc7.UseVisualStyleBackColor = true;
@@ -2571,10 +2511,10 @@ namespace Ado
             // 
             // btnBurn1hrDvc7
             // 
-            this.btnBurn1hrDvc7.Location = new System.Drawing.Point(215, 252);
-            this.btnBurn1hrDvc7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBurn1hrDvc7.Location = new System.Drawing.Point(161, 202);
+            this.btnBurn1hrDvc7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBurn1hrDvc7.Name = "btnBurn1hrDvc7";
-            this.btnBurn1hrDvc7.Size = new System.Drawing.Size(208, 40);
+            this.btnBurn1hrDvc7.Size = new System.Drawing.Size(156, 32);
             this.btnBurn1hrDvc7.TabIndex = 137;
             this.btnBurn1hrDvc7.Text = "Burn-in 1hr";
             this.btnBurn1hrDvc7.UseVisualStyleBackColor = true;
@@ -2585,10 +2525,11 @@ namespace Ado
             this.lblBurnRestDvc7.AutoSize = true;
             this.lblBurnRestDvc7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblBurnRestDvc7.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBurnRestDvc7.Location = new System.Drawing.Point(11, 299);
+            this.lblBurnRestDvc7.Location = new System.Drawing.Point(8, 239);
+            this.lblBurnRestDvc7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBurnRestDvc7.Name = "lblBurnRestDvc7";
             this.lblBurnRestDvc7.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblBurnRestDvc7.Size = new System.Drawing.Size(132, 28);
+            this.lblBurnRestDvc7.Size = new System.Drawing.Size(103, 23);
             this.lblBurnRestDvc7.TabIndex = 136;
             this.lblBurnRestDvc7.Text = "Burn-in time";
             this.lblBurnRestDvc7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -2597,9 +2538,10 @@ namespace Ado
             // 
             this.lblFinalDvc7.AutoSize = true;
             this.lblFinalDvc7.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFinalDvc7.Location = new System.Drawing.Point(11, 270);
+            this.lblFinalDvc7.Location = new System.Drawing.Point(8, 216);
+            this.lblFinalDvc7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFinalDvc7.Name = "lblFinalDvc7";
-            this.lblFinalDvc7.Size = new System.Drawing.Size(116, 26);
+            this.lblFinalDvc7.Size = new System.Drawing.Size(91, 21);
             this.lblFinalDvc7.TabIndex = 135;
             this.lblFinalDvc7.Text = "Final result";
             // 
@@ -2609,10 +2551,11 @@ namespace Ado
             this.lblDevIdDvc7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblDevIdDvc7.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDevIdDvc7.ForeColor = System.Drawing.Color.Blue;
-            this.lblDevIdDvc7.Location = new System.Drawing.Point(11, 345);
+            this.lblDevIdDvc7.Location = new System.Drawing.Point(8, 276);
+            this.lblDevIdDvc7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDevIdDvc7.Name = "lblDevIdDvc7";
             this.lblDevIdDvc7.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblDevIdDvc7.Size = new System.Drawing.Size(99, 24);
+            this.lblDevIdDvc7.Size = new System.Drawing.Size(77, 21);
             this.lblDevIdDvc7.TabIndex = 134;
             this.lblDevIdDvc7.Text = "Device_ID";
             this.lblDevIdDvc7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -2627,11 +2570,11 @@ namespace Ado
             this.grpStaDvc7.Controls.Add(this.button33);
             this.grpStaDvc7.Controls.Add(this.button34);
             this.grpStaDvc7.Enabled = false;
-            this.grpStaDvc7.Location = new System.Drawing.Point(7, 139);
-            this.grpStaDvc7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grpStaDvc7.Location = new System.Drawing.Point(5, 111);
+            this.grpStaDvc7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.grpStaDvc7.Name = "grpStaDvc7";
-            this.grpStaDvc7.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.grpStaDvc7.Size = new System.Drawing.Size(407, 71);
+            this.grpStaDvc7.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grpStaDvc7.Size = new System.Drawing.Size(305, 57);
             this.grpStaDvc7.TabIndex = 133;
             this.grpStaDvc7.TabStop = false;
             this.grpStaDvc7.Text = "station 站別";
@@ -2639,10 +2582,10 @@ namespace Ado
             // radSta4Dvc7
             // 
             this.radSta4Dvc7.AutoSize = true;
-            this.radSta4Dvc7.Location = new System.Drawing.Point(13, 44);
-            this.radSta4Dvc7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta4Dvc7.Location = new System.Drawing.Point(10, 35);
+            this.radSta4Dvc7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta4Dvc7.Name = "radSta4Dvc7";
-            this.radSta4Dvc7.Size = new System.Drawing.Size(79, 19);
+            this.radSta4Dvc7.Size = new System.Drawing.Size(64, 16);
             this.radSta4Dvc7.TabIndex = 5;
             this.radSta4Dvc7.Text = "Station 4";
             this.radSta4Dvc7.UseVisualStyleBackColor = true;
@@ -2650,10 +2593,10 @@ namespace Ado
             // radSta3Dvc7
             // 
             this.radSta3Dvc7.AutoSize = true;
-            this.radSta3Dvc7.Location = new System.Drawing.Point(309, 21);
-            this.radSta3Dvc7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta3Dvc7.Location = new System.Drawing.Point(232, 17);
+            this.radSta3Dvc7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta3Dvc7.Name = "radSta3Dvc7";
-            this.radSta3Dvc7.Size = new System.Drawing.Size(79, 19);
+            this.radSta3Dvc7.Size = new System.Drawing.Size(64, 16);
             this.radSta3Dvc7.TabIndex = 4;
             this.radSta3Dvc7.Text = "Station 3";
             this.radSta3Dvc7.UseVisualStyleBackColor = true;
@@ -2661,10 +2604,10 @@ namespace Ado
             // radSta2Dvc7
             // 
             this.radSta2Dvc7.AutoSize = true;
-            this.radSta2Dvc7.Location = new System.Drawing.Point(211, 21);
-            this.radSta2Dvc7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta2Dvc7.Location = new System.Drawing.Point(158, 17);
+            this.radSta2Dvc7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta2Dvc7.Name = "radSta2Dvc7";
-            this.radSta2Dvc7.Size = new System.Drawing.Size(79, 19);
+            this.radSta2Dvc7.Size = new System.Drawing.Size(64, 16);
             this.radSta2Dvc7.TabIndex = 3;
             this.radSta2Dvc7.Text = "Station 2";
             this.radSta2Dvc7.UseVisualStyleBackColor = true;
@@ -2672,10 +2615,10 @@ namespace Ado
             // radSta1Dvc7
             // 
             this.radSta1Dvc7.AutoSize = true;
-            this.radSta1Dvc7.Location = new System.Drawing.Point(112, 21);
-            this.radSta1Dvc7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta1Dvc7.Location = new System.Drawing.Point(84, 17);
+            this.radSta1Dvc7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta1Dvc7.Name = "radSta1Dvc7";
-            this.radSta1Dvc7.Size = new System.Drawing.Size(79, 19);
+            this.radSta1Dvc7.Size = new System.Drawing.Size(64, 16);
             this.radSta1Dvc7.TabIndex = 2;
             this.radSta1Dvc7.Text = "Station 1";
             this.radSta1Dvc7.UseVisualStyleBackColor = true;
@@ -2683,30 +2626,28 @@ namespace Ado
             // radSta0Dvc7
             // 
             this.radSta0Dvc7.AutoSize = true;
-            this.radSta0Dvc7.Location = new System.Drawing.Point(13, 21);
-            this.radSta0Dvc7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta0Dvc7.Location = new System.Drawing.Point(10, 17);
+            this.radSta0Dvc7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta0Dvc7.Name = "radSta0Dvc7";
-            this.radSta0Dvc7.Size = new System.Drawing.Size(79, 19);
+            this.radSta0Dvc7.Size = new System.Drawing.Size(64, 16);
             this.radSta0Dvc7.TabIndex = 0;
             this.radSta0Dvc7.Text = "Station 0";
             this.radSta0Dvc7.UseVisualStyleBackColor = true;
             // 
             // button33
             // 
-            this.button33.Location = new System.Drawing.Point(212, -64);
-            this.button33.Margin = new System.Windows.Forms.Padding(4);
+            this.button33.Location = new System.Drawing.Point(159, -51);
             this.button33.Name = "button33";
-            this.button33.Size = new System.Drawing.Size(195, 58);
+            this.button33.Size = new System.Drawing.Size(146, 46);
             this.button33.TabIndex = 10;
             this.button33.Text = "Clear";
             this.button33.UseVisualStyleBackColor = true;
             // 
             // button34
             // 
-            this.button34.Location = new System.Drawing.Point(0, -64);
-            this.button34.Margin = new System.Windows.Forms.Padding(4);
+            this.button34.Location = new System.Drawing.Point(0, -51);
             this.button34.Name = "button34";
-            this.button34.Size = new System.Drawing.Size(195, 58);
+            this.button34.Size = new System.Drawing.Size(146, 46);
             this.button34.TabIndex = 0;
             this.button34.Text = "OpenPort";
             this.button34.UseVisualStyleBackColor = true;
@@ -2715,19 +2656,17 @@ namespace Ado
             // 
             this.txtSnoDvc7.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtSnoDvc7.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtSnoDvc7.Location = new System.Drawing.Point(80, 42);
-            this.txtSnoDvc7.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSnoDvc7.Location = new System.Drawing.Point(60, 34);
             this.txtSnoDvc7.Name = "txtSnoDvc7";
-            this.txtSnoDvc7.Size = new System.Drawing.Size(335, 25);
+            this.txtSnoDvc7.Size = new System.Drawing.Size(252, 22);
             this.txtSnoDvc7.TabIndex = 126;
             this.txtSnoDvc7.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtSnoDvc7_MouseClick);
             // 
             // btnClearDvc7
             // 
-            this.btnClearDvc7.Location = new System.Drawing.Point(219, 75);
-            this.btnClearDvc7.Margin = new System.Windows.Forms.Padding(4);
+            this.btnClearDvc7.Location = new System.Drawing.Point(164, 60);
             this.btnClearDvc7.Name = "btnClearDvc7";
-            this.btnClearDvc7.Size = new System.Drawing.Size(195, 58);
+            this.btnClearDvc7.Size = new System.Drawing.Size(146, 46);
             this.btnClearDvc7.TabIndex = 132;
             this.btnClearDvc7.Text = "Clear";
             this.btnClearDvc7.UseVisualStyleBackColor = true;
@@ -2735,20 +2674,18 @@ namespace Ado
             // lblBaudDvc7
             // 
             this.lblBaudDvc7.AutoSize = true;
-            this.lblBaudDvc7.Location = new System.Drawing.Point(211, 14);
-            this.lblBaudDvc7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBaudDvc7.Location = new System.Drawing.Point(158, 11);
             this.lblBaudDvc7.Name = "lblBaudDvc7";
-            this.lblBaudDvc7.Size = new System.Drawing.Size(61, 15);
+            this.lblBaudDvc7.Size = new System.Drawing.Size(51, 12);
             this.lblBaudDvc7.TabIndex = 131;
             this.lblBaudDvc7.Text = "BaudRate";
             // 
             // lblComDvc7
             // 
             this.lblComDvc7.AutoSize = true;
-            this.lblComDvc7.Location = new System.Drawing.Point(7, 14);
-            this.lblComDvc7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblComDvc7.Location = new System.Drawing.Point(5, 11);
             this.lblComDvc7.Name = "lblComDvc7";
-            this.lblComDvc7.Size = new System.Drawing.Size(39, 15);
+            this.lblComDvc7.Size = new System.Drawing.Size(31, 12);
             this.lblComDvc7.TabIndex = 130;
             this.lblComDvc7.Text = "COM";
             // 
@@ -2756,27 +2693,24 @@ namespace Ado
             // 
             this.cboBaudDvc7.Enabled = false;
             this.cboBaudDvc7.FormattingEnabled = true;
-            this.cboBaudDvc7.Location = new System.Drawing.Point(284, 11);
-            this.cboBaudDvc7.Margin = new System.Windows.Forms.Padding(4);
+            this.cboBaudDvc7.Location = new System.Drawing.Point(213, 9);
             this.cboBaudDvc7.Name = "cboBaudDvc7";
-            this.cboBaudDvc7.Size = new System.Drawing.Size(129, 23);
+            this.cboBaudDvc7.Size = new System.Drawing.Size(98, 20);
             this.cboBaudDvc7.TabIndex = 129;
             // 
             // cboComDvc7
             // 
             this.cboComDvc7.FormattingEnabled = true;
-            this.cboComDvc7.Location = new System.Drawing.Point(80, 11);
-            this.cboComDvc7.Margin = new System.Windows.Forms.Padding(4);
+            this.cboComDvc7.Location = new System.Drawing.Point(60, 9);
             this.cboComDvc7.Name = "cboComDvc7";
-            this.cboComDvc7.Size = new System.Drawing.Size(100, 23);
+            this.cboComDvc7.Size = new System.Drawing.Size(76, 20);
             this.cboComDvc7.TabIndex = 128;
             // 
             // btnTestDvc7
             // 
-            this.btnTestDvc7.Location = new System.Drawing.Point(7, 75);
-            this.btnTestDvc7.Margin = new System.Windows.Forms.Padding(4);
+            this.btnTestDvc7.Location = new System.Drawing.Point(5, 60);
             this.btnTestDvc7.Name = "btnTestDvc7";
-            this.btnTestDvc7.Size = new System.Drawing.Size(195, 58);
+            this.btnTestDvc7.Size = new System.Drawing.Size(146, 46);
             this.btnTestDvc7.TabIndex = 127;
             this.btnTestDvc7.Text = "Test";
             this.btnTestDvc7.UseVisualStyleBackColor = true;
@@ -2800,10 +2734,10 @@ namespace Ado
             this.tabPage_Device8.Controls.Add(this.cboBaudDvc8);
             this.tabPage_Device8.Controls.Add(this.cboComDvc8);
             this.tabPage_Device8.Controls.Add(this.btnTestDvc8);
-            this.tabPage_Device8.Location = new System.Drawing.Point(4, 46);
-            this.tabPage_Device8.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage_Device8.Location = new System.Drawing.Point(4, 40);
+            this.tabPage_Device8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tabPage_Device8.Name = "tabPage_Device8";
-            this.tabPage_Device8.Size = new System.Drawing.Size(429, 420);
+            this.tabPage_Device8.Size = new System.Drawing.Size(320, 332);
             this.tabPage_Device8.TabIndex = 9;
             this.tabPage_Device8.Text = "Device8";
             this.tabPage_Device8.UseVisualStyleBackColor = true;
@@ -2811,38 +2745,35 @@ namespace Ado
             // lblSnoDvc8
             // 
             this.lblSnoDvc8.AutoSize = true;
-            this.lblSnoDvc8.Location = new System.Drawing.Point(7, 45);
-            this.lblSnoDvc8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSnoDvc8.Location = new System.Drawing.Point(5, 36);
             this.lblSnoDvc8.Name = "lblSnoDvc8";
-            this.lblSnoDvc8.Size = new System.Drawing.Size(65, 15);
+            this.lblSnoDvc8.Size = new System.Drawing.Size(51, 12);
             this.lblSnoDvc8.TabIndex = 141;
             this.lblSnoDvc8.Text = "Serial No.";
             // 
             // lblTestRmkDvc8
             // 
             this.lblTestRmkDvc8.AutoSize = true;
-            this.lblTestRmkDvc8.Location = new System.Drawing.Point(157, 379);
-            this.lblTestRmkDvc8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTestRmkDvc8.Location = new System.Drawing.Point(118, 303);
             this.lblTestRmkDvc8.Name = "lblTestRmkDvc8";
-            this.lblTestRmkDvc8.Size = new System.Drawing.Size(52, 15);
+            this.lblTestRmkDvc8.Size = new System.Drawing.Size(41, 12);
             this.lblTestRmkDvc8.TabIndex = 140;
             this.lblTestRmkDvc8.Text = "備註欄";
             // 
             // txtTestRmkDvc8
             // 
             this.txtTestRmkDvc8.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtTestRmkDvc8.Location = new System.Drawing.Point(215, 378);
-            this.txtTestRmkDvc8.Margin = new System.Windows.Forms.Padding(4);
+            this.txtTestRmkDvc8.Location = new System.Drawing.Point(161, 302);
             this.txtTestRmkDvc8.Name = "txtTestRmkDvc8";
-            this.txtTestRmkDvc8.Size = new System.Drawing.Size(208, 25);
+            this.txtTestRmkDvc8.Size = new System.Drawing.Size(157, 22);
             this.txtTestRmkDvc8.TabIndex = 139;
             // 
             // btnBurnStopDvc8
             // 
-            this.btnBurnStopDvc8.Location = new System.Drawing.Point(215, 330);
-            this.btnBurnStopDvc8.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBurnStopDvc8.Location = new System.Drawing.Point(161, 264);
+            this.btnBurnStopDvc8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBurnStopDvc8.Name = "btnBurnStopDvc8";
-            this.btnBurnStopDvc8.Size = new System.Drawing.Size(208, 40);
+            this.btnBurnStopDvc8.Size = new System.Drawing.Size(156, 32);
             this.btnBurnStopDvc8.TabIndex = 138;
             this.btnBurnStopDvc8.Text = "Burn-in Stop / 中斷燒機";
             this.btnBurnStopDvc8.UseVisualStyleBackColor = true;
@@ -2850,10 +2781,10 @@ namespace Ado
             // 
             // btnBurn1hrDvc8
             // 
-            this.btnBurn1hrDvc8.Location = new System.Drawing.Point(215, 252);
-            this.btnBurn1hrDvc8.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBurn1hrDvc8.Location = new System.Drawing.Point(161, 202);
+            this.btnBurn1hrDvc8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBurn1hrDvc8.Name = "btnBurn1hrDvc8";
-            this.btnBurn1hrDvc8.Size = new System.Drawing.Size(208, 40);
+            this.btnBurn1hrDvc8.Size = new System.Drawing.Size(156, 32);
             this.btnBurn1hrDvc8.TabIndex = 137;
             this.btnBurn1hrDvc8.Text = "Burn-in 1hr";
             this.btnBurn1hrDvc8.UseVisualStyleBackColor = true;
@@ -2864,10 +2795,11 @@ namespace Ado
             this.lblBurnRestDvc8.AutoSize = true;
             this.lblBurnRestDvc8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblBurnRestDvc8.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBurnRestDvc8.Location = new System.Drawing.Point(11, 299);
+            this.lblBurnRestDvc8.Location = new System.Drawing.Point(8, 239);
+            this.lblBurnRestDvc8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBurnRestDvc8.Name = "lblBurnRestDvc8";
             this.lblBurnRestDvc8.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblBurnRestDvc8.Size = new System.Drawing.Size(132, 28);
+            this.lblBurnRestDvc8.Size = new System.Drawing.Size(103, 23);
             this.lblBurnRestDvc8.TabIndex = 136;
             this.lblBurnRestDvc8.Text = "Burn-in time";
             this.lblBurnRestDvc8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -2876,9 +2808,10 @@ namespace Ado
             // 
             this.lblFinalDvc8.AutoSize = true;
             this.lblFinalDvc8.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFinalDvc8.Location = new System.Drawing.Point(11, 270);
+            this.lblFinalDvc8.Location = new System.Drawing.Point(8, 216);
+            this.lblFinalDvc8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFinalDvc8.Name = "lblFinalDvc8";
-            this.lblFinalDvc8.Size = new System.Drawing.Size(116, 26);
+            this.lblFinalDvc8.Size = new System.Drawing.Size(91, 21);
             this.lblFinalDvc8.TabIndex = 135;
             this.lblFinalDvc8.Text = "Final result";
             // 
@@ -2888,10 +2821,11 @@ namespace Ado
             this.lblDevIdDvc8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblDevIdDvc8.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDevIdDvc8.ForeColor = System.Drawing.Color.Blue;
-            this.lblDevIdDvc8.Location = new System.Drawing.Point(11, 345);
+            this.lblDevIdDvc8.Location = new System.Drawing.Point(8, 276);
+            this.lblDevIdDvc8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDevIdDvc8.Name = "lblDevIdDvc8";
             this.lblDevIdDvc8.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblDevIdDvc8.Size = new System.Drawing.Size(99, 24);
+            this.lblDevIdDvc8.Size = new System.Drawing.Size(77, 21);
             this.lblDevIdDvc8.TabIndex = 134;
             this.lblDevIdDvc8.Text = "Device_ID";
             this.lblDevIdDvc8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -2906,11 +2840,11 @@ namespace Ado
             this.grpStaDvc8.Controls.Add(this.button39);
             this.grpStaDvc8.Controls.Add(this.button40);
             this.grpStaDvc8.Enabled = false;
-            this.grpStaDvc8.Location = new System.Drawing.Point(7, 139);
-            this.grpStaDvc8.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grpStaDvc8.Location = new System.Drawing.Point(5, 111);
+            this.grpStaDvc8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.grpStaDvc8.Name = "grpStaDvc8";
-            this.grpStaDvc8.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.grpStaDvc8.Size = new System.Drawing.Size(407, 71);
+            this.grpStaDvc8.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grpStaDvc8.Size = new System.Drawing.Size(305, 57);
             this.grpStaDvc8.TabIndex = 133;
             this.grpStaDvc8.TabStop = false;
             this.grpStaDvc8.Text = "station 站別";
@@ -2918,10 +2852,10 @@ namespace Ado
             // radSta4Dvc8
             // 
             this.radSta4Dvc8.AutoSize = true;
-            this.radSta4Dvc8.Location = new System.Drawing.Point(13, 44);
-            this.radSta4Dvc8.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta4Dvc8.Location = new System.Drawing.Point(10, 35);
+            this.radSta4Dvc8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta4Dvc8.Name = "radSta4Dvc8";
-            this.radSta4Dvc8.Size = new System.Drawing.Size(79, 19);
+            this.radSta4Dvc8.Size = new System.Drawing.Size(64, 16);
             this.radSta4Dvc8.TabIndex = 5;
             this.radSta4Dvc8.Text = "Station 4";
             this.radSta4Dvc8.UseVisualStyleBackColor = true;
@@ -2929,10 +2863,10 @@ namespace Ado
             // radSta3Dvc8
             // 
             this.radSta3Dvc8.AutoSize = true;
-            this.radSta3Dvc8.Location = new System.Drawing.Point(309, 21);
-            this.radSta3Dvc8.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta3Dvc8.Location = new System.Drawing.Point(232, 17);
+            this.radSta3Dvc8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta3Dvc8.Name = "radSta3Dvc8";
-            this.radSta3Dvc8.Size = new System.Drawing.Size(79, 19);
+            this.radSta3Dvc8.Size = new System.Drawing.Size(64, 16);
             this.radSta3Dvc8.TabIndex = 4;
             this.radSta3Dvc8.Text = "Station 3";
             this.radSta3Dvc8.UseVisualStyleBackColor = true;
@@ -2940,10 +2874,10 @@ namespace Ado
             // radSta2Dvc8
             // 
             this.radSta2Dvc8.AutoSize = true;
-            this.radSta2Dvc8.Location = new System.Drawing.Point(211, 21);
-            this.radSta2Dvc8.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta2Dvc8.Location = new System.Drawing.Point(158, 17);
+            this.radSta2Dvc8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta2Dvc8.Name = "radSta2Dvc8";
-            this.radSta2Dvc8.Size = new System.Drawing.Size(79, 19);
+            this.radSta2Dvc8.Size = new System.Drawing.Size(64, 16);
             this.radSta2Dvc8.TabIndex = 3;
             this.radSta2Dvc8.Text = "Station 2";
             this.radSta2Dvc8.UseVisualStyleBackColor = true;
@@ -2951,10 +2885,10 @@ namespace Ado
             // radSta1Dvc8
             // 
             this.radSta1Dvc8.AutoSize = true;
-            this.radSta1Dvc8.Location = new System.Drawing.Point(112, 21);
-            this.radSta1Dvc8.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta1Dvc8.Location = new System.Drawing.Point(84, 17);
+            this.radSta1Dvc8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta1Dvc8.Name = "radSta1Dvc8";
-            this.radSta1Dvc8.Size = new System.Drawing.Size(79, 19);
+            this.radSta1Dvc8.Size = new System.Drawing.Size(64, 16);
             this.radSta1Dvc8.TabIndex = 2;
             this.radSta1Dvc8.Text = "Station 1";
             this.radSta1Dvc8.UseVisualStyleBackColor = true;
@@ -2962,30 +2896,28 @@ namespace Ado
             // radSta0Dvc8
             // 
             this.radSta0Dvc8.AutoSize = true;
-            this.radSta0Dvc8.Location = new System.Drawing.Point(13, 21);
-            this.radSta0Dvc8.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta0Dvc8.Location = new System.Drawing.Point(10, 17);
+            this.radSta0Dvc8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta0Dvc8.Name = "radSta0Dvc8";
-            this.radSta0Dvc8.Size = new System.Drawing.Size(79, 19);
+            this.radSta0Dvc8.Size = new System.Drawing.Size(64, 16);
             this.radSta0Dvc8.TabIndex = 0;
             this.radSta0Dvc8.Text = "Station 0";
             this.radSta0Dvc8.UseVisualStyleBackColor = true;
             // 
             // button39
             // 
-            this.button39.Location = new System.Drawing.Point(212, -64);
-            this.button39.Margin = new System.Windows.Forms.Padding(4);
+            this.button39.Location = new System.Drawing.Point(159, -51);
             this.button39.Name = "button39";
-            this.button39.Size = new System.Drawing.Size(195, 58);
+            this.button39.Size = new System.Drawing.Size(146, 46);
             this.button39.TabIndex = 10;
             this.button39.Text = "Clear";
             this.button39.UseVisualStyleBackColor = true;
             // 
             // button40
             // 
-            this.button40.Location = new System.Drawing.Point(0, -64);
-            this.button40.Margin = new System.Windows.Forms.Padding(4);
+            this.button40.Location = new System.Drawing.Point(0, -51);
             this.button40.Name = "button40";
-            this.button40.Size = new System.Drawing.Size(195, 58);
+            this.button40.Size = new System.Drawing.Size(146, 46);
             this.button40.TabIndex = 0;
             this.button40.Text = "OpenPort";
             this.button40.UseVisualStyleBackColor = true;
@@ -2994,19 +2926,17 @@ namespace Ado
             // 
             this.txtSnoDvc8.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtSnoDvc8.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtSnoDvc8.Location = new System.Drawing.Point(80, 42);
-            this.txtSnoDvc8.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSnoDvc8.Location = new System.Drawing.Point(60, 34);
             this.txtSnoDvc8.Name = "txtSnoDvc8";
-            this.txtSnoDvc8.Size = new System.Drawing.Size(335, 25);
+            this.txtSnoDvc8.Size = new System.Drawing.Size(252, 22);
             this.txtSnoDvc8.TabIndex = 126;
             this.txtSnoDvc8.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtSnoDvc8_MouseClick);
             // 
             // btnClearDvc8
             // 
-            this.btnClearDvc8.Location = new System.Drawing.Point(219, 75);
-            this.btnClearDvc8.Margin = new System.Windows.Forms.Padding(4);
+            this.btnClearDvc8.Location = new System.Drawing.Point(164, 60);
             this.btnClearDvc8.Name = "btnClearDvc8";
-            this.btnClearDvc8.Size = new System.Drawing.Size(195, 58);
+            this.btnClearDvc8.Size = new System.Drawing.Size(146, 46);
             this.btnClearDvc8.TabIndex = 132;
             this.btnClearDvc8.Text = "Clear";
             this.btnClearDvc8.UseVisualStyleBackColor = true;
@@ -3014,20 +2944,18 @@ namespace Ado
             // lblBaudDvc8
             // 
             this.lblBaudDvc8.AutoSize = true;
-            this.lblBaudDvc8.Location = new System.Drawing.Point(211, 14);
-            this.lblBaudDvc8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBaudDvc8.Location = new System.Drawing.Point(158, 11);
             this.lblBaudDvc8.Name = "lblBaudDvc8";
-            this.lblBaudDvc8.Size = new System.Drawing.Size(61, 15);
+            this.lblBaudDvc8.Size = new System.Drawing.Size(51, 12);
             this.lblBaudDvc8.TabIndex = 131;
             this.lblBaudDvc8.Text = "BaudRate";
             // 
             // lblComDvc8
             // 
             this.lblComDvc8.AutoSize = true;
-            this.lblComDvc8.Location = new System.Drawing.Point(7, 14);
-            this.lblComDvc8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblComDvc8.Location = new System.Drawing.Point(5, 11);
             this.lblComDvc8.Name = "lblComDvc8";
-            this.lblComDvc8.Size = new System.Drawing.Size(39, 15);
+            this.lblComDvc8.Size = new System.Drawing.Size(31, 12);
             this.lblComDvc8.TabIndex = 130;
             this.lblComDvc8.Text = "COM";
             // 
@@ -3035,27 +2963,24 @@ namespace Ado
             // 
             this.cboBaudDvc8.Enabled = false;
             this.cboBaudDvc8.FormattingEnabled = true;
-            this.cboBaudDvc8.Location = new System.Drawing.Point(284, 11);
-            this.cboBaudDvc8.Margin = new System.Windows.Forms.Padding(4);
+            this.cboBaudDvc8.Location = new System.Drawing.Point(213, 9);
             this.cboBaudDvc8.Name = "cboBaudDvc8";
-            this.cboBaudDvc8.Size = new System.Drawing.Size(129, 23);
+            this.cboBaudDvc8.Size = new System.Drawing.Size(98, 20);
             this.cboBaudDvc8.TabIndex = 129;
             // 
             // cboComDvc8
             // 
             this.cboComDvc8.FormattingEnabled = true;
-            this.cboComDvc8.Location = new System.Drawing.Point(80, 11);
-            this.cboComDvc8.Margin = new System.Windows.Forms.Padding(4);
+            this.cboComDvc8.Location = new System.Drawing.Point(60, 9);
             this.cboComDvc8.Name = "cboComDvc8";
-            this.cboComDvc8.Size = new System.Drawing.Size(100, 23);
+            this.cboComDvc8.Size = new System.Drawing.Size(76, 20);
             this.cboComDvc8.TabIndex = 128;
             // 
             // btnTestDvc8
             // 
-            this.btnTestDvc8.Location = new System.Drawing.Point(7, 75);
-            this.btnTestDvc8.Margin = new System.Windows.Forms.Padding(4);
+            this.btnTestDvc8.Location = new System.Drawing.Point(5, 60);
             this.btnTestDvc8.Name = "btnTestDvc8";
-            this.btnTestDvc8.Size = new System.Drawing.Size(195, 58);
+            this.btnTestDvc8.Size = new System.Drawing.Size(146, 46);
             this.btnTestDvc8.TabIndex = 127;
             this.btnTestDvc8.Text = "Test";
             this.btnTestDvc8.UseVisualStyleBackColor = true;
@@ -3079,10 +3004,10 @@ namespace Ado
             this.tabPage_Device9.Controls.Add(this.cboBaudDvc9);
             this.tabPage_Device9.Controls.Add(this.cboComDvc9);
             this.tabPage_Device9.Controls.Add(this.btnTestDvc9);
-            this.tabPage_Device9.Location = new System.Drawing.Point(4, 46);
-            this.tabPage_Device9.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage_Device9.Location = new System.Drawing.Point(4, 40);
+            this.tabPage_Device9.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tabPage_Device9.Name = "tabPage_Device9";
-            this.tabPage_Device9.Size = new System.Drawing.Size(429, 420);
+            this.tabPage_Device9.Size = new System.Drawing.Size(320, 332);
             this.tabPage_Device9.TabIndex = 10;
             this.tabPage_Device9.Text = "Device9";
             this.tabPage_Device9.UseVisualStyleBackColor = true;
@@ -3090,38 +3015,35 @@ namespace Ado
             // lblSnoDvc9
             // 
             this.lblSnoDvc9.AutoSize = true;
-            this.lblSnoDvc9.Location = new System.Drawing.Point(7, 45);
-            this.lblSnoDvc9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSnoDvc9.Location = new System.Drawing.Point(5, 36);
             this.lblSnoDvc9.Name = "lblSnoDvc9";
-            this.lblSnoDvc9.Size = new System.Drawing.Size(65, 15);
+            this.lblSnoDvc9.Size = new System.Drawing.Size(51, 12);
             this.lblSnoDvc9.TabIndex = 141;
             this.lblSnoDvc9.Text = "Serial No.";
             // 
             // lblTestRmkDvc9
             // 
             this.lblTestRmkDvc9.AutoSize = true;
-            this.lblTestRmkDvc9.Location = new System.Drawing.Point(157, 379);
-            this.lblTestRmkDvc9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTestRmkDvc9.Location = new System.Drawing.Point(118, 303);
             this.lblTestRmkDvc9.Name = "lblTestRmkDvc9";
-            this.lblTestRmkDvc9.Size = new System.Drawing.Size(52, 15);
+            this.lblTestRmkDvc9.Size = new System.Drawing.Size(41, 12);
             this.lblTestRmkDvc9.TabIndex = 140;
             this.lblTestRmkDvc9.Text = "備註欄";
             // 
             // txtTestRmkDvc9
             // 
             this.txtTestRmkDvc9.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtTestRmkDvc9.Location = new System.Drawing.Point(215, 378);
-            this.txtTestRmkDvc9.Margin = new System.Windows.Forms.Padding(4);
+            this.txtTestRmkDvc9.Location = new System.Drawing.Point(161, 302);
             this.txtTestRmkDvc9.Name = "txtTestRmkDvc9";
-            this.txtTestRmkDvc9.Size = new System.Drawing.Size(208, 25);
+            this.txtTestRmkDvc9.Size = new System.Drawing.Size(157, 22);
             this.txtTestRmkDvc9.TabIndex = 139;
             // 
             // btnBurnStopDvc9
             // 
-            this.btnBurnStopDvc9.Location = new System.Drawing.Point(215, 330);
-            this.btnBurnStopDvc9.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBurnStopDvc9.Location = new System.Drawing.Point(161, 264);
+            this.btnBurnStopDvc9.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBurnStopDvc9.Name = "btnBurnStopDvc9";
-            this.btnBurnStopDvc9.Size = new System.Drawing.Size(208, 40);
+            this.btnBurnStopDvc9.Size = new System.Drawing.Size(156, 32);
             this.btnBurnStopDvc9.TabIndex = 138;
             this.btnBurnStopDvc9.Text = "Burn-in Stop / 中斷燒機";
             this.btnBurnStopDvc9.UseVisualStyleBackColor = true;
@@ -3129,10 +3051,10 @@ namespace Ado
             // 
             // btnBurn1hrDvc9
             // 
-            this.btnBurn1hrDvc9.Location = new System.Drawing.Point(215, 252);
-            this.btnBurn1hrDvc9.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBurn1hrDvc9.Location = new System.Drawing.Point(161, 202);
+            this.btnBurn1hrDvc9.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBurn1hrDvc9.Name = "btnBurn1hrDvc9";
-            this.btnBurn1hrDvc9.Size = new System.Drawing.Size(208, 40);
+            this.btnBurn1hrDvc9.Size = new System.Drawing.Size(156, 32);
             this.btnBurn1hrDvc9.TabIndex = 137;
             this.btnBurn1hrDvc9.Text = "Burn-in 1hr";
             this.btnBurn1hrDvc9.UseVisualStyleBackColor = true;
@@ -3143,10 +3065,11 @@ namespace Ado
             this.lblBurnRestDvc9.AutoSize = true;
             this.lblBurnRestDvc9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblBurnRestDvc9.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBurnRestDvc9.Location = new System.Drawing.Point(11, 299);
+            this.lblBurnRestDvc9.Location = new System.Drawing.Point(8, 239);
+            this.lblBurnRestDvc9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBurnRestDvc9.Name = "lblBurnRestDvc9";
             this.lblBurnRestDvc9.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblBurnRestDvc9.Size = new System.Drawing.Size(132, 28);
+            this.lblBurnRestDvc9.Size = new System.Drawing.Size(103, 23);
             this.lblBurnRestDvc9.TabIndex = 136;
             this.lblBurnRestDvc9.Text = "Burn-in time";
             this.lblBurnRestDvc9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -3155,9 +3078,10 @@ namespace Ado
             // 
             this.lblFinalDvc9.AutoSize = true;
             this.lblFinalDvc9.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFinalDvc9.Location = new System.Drawing.Point(11, 270);
+            this.lblFinalDvc9.Location = new System.Drawing.Point(8, 216);
+            this.lblFinalDvc9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFinalDvc9.Name = "lblFinalDvc9";
-            this.lblFinalDvc9.Size = new System.Drawing.Size(116, 26);
+            this.lblFinalDvc9.Size = new System.Drawing.Size(91, 21);
             this.lblFinalDvc9.TabIndex = 135;
             this.lblFinalDvc9.Text = "Final result";
             // 
@@ -3167,10 +3091,11 @@ namespace Ado
             this.lblDevIdDvc9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblDevIdDvc9.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDevIdDvc9.ForeColor = System.Drawing.Color.Blue;
-            this.lblDevIdDvc9.Location = new System.Drawing.Point(11, 345);
+            this.lblDevIdDvc9.Location = new System.Drawing.Point(8, 276);
+            this.lblDevIdDvc9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDevIdDvc9.Name = "lblDevIdDvc9";
             this.lblDevIdDvc9.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lblDevIdDvc9.Size = new System.Drawing.Size(99, 24);
+            this.lblDevIdDvc9.Size = new System.Drawing.Size(77, 21);
             this.lblDevIdDvc9.TabIndex = 134;
             this.lblDevIdDvc9.Text = "Device_ID";
             this.lblDevIdDvc9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -3185,11 +3110,11 @@ namespace Ado
             this.grpStaDvc9.Controls.Add(this.button45);
             this.grpStaDvc9.Controls.Add(this.button46);
             this.grpStaDvc9.Enabled = false;
-            this.grpStaDvc9.Location = new System.Drawing.Point(7, 139);
-            this.grpStaDvc9.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grpStaDvc9.Location = new System.Drawing.Point(5, 111);
+            this.grpStaDvc9.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.grpStaDvc9.Name = "grpStaDvc9";
-            this.grpStaDvc9.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.grpStaDvc9.Size = new System.Drawing.Size(407, 71);
+            this.grpStaDvc9.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grpStaDvc9.Size = new System.Drawing.Size(305, 57);
             this.grpStaDvc9.TabIndex = 133;
             this.grpStaDvc9.TabStop = false;
             this.grpStaDvc9.Text = "station 站別";
@@ -3197,10 +3122,10 @@ namespace Ado
             // radSta4Dvc9
             // 
             this.radSta4Dvc9.AutoSize = true;
-            this.radSta4Dvc9.Location = new System.Drawing.Point(13, 44);
-            this.radSta4Dvc9.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta4Dvc9.Location = new System.Drawing.Point(10, 35);
+            this.radSta4Dvc9.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta4Dvc9.Name = "radSta4Dvc9";
-            this.radSta4Dvc9.Size = new System.Drawing.Size(79, 19);
+            this.radSta4Dvc9.Size = new System.Drawing.Size(64, 16);
             this.radSta4Dvc9.TabIndex = 5;
             this.radSta4Dvc9.Text = "Station 4";
             this.radSta4Dvc9.UseVisualStyleBackColor = true;
@@ -3208,10 +3133,10 @@ namespace Ado
             // radSta3Dvc9
             // 
             this.radSta3Dvc9.AutoSize = true;
-            this.radSta3Dvc9.Location = new System.Drawing.Point(309, 21);
-            this.radSta3Dvc9.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta3Dvc9.Location = new System.Drawing.Point(232, 17);
+            this.radSta3Dvc9.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta3Dvc9.Name = "radSta3Dvc9";
-            this.radSta3Dvc9.Size = new System.Drawing.Size(79, 19);
+            this.radSta3Dvc9.Size = new System.Drawing.Size(64, 16);
             this.radSta3Dvc9.TabIndex = 4;
             this.radSta3Dvc9.Text = "Station 3";
             this.radSta3Dvc9.UseVisualStyleBackColor = true;
@@ -3219,10 +3144,10 @@ namespace Ado
             // radSta2Dvc9
             // 
             this.radSta2Dvc9.AutoSize = true;
-            this.radSta2Dvc9.Location = new System.Drawing.Point(211, 21);
-            this.radSta2Dvc9.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta2Dvc9.Location = new System.Drawing.Point(158, 17);
+            this.radSta2Dvc9.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta2Dvc9.Name = "radSta2Dvc9";
-            this.radSta2Dvc9.Size = new System.Drawing.Size(79, 19);
+            this.radSta2Dvc9.Size = new System.Drawing.Size(64, 16);
             this.radSta2Dvc9.TabIndex = 3;
             this.radSta2Dvc9.Text = "Station 2";
             this.radSta2Dvc9.UseVisualStyleBackColor = true;
@@ -3230,10 +3155,10 @@ namespace Ado
             // radSta1Dvc9
             // 
             this.radSta1Dvc9.AutoSize = true;
-            this.radSta1Dvc9.Location = new System.Drawing.Point(112, 21);
-            this.radSta1Dvc9.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta1Dvc9.Location = new System.Drawing.Point(84, 17);
+            this.radSta1Dvc9.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta1Dvc9.Name = "radSta1Dvc9";
-            this.radSta1Dvc9.Size = new System.Drawing.Size(79, 19);
+            this.radSta1Dvc9.Size = new System.Drawing.Size(64, 16);
             this.radSta1Dvc9.TabIndex = 2;
             this.radSta1Dvc9.Text = "Station 1";
             this.radSta1Dvc9.UseVisualStyleBackColor = true;
@@ -3241,30 +3166,28 @@ namespace Ado
             // radSta0Dvc9
             // 
             this.radSta0Dvc9.AutoSize = true;
-            this.radSta0Dvc9.Location = new System.Drawing.Point(13, 21);
-            this.radSta0Dvc9.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radSta0Dvc9.Location = new System.Drawing.Point(10, 17);
+            this.radSta0Dvc9.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radSta0Dvc9.Name = "radSta0Dvc9";
-            this.radSta0Dvc9.Size = new System.Drawing.Size(79, 19);
+            this.radSta0Dvc9.Size = new System.Drawing.Size(64, 16);
             this.radSta0Dvc9.TabIndex = 0;
             this.radSta0Dvc9.Text = "Station 0";
             this.radSta0Dvc9.UseVisualStyleBackColor = true;
             // 
             // button45
             // 
-            this.button45.Location = new System.Drawing.Point(212, -64);
-            this.button45.Margin = new System.Windows.Forms.Padding(4);
+            this.button45.Location = new System.Drawing.Point(159, -51);
             this.button45.Name = "button45";
-            this.button45.Size = new System.Drawing.Size(195, 58);
+            this.button45.Size = new System.Drawing.Size(146, 46);
             this.button45.TabIndex = 10;
             this.button45.Text = "Clear";
             this.button45.UseVisualStyleBackColor = true;
             // 
             // button46
             // 
-            this.button46.Location = new System.Drawing.Point(0, -64);
-            this.button46.Margin = new System.Windows.Forms.Padding(4);
+            this.button46.Location = new System.Drawing.Point(0, -51);
             this.button46.Name = "button46";
-            this.button46.Size = new System.Drawing.Size(195, 58);
+            this.button46.Size = new System.Drawing.Size(146, 46);
             this.button46.TabIndex = 0;
             this.button46.Text = "OpenPort";
             this.button46.UseVisualStyleBackColor = true;
@@ -3273,19 +3196,17 @@ namespace Ado
             // 
             this.txtSnoDvc9.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtSnoDvc9.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtSnoDvc9.Location = new System.Drawing.Point(80, 42);
-            this.txtSnoDvc9.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSnoDvc9.Location = new System.Drawing.Point(60, 34);
             this.txtSnoDvc9.Name = "txtSnoDvc9";
-            this.txtSnoDvc9.Size = new System.Drawing.Size(335, 25);
+            this.txtSnoDvc9.Size = new System.Drawing.Size(252, 22);
             this.txtSnoDvc9.TabIndex = 126;
             this.txtSnoDvc9.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtSnoDvc9_MouseClick);
             // 
             // btnClearDvc9
             // 
-            this.btnClearDvc9.Location = new System.Drawing.Point(219, 75);
-            this.btnClearDvc9.Margin = new System.Windows.Forms.Padding(4);
+            this.btnClearDvc9.Location = new System.Drawing.Point(164, 60);
             this.btnClearDvc9.Name = "btnClearDvc9";
-            this.btnClearDvc9.Size = new System.Drawing.Size(195, 58);
+            this.btnClearDvc9.Size = new System.Drawing.Size(146, 46);
             this.btnClearDvc9.TabIndex = 132;
             this.btnClearDvc9.Text = "Clear";
             this.btnClearDvc9.UseVisualStyleBackColor = true;
@@ -3293,20 +3214,18 @@ namespace Ado
             // lblBaudDvc9
             // 
             this.lblBaudDvc9.AutoSize = true;
-            this.lblBaudDvc9.Location = new System.Drawing.Point(211, 14);
-            this.lblBaudDvc9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBaudDvc9.Location = new System.Drawing.Point(158, 11);
             this.lblBaudDvc9.Name = "lblBaudDvc9";
-            this.lblBaudDvc9.Size = new System.Drawing.Size(61, 15);
+            this.lblBaudDvc9.Size = new System.Drawing.Size(51, 12);
             this.lblBaudDvc9.TabIndex = 131;
             this.lblBaudDvc9.Text = "BaudRate";
             // 
             // lblComDvc9
             // 
             this.lblComDvc9.AutoSize = true;
-            this.lblComDvc9.Location = new System.Drawing.Point(7, 14);
-            this.lblComDvc9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblComDvc9.Location = new System.Drawing.Point(5, 11);
             this.lblComDvc9.Name = "lblComDvc9";
-            this.lblComDvc9.Size = new System.Drawing.Size(39, 15);
+            this.lblComDvc9.Size = new System.Drawing.Size(31, 12);
             this.lblComDvc9.TabIndex = 130;
             this.lblComDvc9.Text = "COM";
             // 
@@ -3314,27 +3233,24 @@ namespace Ado
             // 
             this.cboBaudDvc9.Enabled = false;
             this.cboBaudDvc9.FormattingEnabled = true;
-            this.cboBaudDvc9.Location = new System.Drawing.Point(284, 11);
-            this.cboBaudDvc9.Margin = new System.Windows.Forms.Padding(4);
+            this.cboBaudDvc9.Location = new System.Drawing.Point(213, 9);
             this.cboBaudDvc9.Name = "cboBaudDvc9";
-            this.cboBaudDvc9.Size = new System.Drawing.Size(129, 23);
+            this.cboBaudDvc9.Size = new System.Drawing.Size(98, 20);
             this.cboBaudDvc9.TabIndex = 129;
             // 
             // cboComDvc9
             // 
             this.cboComDvc9.FormattingEnabled = true;
-            this.cboComDvc9.Location = new System.Drawing.Point(80, 11);
-            this.cboComDvc9.Margin = new System.Windows.Forms.Padding(4);
+            this.cboComDvc9.Location = new System.Drawing.Point(60, 9);
             this.cboComDvc9.Name = "cboComDvc9";
-            this.cboComDvc9.Size = new System.Drawing.Size(100, 23);
+            this.cboComDvc9.Size = new System.Drawing.Size(76, 20);
             this.cboComDvc9.TabIndex = 128;
             // 
             // btnTestDvc9
             // 
-            this.btnTestDvc9.Location = new System.Drawing.Point(7, 75);
-            this.btnTestDvc9.Margin = new System.Windows.Forms.Padding(4);
+            this.btnTestDvc9.Location = new System.Drawing.Point(5, 60);
             this.btnTestDvc9.Name = "btnTestDvc9";
-            this.btnTestDvc9.Size = new System.Drawing.Size(195, 58);
+            this.btnTestDvc9.Size = new System.Drawing.Size(146, 46);
             this.btnTestDvc9.TabIndex = 127;
             this.btnTestDvc9.Text = "Test";
             this.btnTestDvc9.UseVisualStyleBackColor = true;
@@ -3369,21 +3285,21 @@ namespace Ado
             this.tabPage_Test.Controls.Add(this.btnCmdSend);
             this.tabPage_Test.Controls.Add(this.tbxAtReturn);
             this.tabPage_Test.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.tabPage_Test.Location = new System.Drawing.Point(4, 46);
-            this.tabPage_Test.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage_Test.Location = new System.Drawing.Point(4, 40);
+            this.tabPage_Test.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tabPage_Test.Name = "tabPage_Test";
-            this.tabPage_Test.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage_Test.Size = new System.Drawing.Size(429, 420);
+            this.tabPage_Test.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage_Test.Size = new System.Drawing.Size(320, 332);
             this.tabPage_Test.TabIndex = 1;
             this.tabPage_Test.Text = "Engineer_Setting";
             // 
             // btnCloseCom
             // 
             this.btnCloseCom.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCloseCom.Location = new System.Drawing.Point(337, 32);
-            this.btnCloseCom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCloseCom.Location = new System.Drawing.Point(253, 26);
+            this.btnCloseCom.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnCloseCom.Name = "btnCloseCom";
-            this.btnCloseCom.Size = new System.Drawing.Size(85, 24);
+            this.btnCloseCom.Size = new System.Drawing.Size(64, 19);
             this.btnCloseCom.TabIndex = 81;
             this.btnCloseCom.Text = "ClosePort";
             this.btnCloseCom.UseVisualStyleBackColor = true;
@@ -3392,10 +3308,10 @@ namespace Ado
             // chkTempRec
             // 
             this.chkTempRec.AutoSize = true;
-            this.chkTempRec.Location = new System.Drawing.Point(295, 125);
-            this.chkTempRec.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.chkTempRec.Location = new System.Drawing.Point(221, 100);
+            this.chkTempRec.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chkTempRec.Name = "chkTempRec";
-            this.chkTempRec.Size = new System.Drawing.Size(128, 19);
+            this.chkTempRec.Size = new System.Drawing.Size(107, 16);
             this.chkTempRec.TabIndex = 80;
             this.chkTempRec.Text = "chkTempRecord?";
             this.chkTempRec.UseVisualStyleBackColor = true;
@@ -3404,19 +3320,18 @@ namespace Ado
             // lblTempChkTime
             // 
             this.lblTempChkTime.AutoSize = true;
-            this.lblTempChkTime.Location = new System.Drawing.Point(332, 68);
-            this.lblTempChkTime.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTempChkTime.Location = new System.Drawing.Point(249, 54);
             this.lblTempChkTime.Name = "lblTempChkTime";
-            this.lblTempChkTime.Size = new System.Drawing.Size(93, 15);
+            this.lblTempChkTime.Size = new System.Drawing.Size(76, 12);
             this.lblTempChkTime.TabIndex = 79;
             this.lblTempChkTime.Text = "TempChkPoint";
             // 
             // txtTempChkTime
             // 
-            this.txtTempChkTime.Location = new System.Drawing.Point(348, 90);
-            this.txtTempChkTime.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtTempChkTime.Location = new System.Drawing.Point(261, 72);
+            this.txtTempChkTime.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtTempChkTime.Name = "txtTempChkTime";
-            this.txtTempChkTime.Size = new System.Drawing.Size(72, 25);
+            this.txtTempChkTime.Size = new System.Drawing.Size(55, 22);
             this.txtTempChkTime.TabIndex = 78;
             this.txtTempChkTime.Text = "0";
             this.txtTempChkTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -3424,10 +3339,10 @@ namespace Ado
             // 
             // txtBurnTime
             // 
-            this.txtBurnTime.Location = new System.Drawing.Point(96, 121);
-            this.txtBurnTime.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtBurnTime.Location = new System.Drawing.Point(72, 97);
+            this.txtBurnTime.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtBurnTime.Name = "txtBurnTime";
-            this.txtBurnTime.Size = new System.Drawing.Size(95, 25);
+            this.txtBurnTime.Size = new System.Drawing.Size(72, 22);
             this.txtBurnTime.TabIndex = 77;
             this.txtBurnTime.Text = "0";
             this.txtBurnTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -3435,20 +3350,19 @@ namespace Ado
             // lblBrunTimeSet
             // 
             this.lblBrunTimeSet.AutoSize = true;
-            this.lblBrunTimeSet.Location = new System.Drawing.Point(5, 128);
-            this.lblBrunTimeSet.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBrunTimeSet.Location = new System.Drawing.Point(4, 102);
             this.lblBrunTimeSet.Name = "lblBrunTimeSet";
-            this.lblBrunTimeSet.Size = new System.Drawing.Size(83, 15);
+            this.lblBrunTimeSet.Size = new System.Drawing.Size(67, 12);
             this.lblBrunTimeSet.TabIndex = 76;
             this.lblBrunTimeSet.Text = "BurnTimeSet";
             // 
             // btnBurnTimeSet
             // 
             this.btnBurnTimeSet.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnBurnTimeSet.Location = new System.Drawing.Point(196, 121);
-            this.btnBurnTimeSet.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBurnTimeSet.Location = new System.Drawing.Point(147, 97);
+            this.btnBurnTimeSet.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBurnTimeSet.Name = "btnBurnTimeSet";
-            this.btnBurnTimeSet.Size = new System.Drawing.Size(85, 25);
+            this.btnBurnTimeSet.Size = new System.Drawing.Size(64, 20);
             this.btnBurnTimeSet.TabIndex = 75;
             this.btnBurnTimeSet.Text = "SetTime";
             this.btnBurnTimeSet.UseVisualStyleBackColor = true;
@@ -3458,37 +3372,37 @@ namespace Ado
             // 
             this.cboComList.Enabled = false;
             this.cboComList.FormattingEnabled = true;
-            this.cboComList.Location = new System.Drawing.Point(331, 4);
-            this.cboComList.Margin = new System.Windows.Forms.Padding(4);
+            this.cboComList.Location = new System.Drawing.Point(248, 3);
             this.cboComList.Name = "cboComList";
-            this.cboComList.Size = new System.Drawing.Size(89, 23);
+            this.cboComList.Size = new System.Drawing.Size(68, 20);
             this.cboComList.TabIndex = 74;
             // 
             // lblDevice
             // 
             this.lblDevice.AutoSize = true;
-            this.lblDevice.Location = new System.Drawing.Point(220, 8);
+            this.lblDevice.Location = new System.Drawing.Point(165, 6);
+            this.lblDevice.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDevice.Name = "lblDevice";
-            this.lblDevice.Size = new System.Drawing.Size(46, 15);
+            this.lblDevice.Size = new System.Drawing.Size(37, 12);
             this.lblDevice.TabIndex = 72;
             this.lblDevice.Text = "Device";
             // 
             // cboDevNo
             // 
             this.cboDevNo.FormattingEnabled = true;
-            this.cboDevNo.Location = new System.Drawing.Point(273, 4);
-            this.cboDevNo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cboDevNo.Location = new System.Drawing.Point(205, 3);
+            this.cboDevNo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cboDevNo.Name = "cboDevNo";
-            this.cboDevNo.Size = new System.Drawing.Size(51, 23);
+            this.cboDevNo.Size = new System.Drawing.Size(39, 20);
             this.cboDevNo.TabIndex = 71;
             this.cboDevNo.SelectedIndexChanged += new System.EventHandler(this.cboDevNo_SelectedIndexChanged);
             // 
             // txtParameter
             // 
-            this.txtParameter.Location = new System.Drawing.Point(196, 91);
-            this.txtParameter.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtParameter.Location = new System.Drawing.Point(147, 73);
+            this.txtParameter.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtParameter.Name = "txtParameter";
-            this.txtParameter.Size = new System.Drawing.Size(61, 25);
+            this.txtParameter.Size = new System.Drawing.Size(47, 22);
             this.txtParameter.TabIndex = 70;
             this.txtParameter.Text = "0";
             this.txtParameter.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -3496,10 +3410,9 @@ namespace Ado
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(5, 98);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(4, 78);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(46, 15);
+            this.label4.Size = new System.Drawing.Size(37, 12);
             this.label4.TabIndex = 69;
             this.label4.Text = "CMD2";
             // 
@@ -3522,19 +3435,19 @@ namespace Ado
             "AT+PDN L",
             "AT+PDN T",
             "AT+STA"});
-            this.cboAtSetCmd.Location = new System.Drawing.Point(60, 91);
-            this.cboAtSetCmd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cboAtSetCmd.Location = new System.Drawing.Point(45, 73);
+            this.cboAtSetCmd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cboAtSetCmd.Name = "cboAtSetCmd";
-            this.cboAtSetCmd.Size = new System.Drawing.Size(129, 23);
+            this.cboAtSetCmd.Size = new System.Drawing.Size(98, 20);
             this.cboAtSetCmd.TabIndex = 68;
             // 
             // btnAtSetCmdSend
             // 
             this.btnAtSetCmdSend.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnAtSetCmdSend.Location = new System.Drawing.Point(263, 91);
-            this.btnAtSetCmdSend.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnAtSetCmdSend.Location = new System.Drawing.Point(197, 73);
+            this.btnAtSetCmdSend.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnAtSetCmdSend.Name = "btnAtSetCmdSend";
-            this.btnAtSetCmdSend.Size = new System.Drawing.Size(85, 24);
+            this.btnAtSetCmdSend.Size = new System.Drawing.Size(64, 19);
             this.btnAtSetCmdSend.TabIndex = 67;
             this.btnAtSetCmdSend.Text = "Cmd Send";
             this.btnAtSetCmdSend.UseVisualStyleBackColor = true;
@@ -3543,10 +3456,10 @@ namespace Ado
             // btnBisRead
             // 
             this.btnBisRead.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnBisRead.Location = new System.Drawing.Point(220, 34);
-            this.btnBisRead.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBisRead.Location = new System.Drawing.Point(165, 27);
+            this.btnBisRead.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBisRead.Name = "btnBisRead";
-            this.btnBisRead.Size = new System.Drawing.Size(83, 22);
+            this.btnBisRead.Size = new System.Drawing.Size(62, 18);
             this.btnBisRead.TabIndex = 66;
             this.btnBisRead.Text = "BIS_Read";
             this.btnBisRead.UseVisualStyleBackColor = true;
@@ -3555,10 +3468,10 @@ namespace Ado
             // btnBisSet
             // 
             this.btnBisSet.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnBisSet.Location = new System.Drawing.Point(132, 34);
-            this.btnBisSet.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBisSet.Location = new System.Drawing.Point(99, 27);
+            this.btnBisSet.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnBisSet.Name = "btnBisSet";
-            this.btnBisSet.Size = new System.Drawing.Size(83, 22);
+            this.btnBisSet.Size = new System.Drawing.Size(62, 18);
             this.btnBisSet.TabIndex = 65;
             this.btnBisSet.Text = "BIS_Set";
             this.btnBisSet.UseVisualStyleBackColor = true;
@@ -3567,10 +3480,10 @@ namespace Ado
             // btnStationSet
             // 
             this.btnStationSet.Enabled = false;
-            this.btnStationSet.Location = new System.Drawing.Point(117, 2);
-            this.btnStationSet.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnStationSet.Location = new System.Drawing.Point(88, 2);
+            this.btnStationSet.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnStationSet.Name = "btnStationSet";
-            this.btnStationSet.Size = new System.Drawing.Size(97, 25);
+            this.btnStationSet.Size = new System.Drawing.Size(73, 20);
             this.btnStationSet.TabIndex = 64;
             this.btnStationSet.Text = "Station_Set";
             this.btnStationSet.UseVisualStyleBackColor = true;
@@ -3583,19 +3496,20 @@ namespace Ado
             this.cboBis.Items.AddRange(new object[] {
             "0",
             "1"});
-            this.cboBis.Location = new System.Drawing.Point(79, 34);
-            this.cboBis.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cboBis.Location = new System.Drawing.Point(59, 27);
+            this.cboBis.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cboBis.Name = "cboBis";
-            this.cboBis.Size = new System.Drawing.Size(47, 23);
+            this.cboBis.Size = new System.Drawing.Size(36, 20);
             this.cboBis.TabIndex = 63;
             this.cboBis.Text = "0";
             // 
             // lblBisStatus
             // 
             this.lblBisStatus.AutoSize = true;
-            this.lblBisStatus.Location = new System.Drawing.Point(5, 38);
+            this.lblBisStatus.Location = new System.Drawing.Point(4, 30);
+            this.lblBisStatus.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblBisStatus.Name = "lblBisStatus";
-            this.lblBisStatus.Size = new System.Drawing.Size(67, 15);
+            this.lblBisStatus.Size = new System.Drawing.Size(54, 12);
             this.lblBisStatus.TabIndex = 62;
             this.lblBisStatus.Text = "BIS_status";
             // 
@@ -3608,29 +3522,29 @@ namespace Ado
             "2",
             "3",
             "4"});
-            this.cboStaSet.Location = new System.Drawing.Point(60, 4);
-            this.cboStaSet.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cboStaSet.Location = new System.Drawing.Point(45, 3);
+            this.cboStaSet.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cboStaSet.Name = "cboStaSet";
-            this.cboStaSet.Size = new System.Drawing.Size(51, 23);
+            this.cboStaSet.Size = new System.Drawing.Size(39, 20);
             this.cboStaSet.TabIndex = 58;
             this.cboStaSet.Text = "0";
             // 
             // lblStaSet
             // 
             this.lblStaSet.AutoSize = true;
-            this.lblStaSet.Location = new System.Drawing.Point(5, 8);
+            this.lblStaSet.Location = new System.Drawing.Point(4, 6);
+            this.lblStaSet.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblStaSet.Name = "lblStaSet";
-            this.lblStaSet.Size = new System.Drawing.Size(47, 15);
+            this.lblStaSet.Size = new System.Drawing.Size(37, 12);
             this.lblStaSet.TabIndex = 57;
             this.lblStaSet.Text = "Station";
             // 
             // lblCmdList
             // 
             this.lblCmdList.AutoSize = true;
-            this.lblCmdList.Location = new System.Drawing.Point(5, 71);
-            this.lblCmdList.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCmdList.Location = new System.Drawing.Point(4, 57);
             this.lblCmdList.Name = "lblCmdList";
-            this.lblCmdList.Size = new System.Drawing.Size(46, 15);
+            this.lblCmdList.Size = new System.Drawing.Size(37, 12);
             this.lblCmdList.TabIndex = 56;
             this.lblCmdList.Text = "CMD1";
             // 
@@ -3663,18 +3577,18 @@ namespace Ado
             "AT+TEMP?",
             "AT+VER?",
             "@@"});
-            this.cboCmdList.Location = new System.Drawing.Point(60, 64);
-            this.cboCmdList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cboCmdList.Location = new System.Drawing.Point(45, 51);
+            this.cboCmdList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cboCmdList.Name = "cboCmdList";
-            this.cboCmdList.Size = new System.Drawing.Size(129, 23);
+            this.cboCmdList.Size = new System.Drawing.Size(98, 20);
             this.cboCmdList.TabIndex = 55;
             // 
             // btnCmdSend
             // 
-            this.btnCmdSend.Location = new System.Drawing.Point(196, 62);
-            this.btnCmdSend.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCmdSend.Location = new System.Drawing.Point(147, 50);
+            this.btnCmdSend.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnCmdSend.Name = "btnCmdSend";
-            this.btnCmdSend.Size = new System.Drawing.Size(85, 24);
+            this.btnCmdSend.Size = new System.Drawing.Size(64, 19);
             this.btnCmdSend.TabIndex = 17;
             this.btnCmdSend.Text = "Cmd Send";
             this.btnCmdSend.UseVisualStyleBackColor = true;
@@ -3682,13 +3596,13 @@ namespace Ado
             // 
             // tbxAtReturn
             // 
-            this.tbxAtReturn.Location = new System.Drawing.Point(5, 151);
-            this.tbxAtReturn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tbxAtReturn.Location = new System.Drawing.Point(4, 121);
+            this.tbxAtReturn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tbxAtReturn.Multiline = true;
             this.tbxAtReturn.Name = "tbxAtReturn";
             this.tbxAtReturn.ReadOnly = true;
             this.tbxAtReturn.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbxAtReturn.Size = new System.Drawing.Size(417, 255);
+            this.tbxAtReturn.Size = new System.Drawing.Size(314, 205);
             this.tbxAtReturn.TabIndex = 16;
             this.tbxAtReturn.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
@@ -3696,6 +3610,14 @@ namespace Ado
             // 
             this.timer3.Interval = 1000;
             this.timer3.Tick += new System.EventHandler(this.timer3_Tick);
+            // 
+            // serialPort2
+            // 
+            this.serialPort2.BaudRate = 115200;
+            // 
+            // serialPort3
+            // 
+            this.serialPort3.BaudRate = 115200;
             // 
             // timer4
             // 
@@ -3713,9 +3635,10 @@ namespace Ado
             this.lblVerPs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblVerPs.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblVerPs.ForeColor = System.Drawing.Color.Blue;
-            this.lblVerPs.Location = new System.Drawing.Point(455, 31);
+            this.lblVerPs.Location = new System.Drawing.Point(341, 25);
+            this.lblVerPs.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblVerPs.Name = "lblVerPs";
-            this.lblVerPs.Size = new System.Drawing.Size(104, 24);
+            this.lblVerPs.Size = new System.Drawing.Size(79, 21);
             this.lblVerPs.TabIndex = 79;
             this.lblVerPs.Text = "PS: version";
             this.lblVerPs.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -3770,13 +3693,13 @@ namespace Ado
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.settingToolStripMenuItem,
             this.toolsToolStripMenuItem,
+            this.settingToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(939, 27);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(704, 24);
             this.menuStrip1.TabIndex = 80;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -3787,56 +3710,56 @@ namespace Ado
             this.loadJSONFileToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(47, 23);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // saveAsFileToolStripMenuItem
             // 
             this.saveAsFileToolStripMenuItem.Name = "saveAsFileToolStripMenuItem";
-            this.saveAsFileToolStripMenuItem.Size = new System.Drawing.Size(198, 26);
+            this.saveAsFileToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.saveAsFileToolStripMenuItem.Text = "Save as File";
             this.saveAsFileToolStripMenuItem.Click += new System.EventHandler(this.saveAsFileToolStripMenuItem_Click);
             // 
             // loadJSONFileToolStripMenuItem
             // 
             this.loadJSONFileToolStripMenuItem.Name = "loadJSONFileToolStripMenuItem";
-            this.loadJSONFileToolStripMenuItem.Size = new System.Drawing.Size(198, 26);
+            this.loadJSONFileToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.loadJSONFileToolStripMenuItem.Text = "Load JSON File";
             this.loadJSONFileToolStripMenuItem.Click += new System.EventHandler(this.loadJSONFileToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(198, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // settingToolStripMenuItem
-            // 
-            this.settingToolStripMenuItem.Enabled = false;
-            this.settingToolStripMenuItem.Name = "settingToolStripMenuItem";
-            this.settingToolStripMenuItem.Size = new System.Drawing.Size(73, 23);
-            this.settingToolStripMenuItem.Text = "Setting";
             // 
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.Enabled = false;
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(60, 23);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // settingToolStripMenuItem
+            // 
+            this.settingToolStripMenuItem.Enabled = false;
+            this.settingToolStripMenuItem.Name = "settingToolStripMenuItem";
+            this.settingToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.settingToolStripMenuItem.Text = "Setting";
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(55, 23);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(134, 26);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -3849,48 +3772,26 @@ namespace Ado
             // 
             this.txtMac.Enabled = false;
             this.txtMac.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.txtMac.Location = new System.Drawing.Point(773, 28);
-            this.txtMac.Margin = new System.Windows.Forms.Padding(4);
+            this.txtMac.Location = new System.Drawing.Point(580, 22);
             this.txtMac.Name = "txtMac";
-            this.txtMac.Size = new System.Drawing.Size(151, 25);
+            this.txtMac.Size = new System.Drawing.Size(114, 22);
             this.txtMac.TabIndex = 90;
-            this.txtMac.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label13
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label13.Location = new System.Drawing.Point(699, 28);
-            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label13.Location = new System.Drawing.Point(524, 22);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(68, 25);
+            this.label13.Size = new System.Drawing.Size(54, 20);
             this.label13.TabIndex = 91;
             this.label13.Text = "MAC :";
             // 
-            // statusStrip1
-            // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 502);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(939, 25);
-            this.statusStrip1.TabIndex = 92;
-            this.statusStrip1.Text = "statusStrip";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(81, 19);
-            this.toolStripStatusLabel1.Text = "Status text";
-            this.toolStripStatusLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(939, 527);
-            this.Controls.Add(this.statusStrip1);
+            this.ClientSize = new System.Drawing.Size(704, 410);
             this.Controls.Add(this.txtMac);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.menuStrip1);
@@ -3899,7 +3800,6 @@ namespace Ado
             this.Controls.Add(this.richBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Mercury_E v1.2.7 - Burn_in-1To10";
@@ -3951,14 +3851,14 @@ namespace Ado
             this.tabPage_Test.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
+
+        private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.RichTextBox richBox;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Timer timer2;
@@ -4036,6 +3936,8 @@ namespace Ado
         private System.Windows.Forms.Button btnTestDvc1;
         private System.Windows.Forms.ComboBox cboComDvc0;
         private System.Windows.Forms.ComboBox cboComList;
+        private System.IO.Ports.SerialPort serialPort2;
+        private System.IO.Ports.SerialPort serialPort3;
         private System.Windows.Forms.Label lblBurnRestDvc1;
         private System.Windows.Forms.Label lblFinalDvc1;
         private System.Windows.Forms.Button btnBurnStopDvc1;
@@ -4265,8 +4167,6 @@ namespace Ado
         private System.Windows.Forms.Timer timer15;
         private System.Windows.Forms.TextBox txtMac;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }
 }
 

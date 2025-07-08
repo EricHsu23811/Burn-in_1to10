@@ -68,7 +68,7 @@
 **  Fix DateTime when Burn-in finish.   //2023-02-17
 **  Remodify details to be more stable. //2023-02-21
 **  Modify { VID, PID } detection method.   //2023-03-30
-**  macAddresses = AddSpaceEveryNChar(macAddresses, 2); //2025-06-19
+**
 ******************************************************************************/
 using System;
 using System.Collections.Generic;
@@ -164,13 +164,11 @@ namespace Ado
         readonly Feedback aas = new Feedback();
         string strComSelected = ""; //Eric:2022-5-9
         Boolean bTempReading = false;   //2022-05-24
-        //******2022-11-09, 2024-03-13*********
-        static SerialPort serialPort1 = new SerialPort(); static SerialPort serialPort2 = new SerialPort();
-        static SerialPort serialPort3 = new SerialPort();
-        static SerialPort serialPort4 = new SerialPort(); static SerialPort serialPort5 = new SerialPort();
-        static SerialPort serialPort6 = new SerialPort(); static SerialPort serialPort7 = new SerialPort();
-        static SerialPort serialPort8 = new SerialPort(); static SerialPort serialPort9 = new SerialPort();
-        static SerialPort serialPort10 = new SerialPort();
+        //******2022-11-09*********
+        SerialPort serialPort4 = new SerialPort(); SerialPort serialPort5 = new SerialPort();
+        SerialPort serialPort6 = new SerialPort(); SerialPort serialPort7 = new SerialPort();
+        SerialPort serialPort8 = new SerialPort(); SerialPort serialPort9 = new SerialPort();
+        SerialPort serialPort10 = new SerialPort();
         //******2022-11-15*********for referrence
         //System.Windows.Forms.Timer t = new System.Windows.Forms.Timer();
         //t.Interval = 1000;
@@ -267,40 +265,20 @@ namespace Ado
         //string form_txt="Lucio EVT Electric Test v.1.4 - 1pc To 10 Jigs";  //2022-11-09
 
         int iDvcCnt = 0; //2022-08-01; For burn-in Device count:0,1,2
-        //2024-03-13：searilPort1 ~ serialPort10 name to array
-        static SerialPort[] serialPortN = { serialPort1, serialPort2, serialPort3, serialPort4, serialPort5,
-        serialPort6,serialPort7,serialPort8,serialPort9,serialPort10};  //2024-03-13
-        //2022-08-08:SerailPort? => com? 對應到com?
-        string strComSerial1, strComSerial2, strComSerial3 = "";   //2022-08-08:SerailPort?
-        string strComSerial4, strComSerial5, strComSerial6, strComSerial7, 
-            strComSerial8, strComSerial9, strComSerial10 = "";   //2022-11-08
-        //2024-03-11：SerialPort? => Com? ...to List
-        List<string> strComSerial = new List<string>(); //2023-10-19：Com for SerialPort?
-        string[] strComConnect = new string[] { };   //2024-03-11:Connected Com
-        //---create list<T>...2024-03-11----
-        //string strVID = "0416"; string strPID = "B1B2";
-        List<string> VidPidNames = ComPortNames("0416", "B1B2");
-        List<string> strComNowConnect = new List<string>(); //2024-03-12:Com that Connecting
+        string strComSerial1, strComSerial2, strComSerial3 = "";   //2022-08-08:SerailPort?對應到com?
+        string strComSerial4, strComSerial5, strComSerial6, 
+            strComSerial7, strComSerial8, strComSerial9, strComSerial10 = "";   //2022-11-08
+        
+        List<string> lstComSerial = new List<string>(); //2023-10-19
 
         Boolean bAtVerSent, bAtVerAns = false;  //2022-08-16
         int iAtVerCmdStep = 0;  //2022-08-16
         Boolean bAtBisSet = false;  //2022-08-29
 
-        //2024-03-13:SerialDvc? -> SerialPort? name to array
-        static SerialPort Dvc0Serial, Dvc1Serial, Dvc2Serial;  //2022-08-18=>The serialPort of devices
-        static SerialPort Dvc3Serial, Dvc4Serial, Dvc5Serial, Dvc6Serial, Dvc7Serial, Dvc8Serial, Dvc9Serial;  //2022-11-08: Device? get SerialPort?
-        //List<SerialPort> SerialDvc = new List<SerialPort>();  //Device[N].Serial:2024-03-11
-        SerialPort[] serialDvc = { Dvc0Serial, Dvc1Serial, Dvc2Serial, Dvc3Serial, Dvc4Serial,
-            Dvc5Serial, Dvc6Serial, Dvc7Serial, Dvc8Serial, Dvc9Serial};  //2024-03-13:Dvc?->SerialPortN
-        //2024-03-13:ComOfDvc -> ComPort? name to array
-        static String strDvc0Com, strDvc1Com, strDvc2Com;   //2022-08-18=>The Com of devices
-        static String strDvc3Com, strDvc4Com, strDvc5Com, strDvc6Com, strDvc7Com, strDvc8Com, strDvc9Com;  //2022-11-08: Device? get comport?
-        //string[] strComDvc = { strDvc0Com, strDvc1Com, strDvc2Com, strDvc3Com, strDvc4Com,
-        //    strDvc5Com, strDvc6Com, strDvc7Com, strDvc8Com, strDvc9Com };  //2024-03-13:ComOfDvcN->ComPort?
-        string[] strComDvc = { "", "", "", "", "", "", "", "", "", "" };  //2024-03-22:ComOfDvcN->ComPort?
-        //static string[] StationDvc = { "Device1", "Device2", "Device3", "Device4", "Device5" 
-        //,"Device6","Device7","Device9","Device10"};   //2024-03-19
-
+        SerialPort Dvc0Serial, Dvc1Serial, Dvc2Serial;  //2022-08-18=>The serialPort of devices
+        SerialPort Dvc3Serial, Dvc4Serial, Dvc5Serial, Dvc6Serial, Dvc7Serial, Dvc8Serial, Dvc9Serial;  //2022-11-08: Device? get SerialPort?
+        String strDvc0Port, strDvc1Port, strDvc2Port;   //2022-08-18=>The Com of devices
+        String strDvc3Port, strDvc4Port, strDvc5Port, strDvc6Port, strDvc7Port, strDvc8Port, strDvc9Port;  //2022-11-08: Device? get comport?
         DateTime dtBurnStartDvc0, dtBurnTimeDvc0;   //2022-08-29
         DateTime dtBurnStartDvc1, dtBurnTimeDvc1;   //2022-08-29
         DateTime dtBurnStartDvc2, dtBurnTimeDvc2;   //2022-08-29
@@ -534,7 +512,7 @@ namespace Ado
 
         private void btnCloseCom_Click(object sender, EventArgs e)  //2023-07-19
         {
-            if (cboComList.Text == strComSerial[0]/*strComSerial1*/) { /*serialPort1*/serialPortN[0].Close(); /*cboComDvc0.Text = "";*/ }//2024-03-13
+            if (cboComList.Text == strComSerial1) { serialPort1.Close(); cboComDvc0.Text = ""; }
             else if (cboComList.Text == strComSerial2) { serialPort2.Close(); }
             else if (cboComList.Text == strComSerial3) { serialPort3.Close(); }
             else if (cboComList.Text == strComSerial4) { serialPort4.Close(); }
@@ -546,7 +524,7 @@ namespace Ado
             else if (cboComList.Text == strComSerial10) { serialPort10.Close(); }
         }
 
-        private void timer15_Tick(object sender, EventArgs e)   //2023-07-19："AT+VER?" process
+        private void timer15_Tick(object sender, EventArgs e)   //2023-07-19
         {
             System.Windows.Forms.Application.DoEvents();    //Application.DoEvents();
             switch (iAtVerCmdStep)
@@ -559,7 +537,7 @@ namespace Ado
                     if (iDvcCnt >= 1)
                     {
                         iAtVerCmdStep = 2;
-                        OpenPort(serialPort1, strComSerial[0]/*strComSerial1*/);   //2022-12-02: Must before .DiscardInBuffer
+                        OpenPort(serialPort1, strComSerial1);   //2022-12-02: Must before .DiscardInBuffer
                         serialPort1.DiscardInBuffer(); serialPort1.DiscardOutBuffer();  //2022-12-04
                         serialPort1.Write("AT+VER?" + "\r\n");  //2023-06-30
                     }
@@ -1243,7 +1221,7 @@ namespace Ado
                     break;
 
                 case 10:
-                    if (IsOpenPort(Dvc1Serial, strDvc1Com))    //2023-02-16
+                    if (IsOpenPort(Dvc1Serial, strDvc1Port))    //2023-02-16
                     {
                         utilDvcxSerialWrite(eCPort.cPort1, "AT+BIT " + 0 + "\r\n"); //set mirror not open
                     }
@@ -1253,7 +1231,7 @@ namespace Ado
                 case 11: //2023-02-16    
                     //if ((iBurnTimeDvc1 > iTempChkTime) && !bTempChkInBurnDvc1)   //2023-02-15:To check temperature after certain time
                     //{
-                    //    //OpenPort(Dvc1Serial, strDvc1Com);
+                    //    //OpenPort(Dvc1Serial, strDvc1Port);
                     //    utilDvcxSerialWrite(eCPort.cPort1, "AT+TEMP?" + "\r\n");
                     //    bTempChkInBurnDvc1 = true;
                     //}
@@ -1264,13 +1242,13 @@ namespace Ado
 
                     if (bTempOver50Dvc1 && !bWaitCoolDvc1)
                     {
-                        //IsOpenPort(Dvc1Serial, strDvc1Com);
+                        //IsOpenPort(Dvc1Serial, strDvc1Port);
                         utilDvcxSerialWrite(eCPort.cPort1, "AT+CURR 0" + "\r\n");
                         iBurnStopStepDvc1 = 12;
                     }
                     else if (bTempUnder40Dvc1 && bWaitCoolDvc1)
                     {
-                        //IsOpenPort(Dvc1Serial, strDvc1Com);
+                        //IsOpenPort(Dvc1Serial, strDvc1Port);
                         utilDvcxSerialWrite(eCPort.cPort1, "AT+CURR 146" + "\r\n");
                         iBurnStopStepDvc1 = 13;
                     }
@@ -1278,7 +1256,7 @@ namespace Ado
                     if (iBurnTimeDvc1 > iBurnMin || bBurnStopDvc1)  //2022-09-19
                     {
                         bBurnFinishedDvc1 = true;
-                        //OpenPort(Dvc1Serial, strDvc1Com);
+                        //OpenPort(Dvc1Serial, strDvc1Port);
                         utilDvcxSerialWrite(eCPort.cPort1, "AT+BIS 0" + "\r\n");
                         timerDelay1ms(300);  //2022-12-01
                         iBurnStopStepDvc1 = 20;
@@ -1375,9 +1353,8 @@ namespace Ado
         const int iBurnRetWaitTime = 5; //2023-06-19
 
         int iWaitTimerMs = 5;    //2023-02-18:Set 5 min
-        int iMsecCount = 1;    //2023-02-18:1ms = 1 million counts
+        int iMsecCount = 10;    //2023-02-18:1ms = 1 million counts
         int iWaitCount; //2023-02-18
-        private static SerialPort serialPort14;
 
         private void timer6_Tick(object sender, EventArgs e)    //For Device3:2022-11-14
         {
@@ -1433,7 +1410,7 @@ namespace Ado
 
                 #region
                 case 10:
-                    if (IsOpenPort(Dvc3Serial, strDvc3Com))
+                    if (IsOpenPort(Dvc3Serial, strDvc3Port))
                     {
                         utilDvcxSerialWrite(eCPort.cPort3, "AT+BIT " + 0 + "\r\n"); //set mirror not open
                     }
@@ -1443,7 +1420,7 @@ namespace Ado
                 case 11: //2023-02-16
                     //if ((iBurnTimeDvc3 > iTempChkTime) && !bTempChkInBurnDvc3)   //2023-02-15:To check temperature after certain time
                     //{
-                    //    //OpenPort(Dvc3Serial, strDvc3Com);
+                    //    //OpenPort(Dvc3Serial, strDvc3Port);
                     //    utilDvcxSerialWrite(eCPort.cPort3, "AT+TEMP?" + "\r\n");
                     //    bTempChkInBurnDvc3 = true;
                     //}
@@ -1465,7 +1442,7 @@ namespace Ado
                     if (iBurnTimeDvc3 > iBurnMin || bBurnStopDvc3) 
                     {
                         bBurnFinishedDvc3 = true;
-                        //OpenPort(Dvc3Serial, strDvc3Com);
+                        //OpenPort(Dvc3Serial, strDvc3Port);
 						//Dvc3Serial.DiscardInBuffer(); Dvc3Serial.DiscardOutBuffer();  //2022-12-04
                         utilDvcxSerialWrite(eCPort.cPort3, "AT+BIS 0" + "\r\n");
                         timerDelay1ms(300);  //2022-12-01
@@ -1504,14 +1481,14 @@ namespace Ado
                     }
                     //if ((iBurnTimeDvc3 > iTempChkTime) && !bTempChkInBurnDvc3)   //2023-02-15:To check temperature after certain time
                     //{
-                    //    //OpenPort(Dvc3Serial, strDvc3Com);
+                    //    //OpenPort(Dvc3Serial, strDvc3Port);
                     //    utilDvcxSerialWrite(eCPort.cPort3, "AT+TEMP?" + "\r\n");
                     //    bTempChkInBurnDvc3 = true;
                     //}
                     if (iBurnTimeDvc3 > iBurnMin || bBurnStopDvc3)
                     {
                         bBurnFinishedDvc3 = true;
-                        //OpenPort(Dvc3Serial, strDvc3Com);
+                        //OpenPort(Dvc3Serial, strDvc3Port);
                         //Dvc3Serial.DiscardInBuffer(); Dvc3Serial.DiscardOutBuffer();  //2022-12-04
                         utilDvcxSerialWrite(eCPort.cPort3, "AT+BIS 0" + "\r\n");
                         timerDelay1ms(300);  //2022-12-01
@@ -1634,7 +1611,7 @@ namespace Ado
 
                 #region
                 case 10:
-                    if (IsOpenPort(Dvc4Serial, strDvc4Com))
+                    if (IsOpenPort(Dvc4Serial, strDvc4Port))
                     {
                         utilDvcxSerialWrite(eCPort.cPort4, "AT+BIT " + 0 + "\r\n"); //set mirror not open
                     }
@@ -1659,7 +1636,7 @@ namespace Ado
                     {
                         bBurnFinishedDvc4 = true;
                         iBurnStopStepDvc4 = 20;
-                        //OpenPort(Dvc4Serial, strDvc4Com);
+                        //OpenPort(Dvc4Serial, strDvc4Port);
 						//Dvc4Serial.DiscardInBuffer(); Dvc4Serial.DiscardOutBuffer();  //2022-12-04
                         utilDvcxSerialWrite(eCPort.cPort4, "AT+BIS 0" + "\r\n");
                         timerDelay1ms(300);  //2022-12-01
@@ -1698,7 +1675,7 @@ namespace Ado
                     }
                     //if ((iBurnTimeDvc4 > iTempChkTime) && !bTempChkInBurnDvc4)   //2023-02-15:To check temperature after certain time
                     //{
-                    //    //OpenPort(Dvc4Serial, strDvc4Com);
+                    //    //OpenPort(Dvc4Serial, strDvc4Port);
                     //    utilDvcxSerialWrite(eCPort.cPort4, "AT+TEMP?" + "\r\n");
                     //    bTempChkInBurnDvc4 = true;
                     //}
@@ -1706,7 +1683,7 @@ namespace Ado
                     {
                         bBurnFinishedDvc4 = true;
                         iBurnStopStepDvc4 = 20;
-                        //OpenPort(Dvc4Serial, strDvc4Com);
+                        //OpenPort(Dvc4Serial, strDvc4Port);
                         //Dvc4Serial.DiscardInBuffer(); Dvc4Serial.DiscardOutBuffer();  //2022-12-04
                         utilDvcxSerialWrite(eCPort.cPort4, "AT+BIS 0" + "\r\n");
                         timerDelay1ms(300);  //2022-12-01
@@ -1733,7 +1710,7 @@ namespace Ado
                     Console.WriteLine(strDateTimeDvc4);    //2023-02-17
                     if (!bBurnAll2ndTesting)    //2022-12-01
                     {
-                        //OpenPort(Dvc4Serial, strDvc4Com);
+                        //OpenPort(Dvc4Serial, strDvc4Port);
                         //Dvc4Serial.Write("AT+BIS 0" + "\r\n");  //2022-12-01
                         iBurnStopStepDvc4 += 1;
                     }
@@ -1852,7 +1829,7 @@ namespace Ado
 
                 #region
                 case 10:
-                    if (IsOpenPort(Dvc5Serial, strDvc5Com))
+                    if (IsOpenPort(Dvc5Serial, strDvc5Port))
                     {
                         utilDvcxSerialWrite(eCPort.cPort5, "AT+BIT " + 0 + "\r\n"); //set mirror not open
                     }
@@ -1877,7 +1854,7 @@ namespace Ado
                     if (iBurnTimeDvc5 > iBurnMin || bBurnStopDvc5)
                     {
                         bBurnFinishedDvc5 = true;
-                        //OpenPort(Dvc5Serial, strDvc5Com);
+                        //OpenPort(Dvc5Serial, strDvc5Port);
 						//Dvc5Serial.DiscardInBuffer(); Dvc5Serial.DiscardOutBuffer();  //2022-12-04
                         iBurnStopStepDvc5 = 20;
                         utilDvcxSerialWrite(eCPort.cPort5, "AT+BIS 0" + "\r\n");
@@ -1917,14 +1894,14 @@ namespace Ado
                     }
                     //if ((iBurnTimeDvc5 > iTempChkTime) && !bTempChkInBurnDvc5)   //2023-02-15:To check temperature after certain time
                     //{
-                    //    //OpenPort(Dvc5Serial, strDvc5Com);
+                    //    //OpenPort(Dvc5Serial, strDvc5Port);
                     //    utilDvcxSerialWrite(eCPort.cPort5, "AT+TEMP?" + "\r\n");
                     //    bTempChkInBurnDvc5 = true;
                     //}
                     if (iBurnTimeDvc5 > iBurnMin || bBurnStopDvc5)
                     {
                         bBurnFinishedDvc5 = true;
-                        //OpenPort(Dvc5Serial, strDvc5Com);
+                        //OpenPort(Dvc5Serial, strDvc5Port);
                         //Dvc5Serial.DiscardInBuffer(); Dvc5Serial.DiscardOutBuffer();  //2022-12-04
                         iBurnStopStepDvc5 = 20;
                         utilDvcxSerialWrite(eCPort.cPort5, "AT+BIS 0" + "\r\n");
@@ -2021,8 +1998,8 @@ namespace Ado
             utilDvcxSerialWrite(eCPort.cPort5, "AT+CURR 146" + "\r\n");
             timerDelay1ms(500);
 
-            //OpenPort(Dvc5Serial, strDvc5Com);  //2022-12-02: One more port open for sure
-            if (IsOpenPort(Dvc5Serial, strDvc5Com))
+            //OpenPort(Dvc5Serial, strDvc5Port);  //2022-12-02: One more port open for sure
+            if (IsOpenPort(Dvc5Serial, strDvc5Port))
             {
 				//Dvc5Serial.DiscardInBuffer(); Dvc5Serial.DiscardOutBuffer();  //2022-12-04
                 utilDvcxSerialWrite(eCPort.cPort5, "AT+RET" + "\r\n");
@@ -2030,7 +2007,7 @@ namespace Ado
                 strDateTimeDvc5= /*DateTime.Now*/dts5.ToString("yyyy-MM-dd-HH:mm:ss"); //2023-02-15
             }
             else   //2022-11-21
-            { MessageBox.Show("Dvc5:Test not finished for COM port " + strDvc5Com + " was not opened.\r\n"); }
+            { MessageBox.Show("Dvc5:Test not finished for COM port " + strDvc5Port + " was not opened.\r\n"); }
             timerDelay1s(2); //2023-06-27
             if (bBurnFinishedDvc5)
             { 
@@ -2058,14 +2035,14 @@ namespace Ado
             richBox.AppendText("\r\nDevice_5......Burn-in starting : " + "\r\n");
             btnBurn1hrDvc5.Enabled = false;
             txtTestRmkDvc5.Text = "";   //2023-06-19
-            if (IsOpenPort(Dvc5Serial, strDvc5Com))    //2022-11-28
+            if (IsOpenPort(Dvc5Serial, strDvc5Port))    //2022-11-28
             {
                 //Dvc5Serial.DiscardInBuffer(); Dvc5Serial.DiscardOutBuffer();  //2022-12-04
                 utilDvcxSerialWrite(eCPort.cPort5, "AT+BIT " + (iBurnMin) + "\r\n");
             }     //burn-in setting    
             timerDelay1ms(100);  //2022-11-28
 
-            //OpenPort(Dvc5Serial, strDvc5Com);  
+            //OpenPort(Dvc5Serial, strDvc5Port);  
 			//Dvc5Serial.DiscardInBuffer(); Dvc5Serial.DiscardOutBuffer();  //2022-12-04
             utilDvcxSerialWrite(eCPort.cPort5, "AT+BIS 1" + "\r\n"); //burn-in setting
             timerDelay1ms(200);  //2022-11-28
@@ -2116,8 +2093,8 @@ namespace Ado
             utilDvcxSerialWrite(eCPort.cPort6, "AT+CURR 146" + "\r\n");
             timerDelay1ms(500);
 
-            //OpenPort(Dvc6Serial, strDvc6Com);  //2022-12-02: One more port open for sure
-            if (IsOpenPort(Dvc6Serial, strDvc6Com))
+            //OpenPort(Dvc6Serial, strDvc6Port);  //2022-12-02: One more port open for sure
+            if (IsOpenPort(Dvc6Serial, strDvc6Port))
             {
                 //Dvc6Serial.DiscardInBuffer(); Dvc6Serial.DiscardOutBuffer();  //2022-12-04
 				utilDvcxSerialWrite(eCPort.cPort6, "AT+RET" + "\r\n");
@@ -2125,7 +2102,7 @@ namespace Ado
                 strDateTimeDvc6 = /*DateTime.Now*/dts6.ToString("yyyy-MM-dd-HH:mm:ss"); //2023-02-15
             }
             else   //2022-11-21
-            { MessageBox.Show("Dvc6:Test not finished for COM port " + strDvc6Com + " was not opened.\r\n"); }
+            { MessageBox.Show("Dvc6:Test not finished for COM port " + strDvc6Port + " was not opened.\r\n"); }
             timerDelay1s(2); //2023-06-27
             if (bBurnFinishedDvc6)
             { 
@@ -2153,14 +2130,14 @@ namespace Ado
             richBox.AppendText("\r\nDevice_6......Burn-in starting : " + "\r\n");
             btnBurn1hrDvc6.Enabled = false;
             txtTestRmkDvc6.Text = "";   //2023-06-19
-            if (IsOpenPort(Dvc6Serial, strDvc6Com))    //2022-11-28
+            if (IsOpenPort(Dvc6Serial, strDvc6Port))    //2022-11-28
             {
                 //Dvc6Serial.DiscardInBuffer(); Dvc6Serial.DiscardOutBuffer();  //2022-12-04
                 utilDvcxSerialWrite(eCPort.cPort6, "AT+BIT " + (iBurnMin) + "\r\n");
             }     //burn-in setting  
             timerDelay1ms(100);  //2022-11-28
 
-            //OpenPort(Dvc6Serial, strDvc6Com);
+            //OpenPort(Dvc6Serial, strDvc6Port);
             //Dvc6Serial.DiscardInBuffer(); Dvc6Serial.DiscardOutBuffer();  //2022-12-04
             utilDvcxSerialWrite(eCPort.cPort6, "AT+BIS 1" + "\r\n"); //burn-in setting 
             timerDelay1ms(200);  //2022-11-28
@@ -2236,7 +2213,7 @@ namespace Ado
 
                 #region
                 case 10:
-                    if (IsOpenPort(Dvc6Serial, strDvc6Com))
+                    if (IsOpenPort(Dvc6Serial, strDvc6Port))
                     {
                         utilDvcxSerialWrite(eCPort.cPort6, "AT+BIT " + 0 + "\r\n"); //set mirror not open
                     }
@@ -2262,7 +2239,7 @@ namespace Ado
                     {
                         iBurnStopStepDvc6 = 20;
                         bBurnFinishedDvc6 = true;
-                        //OpenPort(Dvc6Serial, strDvc6Com);
+                        //OpenPort(Dvc6Serial, strDvc6Port);
                         //Dvc6Serial.DiscardInBuffer(); Dvc6Serial.DiscardOutBuffer();  //2022-12-04
                         utilDvcxSerialWrite(eCPort.cPort6, "AT+BIS 0" + "\r\n");
                         timerDelay1ms(300);  //2022-12-01
@@ -2301,7 +2278,7 @@ namespace Ado
                     }
                     //if ((iBurnTimeDvc6 > iTempChkTime) && !bTempChkInBurnDvc6)   //2023-02-15:To check temperature after certain time
                     //{
-                    //    //OpenPort(Dvc6Serial, strDvc6Com);
+                    //    //OpenPort(Dvc6Serial, strDvc6Port);
                     //    utilDvcxSerialWrite(eCPort.cPort6, "AT+TEMP?" + "\r\n");
                     //    bTempChkInBurnDvc6 = true;                        
                     //}
@@ -2309,7 +2286,7 @@ namespace Ado
                     {
                         iBurnStopStepDvc6 = 20;
                         bBurnFinishedDvc6 = true;
-                        //OpenPort(Dvc6Serial, strDvc6Com);
+                        //OpenPort(Dvc6Serial, strDvc6Port);
                         //Dvc6Serial.DiscardInBuffer(); Dvc6Serial.DiscardOutBuffer();  //2022-12-04
                         utilDvcxSerialWrite(eCPort.cPort6, "AT+BIS 0" + "\r\n");
                         timerDelay1ms(300);  //2022-12-01
@@ -2430,7 +2407,7 @@ namespace Ado
 
                 #region
                 case 10: //2023-02-16
-                    if (IsOpenPort(Dvc7Serial, strDvc7Com))
+                    if (IsOpenPort(Dvc7Serial, strDvc7Port))
                     {
                         utilDvcxSerialWrite(eCPort.cPort7, "AT+BIT " + 0 + "\r\n"); //set mirror not open
                     }
@@ -2456,7 +2433,7 @@ namespace Ado
                     {
                         bBurnFinishedDvc7 = true;
                         iBurnStopStepDvc7 = 20;
-                        //OpenPort(Dvc7Serial, strDvc7Com);
+                        //OpenPort(Dvc7Serial, strDvc7Port);
 						//Dvc7Serial.DiscardInBuffer(); Dvc7Serial.DiscardOutBuffer();  //2022-12-04
                         utilDvcxSerialWrite(eCPort.cPort7, "AT+BIS 0" + "\r\n");
                         timerDelay1ms(300);  //2022-12-01
@@ -2495,7 +2472,7 @@ namespace Ado
                     }
                     //if ((iBurnTimeDvc7 > iTempChkTime) && !bTempChkInBurnDvc7)   //2023-02-15:To check temperature after certain time
                     //{
-                    //    //OpenPort(Dvc7Serial, strDvc7Com);
+                    //    //OpenPort(Dvc7Serial, strDvc7Port);
                     //    utilDvcxSerialWrite(eCPort.cPort7, "AT+TEMP?" + "\r\n");
                     //    bTempChkInBurnDvc7 = true;
                     //}
@@ -2503,7 +2480,7 @@ namespace Ado
                     {
                         bBurnFinishedDvc7 = true;
                         iBurnStopStepDvc7 = 20;
-                        //OpenPort(Dvc7Serial, strDvc7Com);
+                        //OpenPort(Dvc7Serial, strDvc7Port);
                         //Dvc7Serial.DiscardInBuffer(); Dvc7Serial.DiscardOutBuffer();  //2022-12-04
                         utilDvcxSerialWrite(eCPort.cPort7, "AT+BIS 0" + "\r\n");
                         timerDelay1ms(300);  //2022-12-01
@@ -2623,7 +2600,7 @@ namespace Ado
 
                 #region
                 case 10:
-                    if (IsOpenPort(Dvc8Serial, strDvc8Com))
+                    if (IsOpenPort(Dvc8Serial, strDvc8Port))
                     {
                         utilDvcxSerialWrite(eCPort.cPort8, "AT+BIT " + 0 + "\r\n"); //set mirror not open
                     }
@@ -2649,7 +2626,7 @@ namespace Ado
                     {
                         bBurnFinishedDvc8 = true;
                         iBurnStopStepDvc8 = 20;
-                        //OpenPort(Dvc8Serial, strDvc8Com);
+                        //OpenPort(Dvc8Serial, strDvc8Port);
 						//Dvc8Serial.DiscardInBuffer(); Dvc8Serial.DiscardOutBuffer();  //2022-12-04
                         utilDvcxSerialWrite(eCPort.cPort8, "AT+BIS 0" + "\r\n");
                         timerDelay1ms(300);  //2022-12-01
@@ -2688,7 +2665,7 @@ namespace Ado
                     }
                     //if ((iBurnTimeDvc8 > iTempChkTime) && !bTempChkInBurnDvc8)   //2023-02-15:To check temperature after certain time
                     //{
-                    //    //OpenPort(Dvc8Serial, strDvc8Com);
+                    //    //OpenPort(Dvc8Serial, strDvc8Port);
                     //    utilDvcxSerialWrite(eCPort.cPort8, "AT+TEMP?" + "\r\n");
                     //    bTempChkInBurnDvc8 = true;
                     //}
@@ -2696,7 +2673,7 @@ namespace Ado
                     {
                         bBurnFinishedDvc8 = true;
                         iBurnStopStepDvc8 = 20;
-                        //OpenPort(Dvc8Serial, strDvc8Com);
+                        //OpenPort(Dvc8Serial, strDvc8Port);
                         //Dvc8Serial.DiscardInBuffer(); Dvc8Serial.DiscardOutBuffer();  //2022-12-04
                         utilDvcxSerialWrite(eCPort.cPort8, "AT+BIS 0" + "\r\n");
                         timerDelay1ms(300);  //2022-12-01
@@ -2817,7 +2794,7 @@ namespace Ado
 
                 #region
                 case 10:
-                    if (IsOpenPort(Dvc9Serial, strDvc9Com))
+                    if (IsOpenPort(Dvc9Serial, strDvc9Port))
                     {
                         utilDvcxSerialWrite(eCPort.cPort9, "AT+BIT " + 0 + "\r\n"); //set mirror not open
                     }
@@ -2843,7 +2820,7 @@ namespace Ado
                     {
                         bBurnFinishedDvc9 = true;
                         iBurnStopStepDvc9 = 20;
-                        //OpenPort(Dvc9Serial, strDvc9Com);
+                        //OpenPort(Dvc9Serial, strDvc9Port);
 						//Dvc9Serial.DiscardInBuffer(); Dvc9Serial.DiscardOutBuffer();  //2022-12-04
                         utilDvcxSerialWrite(eCPort.cPort9, "AT+BIS 0" + "\r\n");
                         timerDelay1ms(300);  //2022-12-01
@@ -2881,7 +2858,7 @@ namespace Ado
                     }
                     //if ((iBurnTimeDvc9 > iTempChkTime) && !bTempChkInBurnDvc9)   //2023-02-15:To check temperature after certain time
                     //{
-                    //    //OpenPort(Dvc9Serial, strDvc9Com);
+                    //    //OpenPort(Dvc9Serial, strDvc9Port);
                     //    utilDvcxSerialWrite(eCPort.cPort9, "AT+TEMP?" + "\r\n");
                     //    bTempChkInBurnDvc9 = true;
                     //}
@@ -2889,7 +2866,7 @@ namespace Ado
                     {
                         bBurnFinishedDvc9 = true;
                         iBurnStopStepDvc9 = 20;
-                        //OpenPort(Dvc9Serial, strDvc9Com);
+                        //OpenPort(Dvc9Serial, strDvc9Port);
                         //Dvc9Serial.DiscardInBuffer(); Dvc9Serial.DiscardOutBuffer();  //2022-12-04
                         utilDvcxSerialWrite(eCPort.cPort9, "AT+BIS 0" + "\r\n");
                         timerDelay1ms(300);  //2022-12-01
@@ -2984,8 +2961,8 @@ namespace Ado
             utilDvcxSerialWrite(eCPort.cPort7, "AT+CURR 146" + "\r\n");
             timerDelay1ms(500);
 
-            //OpenPort(Dvc7Serial, strDvc7Com);  //2022-12-02: One more port open for sure
-            if (IsOpenPort(Dvc7Serial, strDvc7Com))
+            //OpenPort(Dvc7Serial, strDvc7Port);  //2022-12-02: One more port open for sure
+            if (IsOpenPort(Dvc7Serial, strDvc7Port))
             {
 				//Dvc7Serial.DiscardInBuffer(); Dvc7Serial.DiscardOutBuffer();  //2022-12-04
                 utilDvcxSerialWrite(eCPort.cPort7, "AT+RET" + "\r\n");
@@ -2993,7 +2970,7 @@ namespace Ado
                 strDateTimeDvc7 = /*DateTime.Now*/dts7.ToString("yyyy-MM-dd-HH:mm:ss"); //2023-02-15
             }
             else   //2022-11-21
-            { MessageBox.Show("Dvc7:Test not finished for COM port " + strDvc7Com + " was not opened.\r\n"); }
+            { MessageBox.Show("Dvc7:Test not finished for COM port " + strDvc7Port + " was not opened.\r\n"); }
             timerDelay1s(2); //2023-06-27
             if (bBurnFinishedDvc7)
             { 
@@ -3032,8 +3009,8 @@ namespace Ado
             utilDvcxSerialWrite(eCPort.cPort8, "AT+CURR 146" + "\r\n");
             timerDelay1ms(500);
 
-            //OpenPort(Dvc8Serial, strDvc8Com);  //2022-12-02: One more port open for sure
-            if (IsOpenPort(Dvc8Serial, strDvc8Com))
+            //OpenPort(Dvc8Serial, strDvc8Port);  //2022-12-02: One more port open for sure
+            if (IsOpenPort(Dvc8Serial, strDvc8Port))
             {
 				//Dvc8Serial.DiscardInBuffer(); Dvc8Serial.DiscardOutBuffer();  //2022-12-04
                 utilDvcxSerialWrite(eCPort.cPort8, "AT+RET" + "\r\n");
@@ -3041,7 +3018,7 @@ namespace Ado
                 strDateTimeDvc8 = /*DateTime.Now*/dts8.ToString("yyyy-MM-dd-HH:mm:ss"); //2023-02-15
             }
             else   //2022-11-21
-            { MessageBox.Show("Dvc8:Test not finished for COM port " + strDvc8Com + " was not opened.\r\n"); }
+            { MessageBox.Show("Dvc8:Test not finished for COM port " + strDvc8Port + " was not opened.\r\n"); }
             timerDelay1s(2); //2023-06-27
             if (bBurnFinishedDvc8)
             { 
@@ -3081,8 +3058,8 @@ namespace Ado
             utilDvcxSerialWrite(eCPort.cPort9, "AT+CURR 146" + "\r\n");
             timerDelay1ms(500);
 
-            //OpenPort(Dvc9Serial, strDvc9Com);  //2022-12-01: One more port open for sure
-            if (IsOpenPort(Dvc9Serial, strDvc9Com))
+            //OpenPort(Dvc9Serial, strDvc9Port);  //2022-12-01: One more port open for sure
+            if (IsOpenPort(Dvc9Serial, strDvc9Port))
             {
 				//Dvc9Serial.DiscardInBuffer(); Dvc9Serial.DiscardOutBuffer();  //2022-12-04
                 utilDvcxSerialWrite(eCPort.cPort9, "AT+RET" + "\r\n");
@@ -3090,7 +3067,7 @@ namespace Ado
                 strDateTimeDvc9 = /*DateTime.Now*/dts9.ToString("yyyy-MM-dd-HH:mm:ss"); //2023-02-15
             }
             else   //2022-11-21
-            { MessageBox.Show("Dvc9:Test not finished for COM port " + strDvc9Com + " was not opened.\r\n"); }
+            { MessageBox.Show("Dvc9:Test not finished for COM port " + strDvc9Port + " was not opened.\r\n"); }
             timerDelay1s(2); //2023-06-27
             if (bBurnFinishedDvc9)
             { 
@@ -3118,7 +3095,7 @@ namespace Ado
             richBox.AppendText("\r\nDevice_7......Burn-in starting : " + "\r\n");
             btnBurn1hrDvc7.Enabled = false;
             txtTestRmkDvc7.Text = "";   //2023-06-19
-            if (IsOpenPort(Dvc7Serial, strDvc7Com))    //2022-11-28
+            if (IsOpenPort(Dvc7Serial, strDvc7Port))    //2022-11-28
             {
                 //Dvc7Serial.DiscardInBuffer(); Dvc7Serial.DiscardOutBuffer();  //2022-12-04
                 utilDvcxSerialWrite(eCPort.cPort7, "AT+BIT " + (iBurnMin) + "\r\n");
@@ -3163,14 +3140,14 @@ namespace Ado
             richBox.AppendText("\r\nDevice_8......Burn-in starting : " + "\r\n");
             btnBurn1hrDvc8.Enabled = false;
             txtTestRmkDvc8.Text = "";   //2023-06-19
-            if (IsOpenPort(Dvc8Serial, strDvc8Com))    //2022-11-28
+            if (IsOpenPort(Dvc8Serial, strDvc8Port))    //2022-11-28
             {
                 //Dvc8Serial.DiscardInBuffer(); Dvc8Serial.DiscardOutBuffer();  //2022-12-04
                 utilDvcxSerialWrite(eCPort.cPort8, "AT+BIT " + (iBurnMin) + "\r\n");
             }     //burn-in setting  
             timerDelay1ms(100);  //2022-11-28
 
-            //OpenPort(Dvc8Serial, strDvc8Com);
+            //OpenPort(Dvc8Serial, strDvc8Port);
             //Dvc8Serial.DiscardInBuffer(); Dvc8Serial.DiscardOutBuffer();  //2022-12-04
             utilDvcxSerialWrite(eCPort.cPort8, "AT+BIS 1" + "\r\n");
             timerDelay1ms(200);  //2022-11-28
@@ -3210,14 +3187,14 @@ namespace Ado
             richBox.AppendText("\r\nDevice_9......Burn-in starting : " + "\r\n");
             btnBurn1hrDvc9.Enabled = false;
             txtTestRmkDvc9.Text = "";   //2023-06-19
-            if (IsOpenPort(Dvc9Serial, strDvc9Com))    //2022-11-28
+            if (IsOpenPort(Dvc9Serial, strDvc9Port))    //2022-11-28
             {
                 //Dvc9Serial.DiscardInBuffer(); Dvc9Serial.DiscardOutBuffer();  //2022-12-04
                 utilDvcxSerialWrite(eCPort.cPort9, "AT+BIT " + (iBurnMin) + "\r\n");
             }     //burn-in setting 
             timerDelay1ms(100);  //2022-11-28
 
-            //OpenPort(Dvc9Serial, strDvc9Com);
+            //OpenPort(Dvc9Serial, strDvc9Port);
             //Dvc9Serial.DiscardInBuffer(); Dvc9Serial.DiscardOutBuffer();  //2022-12-04
             utilDvcxSerialWrite(eCPort.cPort9, "AT+BIS 1" + "\r\n");
             timerDelay1ms(200);  //2022-11-28
@@ -3307,14 +3284,14 @@ namespace Ado
             richBox.AppendText("\r\nDevice_4......Burn-in starting : " + "\r\n");
             btnBurn1hrDvc4.Enabled = false;
             txtTestRmkDvc4.Text = "";   //2023-06-19
-            if (IsOpenPort(Dvc4Serial, strDvc4Com))    //2022-11-28
+            if (IsOpenPort(Dvc4Serial, strDvc4Port))    //2022-11-28
             {
                 //Dvc4Serial.DiscardInBuffer(); Dvc4Serial.DiscardOutBuffer();  //2022-12-04
                 utilDvcxSerialWrite(eCPort.cPort4, "AT+BIT " + (iBurnMin) + "\r\n");
             }     //burn-in setting    
             timerDelay1ms(100);  //2022-11-28
 
-            //OpenPort(Dvc4Serial, strDvc4Com);
+            //OpenPort(Dvc4Serial, strDvc4Port);
 			//Dvc4Serial.DiscardInBuffer(); Dvc4Serial.DiscardOutBuffer();  //2022-12-04
             utilDvcxSerialWrite(eCPort.cPort4, "AT+BIS 1" + "\r\n");
             timerDelay1ms(200);  //2022-11-28
@@ -3382,7 +3359,7 @@ namespace Ado
             utilDvcxSerialWrite(eCPort.cPort4, "AT+CURR 146" + "\r\n");
             timerDelay1ms(500);
 
-            if (IsOpenPort(Dvc4Serial, strDvc4Com))
+            if (IsOpenPort(Dvc4Serial, strDvc4Port))
             {
 				//Dvc4Serial.DiscardInBuffer(); Dvc4Serial.DiscardOutBuffer();  //2022-12-04
                 utilDvcxSerialWrite(eCPort.cPort4, "AT+RET" + "\r\n");
@@ -3390,7 +3367,7 @@ namespace Ado
                 strDateTimeDvc4 = /*DateTime.Now*/dts4.ToString("yyyy-MM-dd-HH:mm:ss"); //2023-02-15
             }
             else   //2022-11-21
-            { MessageBox.Show("Dvc4:Test not finished for COM port " + strDvc4Com + " was not opened.\r\n"); }
+            { MessageBox.Show("Dvc4:Test not finished for COM port " + strDvc4Port + " was not opened.\r\n"); }
             timerDelay1s(2); //2023-06-27
             if (bBurnFinishedDvc4)
             { 
@@ -3416,12 +3393,12 @@ namespace Ado
                     { iBurnInQueStep += 1; } 
                     break;
                 case 1:
-                    if (strDvc0Com != null)    //Device_0
+                    if (strDvc0Port != null)    //Device_0
                     {
                         richBox.AppendText("\r\n......Burn-in starting : " + "\r\n");
                         btnBurn1hrDvc0.Enabled = false;
                         btnTest_Click(null, null);
-                        if (IsOpenPort(Dvc0Serial, strDvc0Com))
+                        if (IsOpenPort(Dvc0Serial, strDvc0Port))
                         {
 							//Dvc0Serial.DiscardInBuffer(); Dvc0Serial.DiscardOutBuffer();  //2022-12-04
                             utilDvcxSerialWrite(eCPort.cPort0, "AT+BIS 1" + "\r\n");
@@ -3461,7 +3438,7 @@ namespace Ado
                     }
                     break;
                 case 11:
-                    if (strDvc1Com != null)    //Device_1
+                    if (strDvc1Port != null)    //Device_1
                     {
                         iBurnInQueStep += 1;
                         btnBurn1hrDvc1_Click(null, null);   //2022-11-23(avoid report repeat open)
@@ -3487,7 +3464,7 @@ namespace Ado
                     }
                     break;
                 case 21:
-                    if (strDvc2Com != null)    //Device_2
+                    if (strDvc2Port != null)    //Device_2
                     {
                         iBurnInQueStep += 1;
                         btnBurn1hrDvc2_Click(null, null);   //2022-11-23(avoid report repeat open)
@@ -3514,7 +3491,7 @@ namespace Ado
                     }
                     break;
                 case 31:
-                    if (strDvc3Com != null)    //Device_3
+                    if (strDvc3Port != null)    //Device_3
                     {
                         iBurnInQueStep += 1;
                         btnBurn1hrDvc3_Click(null, null);   //2022-11-23(avoid report repeat open)
@@ -3541,7 +3518,7 @@ namespace Ado
                     }
                     break;
                 case 41:
-                    if (strDvc4Com != null)    //Device_4
+                    if (strDvc4Port != null)    //Device_4
                     {
                         iBurnInQueStep += 1;
                         btnBurn1hrDvc4_Click(null, null);   //2022-11-23(avoid report repeat open)
@@ -3568,7 +3545,7 @@ namespace Ado
                     }
                     break;
                 case 51:
-                    if (strDvc5Com != null)    //Device_5
+                    if (strDvc5Port != null)    //Device_5
                     {
                         iBurnInQueStep += 1;
                         btnBurn1hrDvc5_Click(null, null);   //2022-11-23(avoid report repeat open)
@@ -3595,7 +3572,7 @@ namespace Ado
                     }
                     break;
                 case 61:
-                    if (strDvc6Com != null)    //Device_6
+                    if (strDvc6Port != null)    //Device_6
                     {
                         iBurnInQueStep += 1;
                         btnBurn1hrDvc6_Click(null, null);   //2022-11-23(avoid report repeat open)
@@ -3622,7 +3599,7 @@ namespace Ado
                     }
                     break;
                 case 71:
-                    if (strDvc7Com != null)    //Device_7
+                    if (strDvc7Port != null)    //Device_7
                     {
                         iBurnInQueStep += 1;
                         btnBurn1hrDvc7_Click(null, null);   //2022-11-23(avoid report repeat open)
@@ -3649,7 +3626,7 @@ namespace Ado
                     }
                     break;
                 case 81:
-                    if (strDvc8Com != null)    //Device_8
+                    if (strDvc8Port != null)    //Device_8
                     {
                         iBurnInQueStep += 1;
                         btnBurn1hrDvc8_Click(null, null);   //2022-11-23(avoid report repeat open)
@@ -3676,7 +3653,7 @@ namespace Ado
                     }
                     break;
                 case 91:
-                    if (strDvc9Com != null)    //Device_9
+                    if (strDvc9Port != null)    //Device_9
                     {
                         iBurnInQueStep += 1;
                         btnBurn1hrDvc9_Click(null, null);   //2022-11-23(avoid report repeat open)
@@ -3764,8 +3741,8 @@ namespace Ado
             utilDvcxSerialWrite(eCPort.cPort3, "AT+CURR 146" + "\r\n");
             timerDelay1ms(500);
 
-            //OpenPort(Dvc3Serial, strDvc3Com);  //2022-12-02: One more port open for sure
-            if (IsOpenPort(Dvc3Serial, strDvc3Com))
+            //OpenPort(Dvc3Serial, strDvc3Port);  //2022-12-02: One more port open for sure
+            if (IsOpenPort(Dvc3Serial, strDvc3Port))
             {
 				//Dvc3Serial.DiscardInBuffer(); Dvc3Serial.DiscardOutBuffer();  //2022-12-04
                 utilDvcxSerialWrite(eCPort.cPort3, "AT+RET" + "\r\n");
@@ -3773,7 +3750,7 @@ namespace Ado
                 strDateTimeDvc3 = /*DateTime.Now*/dts3.ToString("yyyy-MM-dd-HH:mm:ss"); //2023-02-15
             }
             else   //2022-11-21
-            { MessageBox.Show("Dvc3:Test not finished for COM port " + strDvc3Com + " was not opened.\r\n"); }
+            { MessageBox.Show("Dvc3:Test not finished for COM port " + strDvc3Port + " was not opened.\r\n"); }
             timerDelay1s(2); //2023-06-27
             if (bBurnFinishedDvc3)
             { 
@@ -3801,14 +3778,14 @@ namespace Ado
             richBox.AppendText("\r\nDevice_3......Burn-in starting : " + "\r\n");  
             btnBurn1hrDvc3.Enabled = false;
             txtTestRmkDvc3.Text = "";   //2023-06-19
-            if (IsOpenPort(Dvc3Serial, strDvc3Com))    //2022-11-28
+            if (IsOpenPort(Dvc3Serial, strDvc3Port))    //2022-11-28
             {
                 Dvc3Serial.DiscardInBuffer(); Dvc3Serial.DiscardOutBuffer();  //2022-12-04
                 utilDvcxSerialWrite(eCPort.cPort3, "AT+BIT " + (iBurnMin) + "\r\n");
             }     //burn-in setting    
             timerDelay1ms(100);  //2022-11-28
 
-            //OpenPort(Dvc3Serial, strDvc3Com); 
+            //OpenPort(Dvc3Serial, strDvc3Port); 
 			//Dvc3Serial.DiscardInBuffer(); Dvc3Serial.DiscardOutBuffer();  //2022-12-04
             utilDvcxSerialWrite(eCPort.cPort3, "AT+BIS 1" + "\r\n");
             timerDelay1ms(200);  //2022-11-28
@@ -3848,8 +3825,6 @@ namespace Ado
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            statusStrip1.AutoSize = false;  toolStripStatusLabel1.Width = 270;  //2024-02-20
-            toolStripStatusLabel1.Text = ""; //2024-02-20
             txtMac.Text = GetMacAddress().ToString(); //2023-07-28
             utilCheckUserFile();    //2023-07-06
             lblSWver.Text = strSwVer;  //2022-06-27
@@ -3891,7 +3866,6 @@ namespace Ado
             lblBurnRestDvc9.Visible = false; btnBurnStopDvc9.Visible = false; btnBurnStopDvc9.ForeColor = Color.Red;
 
             InitPortConfig();
-            utilVerChk();   //2024-03-07
 
             Control.CheckForIllegalCrossThreadCalls = false;
             serialPort1.DataReceived += new SerialDataReceivedEventHandler(dataReceived1);
@@ -4229,7 +4203,7 @@ namespace Ado
                         break;
                 }
                 abComPortBusyFlag[(int)eCPort.cPort0] = true;
-                IsOpenPort(Dvc0Serial, strDvc0Com);    //2023-06-17
+                IsOpenPort(Dvc0Serial, strDvc0Port);    //2023-06-17
                 /* Serial Port Flush */
                 Dvc0Serial.DiscardOutBuffer();
                 Dvc0Serial.DiscardInBuffer();
@@ -4244,7 +4218,7 @@ namespace Ado
                         break;
                 }
                 abComPortBusyFlag[(int)eCPort.cPort1] = true;
-                IsOpenPort(Dvc1Serial, strDvc1Com);    //2023-06-17
+                IsOpenPort(Dvc1Serial, strDvc1Port);    //2023-06-17
                 /* Serial Port Flush */
                 Dvc1Serial.DiscardOutBuffer();
                 Dvc1Serial.DiscardInBuffer();
@@ -4259,7 +4233,7 @@ namespace Ado
                         break;
                 }
                 abComPortBusyFlag[(int)eCPort.cPort2] = true;
-                IsOpenPort(Dvc2Serial, strDvc2Com);    //2023-06-17
+                IsOpenPort(Dvc2Serial, strDvc2Port);    //2023-06-17
                 /* Serial Port Flush */
                 Dvc2Serial.DiscardOutBuffer();
                 Dvc2Serial.DiscardInBuffer();
@@ -4274,7 +4248,7 @@ namespace Ado
                         break;
                 }
                 abComPortBusyFlag[(int)eCPort.cPort3] = true;
-                IsOpenPort(Dvc3Serial, strDvc3Com);    //2023-06-17
+                IsOpenPort(Dvc3Serial, strDvc3Port);    //2023-06-17
                 /* Serial Port Flush */
                 Dvc3Serial.DiscardOutBuffer();
                 Dvc3Serial.DiscardInBuffer();
@@ -4289,7 +4263,7 @@ namespace Ado
                         break;
                 }
                 abComPortBusyFlag[(int)eCPort.cPort4] = true;
-                IsOpenPort(Dvc4Serial, strDvc4Com);    //2023-06-17
+                IsOpenPort(Dvc4Serial, strDvc4Port);    //2023-06-17
                 /* Serial Port Flush */
                 Dvc4Serial.DiscardOutBuffer();
                 Dvc4Serial.DiscardInBuffer();
@@ -4304,7 +4278,7 @@ namespace Ado
                         break;
                 }
                 abComPortBusyFlag[(int)eCPort.cPort5] = true;
-                IsOpenPort(Dvc5Serial, strDvc5Com);    //2023-06-17
+                IsOpenPort(Dvc5Serial, strDvc5Port);    //2023-06-17
                 /* Serial Port Flush */
                 Dvc5Serial.DiscardOutBuffer();
                 Dvc5Serial.DiscardInBuffer();
@@ -4319,7 +4293,7 @@ namespace Ado
                         break;
                 }
                 abComPortBusyFlag[(int)eCPort.cPort6] = true;
-                IsOpenPort(Dvc6Serial, strDvc6Com);    //2023-06-17
+                IsOpenPort(Dvc6Serial, strDvc6Port);    //2023-06-17
                 /* Serial Port Flush */
                 Dvc6Serial.DiscardOutBuffer();
                 Dvc6Serial.DiscardInBuffer();
@@ -4334,7 +4308,7 @@ namespace Ado
                         break;
                 }
                 abComPortBusyFlag[(int)eCPort.cPort7] = true;
-                IsOpenPort(Dvc7Serial, strDvc7Com);    //2023-06-17
+                IsOpenPort(Dvc7Serial, strDvc7Port);    //2023-06-17
                 /* Serial Port Flush */
                 Dvc7Serial.DiscardOutBuffer();
                 Dvc7Serial.DiscardInBuffer();
@@ -4349,7 +4323,7 @@ namespace Ado
                         break;
                 }
                 abComPortBusyFlag[(int)eCPort.cPort8] = true;
-                IsOpenPort(Dvc8Serial, strDvc8Com);    //2023-06-17
+                IsOpenPort(Dvc8Serial, strDvc8Port);    //2023-06-17
                 /* Serial Port Flush */
                 Dvc8Serial.DiscardOutBuffer();
                 Dvc8Serial.DiscardInBuffer();
@@ -4364,7 +4338,7 @@ namespace Ado
                         break;
                 }
                 abComPortBusyFlag[(int)eCPort.cPort9] = true;
-                IsOpenPort(Dvc9Serial, strDvc9Com);    //2023-06-17
+                IsOpenPort(Dvc9Serial, strDvc9Port);    //2023-06-17
                 /* Serial Port Flush */
                 Dvc9Serial.DiscardOutBuffer();
                 Dvc9Serial.DiscardInBuffer();
@@ -4382,7 +4356,7 @@ namespace Ado
             int i;
             try
             {                
-                string[] COMPort = System.IO.Ports.SerialPort.GetPortNames();                
+                string[] COMPort = System.IO.Ports.SerialPort.GetPortNames();
                 string[] baud = { "57600", "115200" };
                 cboBaudDvc0.Items.AddRange(baud);
                 cboBaudDvc0.Text = baud[1]; cboBaudDvc1.Text = baud[1]; cboBaudDvc2.Text = baud[1];    //by Eric   //2022-08-17
@@ -5583,9 +5557,8 @@ namespace Ado
                                                 richBox.AppendText( "不是燒機用的站別 " + iDvcId + "，需請工程師做設定\r\n");
                                                 MessageBox.Show("有治具不是燒機的站別，需請工程師做設定");
                                             }
-                                            int iDvcArrCnt = 0; //2024-03-21
                                             if (iDvcId == 9)  //2022-11-15: Device_9
-                                            {                                                
+                                            {
                                                 if (lblDevIdDvc9.Text != "")
                                                 {
                                                     MessageBox.Show("Device ID repeated.有重複的ID");
@@ -5596,75 +5569,65 @@ namespace Ado
                                                     cboComDvc9.Text = ""; cboComDvc9.Items.Clear();
                                                     if (iAtVerCmdStep == 3)
                                                     {
-                                                        //cboComDvc9.Text = strComSerial1;
-                                                        //strComDvc[9]/*strDvc9Com*/ = strComSerial1;    //-->Remember the ComPort of Device
-                                                        //serialDvc[9]/*Dvc9Serial*/ = serialPortN[0]/*serialPort1*/;   //-->Remember the serialPort of Device
-                                                        iDvcArrCnt = 0; //2024-03-22
+                                                        cboComDvc9.Text = strComSerial1;
+                                                        strDvc9Port = strComSerial1;    //-->Remember the ComPort of Device
+                                                        Dvc9Serial = serialPort1;   //-->Remember the serialPort of Device
                                                     }
                                                     if (iAtVerCmdStep == 13)
                                                     {
-                                                        //cboComDvc9.Text = strComSerial2;
-                                                        //strDvc9Com = strComSerial2;
-                                                        //Dvc9Serial = serialPort2;
-                                                        iDvcArrCnt = 1; //2024-03-22
+                                                        cboComDvc9.Text = strComSerial2;
+                                                        strDvc9Port = strComSerial2;
+                                                        Dvc9Serial = serialPort2;
                                                     }
                                                     if (iAtVerCmdStep == 23)
                                                     {
-                                                        //cboComDvc9.Text = strComSerial3;
-                                                        //strDvc9Com = strComSerial3;
-                                                        //Dvc9Serial = serialPort3;
-                                                        iDvcArrCnt = 2; //2024-03-22
+                                                        cboComDvc9.Text = strComSerial3;
+                                                        strDvc9Port = strComSerial3;
+                                                        Dvc9Serial = serialPort3;
                                                     }
+
                                                     if (iAtVerCmdStep == 33)
                                                     {
-                                                        //cboComDvc9.Text = strComSerial4;
-                                                        //strDvc9Com = strComSerial4;
-                                                        //Dvc9Serial = serialPort4;
-                                                        iDvcArrCnt = 3; //2024-03-22
+                                                        cboComDvc9.Text = strComSerial4;
+                                                        strDvc9Port = strComSerial4;
+                                                        Dvc9Serial = serialPort4;
                                                     }
                                                     if (iAtVerCmdStep == 43)
                                                     {
-                                                        //cboComDvc9.Text = strComSerial5;
-                                                        //strDvc9Com = strComSerial5;
-                                                        //Dvc9Serial = serialPort5;
-                                                        iDvcArrCnt = 4; //2024-03-22
+                                                        cboComDvc9.Text = strComSerial5;
+                                                        strDvc9Port = strComSerial5;
+                                                        Dvc9Serial = serialPort5;
                                                     }
                                                     if (iAtVerCmdStep == 53)
                                                     {
-                                                        //cboComDvc9.Text = strComSerial6;
-                                                        //strDvc9Com = strComSerial6;
-                                                        //Dvc9Serial = serialPort6;
-                                                        iDvcArrCnt = 5; //2024-03-22
+                                                        cboComDvc9.Text = strComSerial6;
+                                                        strDvc9Port = strComSerial6;
+                                                        Dvc9Serial = serialPort6;
                                                     }
                                                     if (iAtVerCmdStep == 63)
                                                     {
-                                                        //cboComDvc9.Text = strComSerial7;
-                                                        //strDvc9Com = strComSerial7;
-                                                        //Dvc9Serial = serialPort7;
-                                                        iDvcArrCnt = 6; //2024-03-22
+                                                        cboComDvc9.Text = strComSerial7;
+                                                        strDvc9Port = strComSerial7;
+                                                        Dvc9Serial = serialPort7;
                                                     }
                                                     if (iAtVerCmdStep == 73)
                                                     {
-                                                        //cboComDvc9.Text = strComSerial8;
-                                                        //strDvc9Com = strComSerial8;
-                                                        //Dvc9Serial = serialPort8;
-                                                        iDvcArrCnt = 7; //2024-03-22
+                                                        cboComDvc9.Text = strComSerial8;
+                                                        strDvc9Port = strComSerial8;
+                                                        Dvc9Serial = serialPort8;
                                                     }
                                                     if (iAtVerCmdStep == 83)
                                                     {
-                                                        //cboComDvc9.Text = strComSerial9;
-                                                        //strDvc9Com = strComSerial9;
-                                                        //Dvc9Serial = serialPort9;
-                                                        iDvcArrCnt = 8; //2024-03-22
+                                                        cboComDvc9.Text = strComSerial9;
+                                                        strDvc9Port = strComSerial9;
+                                                        Dvc9Serial = serialPort9;
                                                     }
                                                     if (iAtVerCmdStep == 93)
                                                     {
-                                                        //cboComDvc9.Text = strComSerial10;
-                                                        //strDvc9Com = strComSerial10;
-                                                        //Dvc9Serial = serialPort10;
-                                                        iDvcArrCnt = 9; //2024-03-22
+                                                        cboComDvc9.Text = strComSerial10;
+                                                        strDvc9Port = strComSerial10;
+                                                        Dvc9Serial = serialPort10;
                                                     }
-                                                    cboComDvc9.Text = strComSerial[iDvcArrCnt]; //2024-03-22
                                                 }
                                             }
                                             else if (iDvcId == 8)  //2022-11-15: Device_8
@@ -5680,70 +5643,64 @@ namespace Ado
                                                     if (iAtVerCmdStep == 3)
                                                     {
                                                         cboComDvc8.Text = strComSerial1;
-                                                        strDvc8Com = strComSerial1;    //-->Remember the ComPort of Device
+                                                        strDvc8Port = strComSerial1;    //-->Remember the ComPort of Device
                                                         Dvc8Serial = serialPort1;   //-->Remember the serialPort of Device
-
                                                     }
                                                     if (iAtVerCmdStep == 13)
                                                     {
                                                         cboComDvc8.Text = strComSerial2;
-                                                        strDvc8Com = strComSerial2;
+                                                        strDvc8Port = strComSerial2;
                                                         Dvc8Serial = serialPort2;
                                                     }
                                                     if (iAtVerCmdStep == 23)
                                                     {
                                                         cboComDvc8.Text = strComSerial3;
-                                                        strDvc8Com = strComSerial3;
+                                                        strDvc8Port = strComSerial3;
                                                         Dvc8Serial = serialPort3;
                                                     }
 
                                                     if (iAtVerCmdStep == 33)
                                                     {
                                                         cboComDvc8.Text = strComSerial4;
-                                                        strDvc8Com = strComSerial4;
+                                                        strDvc8Port = strComSerial4;
                                                         Dvc8Serial = serialPort4;
                                                     }
                                                     if (iAtVerCmdStep == 43)
                                                     {
                                                         cboComDvc8.Text = strComSerial5;
-                                                        strDvc8Com = strComSerial5;
+                                                        strDvc8Port = strComSerial5;
                                                         Dvc8Serial = serialPort5;
                                                     }
                                                     if (iAtVerCmdStep == 53)
                                                     {
                                                         cboComDvc8.Text = strComSerial6;
-                                                        strDvc8Com = strComSerial6;
+                                                        strDvc8Port = strComSerial6;
                                                         Dvc8Serial = serialPort6;
                                                     }
                                                     if (iAtVerCmdStep == 63)
                                                     {
-                                                        //cboComDvc8.Text = strComSerial7;
-                                                        //strDvc8Com = strComSerial7;
-                                                        //Dvc8Serial = serialPort7;
-                                                        iDvcArrCnt = 6; //2024-03-22
+                                                        cboComDvc8.Text = strComSerial7;
+                                                        strDvc8Port = strComSerial7;
+                                                        Dvc8Serial = serialPort7;
                                                     }
                                                     if (iAtVerCmdStep == 73)
                                                     {
-                                                        //cboComDvc8.Text = strComSerial8;
-                                                        //strDvc8Com = strComSerial8;
-                                                        //Dvc8Serial = serialPort8;
-                                                        iDvcArrCnt = 7; //2024-03-22
+                                                        cboComDvc8.Text = strComSerial8;
+                                                        strDvc8Port = strComSerial8;
+                                                        Dvc8Serial = serialPort8;
                                                     }
                                                     if (iAtVerCmdStep == 83)
                                                     {
-                                                        //cboComDvc8.Text = strComSerial9;
-                                                        //strDvc8Com = strComSerial9;
-                                                        //Dvc8Serial = serialPort9;
-                                                        iDvcArrCnt = 8; //2024-03-22
+                                                        cboComDvc8.Text = strComSerial9;
+                                                        strDvc8Port = strComSerial9;
+                                                        Dvc8Serial = serialPort9;
                                                     }
                                                     if (iAtVerCmdStep == 93)
                                                     {
-                                                        //cboComDvc8.Text = strComSerial10;
-                                                        //strDvc8Com = strComSerial10;
-                                                        //Dvc8Serial = serialPort10;
-                                                        iDvcArrCnt = 9; //2024-03-22
+                                                        cboComDvc8.Text = strComSerial10;
+                                                        strDvc8Port = strComSerial10;
+                                                        Dvc8Serial = serialPort10;
                                                     }
-                                                    cboComDvc8.Text = strComSerial[iDvcArrCnt]; //2024-03-22
                                                 }
                                             }
                                             else if (iDvcId == 7)  //2022-11-15: Device_7
@@ -5758,76 +5715,65 @@ namespace Ado
                                                     cboComDvc7.Text = ""; cboComDvc7.Items.Clear();
                                                     if (iAtVerCmdStep == 3)
                                                     {
-                                                        //cboComDvc7.Text = strComSerial1;
-                                                        //strDvc7Com = strComSerial1;    //-->Remember the ComPort of Device
-                                                        //Dvc7Serial = serialPort1;   //-->Remember the serialPort of Device
-                                                        iDvcArrCnt = 0; //2024-03-22
+                                                        cboComDvc7.Text = strComSerial1;
+                                                        strDvc7Port = strComSerial1;    //-->Remember the ComPort of Device
+                                                        Dvc7Serial = serialPort1;   //-->Remember the serialPort of Device
                                                     }
                                                     if (iAtVerCmdStep == 13)
                                                     {
-                                                        //cboComDvc7.Text = strComSerial2;
-                                                        //strDvc7Com = strComSerial2;
-                                                        //Dvc7Serial = serialPort2;
-                                                        iDvcArrCnt = 1; //2024-03-22
+                                                        cboComDvc7.Text = strComSerial2;
+                                                        strDvc7Port = strComSerial2;
+                                                        Dvc7Serial = serialPort2;
                                                     }
                                                     if (iAtVerCmdStep == 23)
                                                     {
-                                                        //cboComDvc7.Text = strComSerial3;
-                                                        //strDvc7Com = strComSerial3;
-                                                        //Dvc7Serial = serialPort3;
-                                                        iDvcArrCnt = 2; //2024-03-22
+                                                        cboComDvc7.Text = strComSerial3;
+                                                        strDvc7Port = strComSerial3;
+                                                        Dvc7Serial = serialPort3;
                                                     }
 
                                                     if (iAtVerCmdStep == 33)
                                                     {
-                                                        //cboComDvc7.Text = strComSerial4;
-                                                        //strDvc7Com = strComSerial4;
-                                                        //Dvc7Serial = serialPort4;
-                                                        iDvcArrCnt = 3; //2024-03-22
+                                                        cboComDvc7.Text = strComSerial4;
+                                                        strDvc7Port = strComSerial4;
+                                                        Dvc7Serial = serialPort4;
                                                     }
                                                     if (iAtVerCmdStep == 43)
                                                     {
-                                                        //cboComDvc7.Text = strComSerial5;
-                                                        //strDvc7Com = strComSerial5;
-                                                        //Dvc7Serial = serialPort5;
-                                                        iDvcArrCnt = 4; //2024-03-22
+                                                        cboComDvc7.Text = strComSerial5;
+                                                        strDvc7Port = strComSerial5;
+                                                        Dvc7Serial = serialPort5;
                                                     }
                                                     if (iAtVerCmdStep == 53)
                                                     {
-                                                        //cboComDvc7.Text = strComSerial6;
-                                                        //strDvc7Com = strComSerial6;
-                                                        //Dvc7Serial = serialPort6;
-                                                        iDvcArrCnt = 5; //2024-03-22
+                                                        cboComDvc7.Text = strComSerial6;
+                                                        strDvc7Port = strComSerial6;
+                                                        Dvc7Serial = serialPort6;
                                                     }
                                                     if (iAtVerCmdStep == 63)
                                                     {
-                                                        //cboComDvc7.Text = strComSerial7;
-                                                        //strDvc7Com = strComSerial7;
-                                                        //Dvc7Serial = serialPort7;
-                                                        iDvcArrCnt = 9; //2024-03-22
+                                                        cboComDvc7.Text = strComSerial7;
+                                                        strDvc7Port = strComSerial7;
+                                                        Dvc7Serial = serialPort7;
                                                     }
                                                     if (iAtVerCmdStep == 73)
                                                     {
-                                                        //cboComDvc7.Text = strComSerial8;
-                                                        //strDvc7Com = strComSerial8;
-                                                        //Dvc7Serial = serialPort8;
-                                                        iDvcArrCnt = 9; //2024-03-22
+                                                        cboComDvc7.Text = strComSerial8;
+                                                        strDvc7Port = strComSerial8;
+                                                        Dvc7Serial = serialPort8;
                                                     }
                                                     if (iAtVerCmdStep == 83)
                                                     {
-                                                        //cboComDvc7.Text = strComSerial9;
-                                                        //strDvc7Com = strComSerial9;
-                                                        //Dvc7Serial = serialPort9;
-                                                        iDvcArrCnt = 8; //2024-03-22
+                                                        cboComDvc7.Text = strComSerial9;
+                                                        strDvc7Port = strComSerial9;
+                                                        Dvc7Serial = serialPort9;
                                                     }
                                                     if (iAtVerCmdStep == 93)
                                                     {
-                                                        //cboComDvc7.Text = strComSerial10;
-                                                        //strDvc7Com = strComSerial10;
-                                                        //Dvc7Serial = serialPort10;
-                                                        iDvcArrCnt = 9; //2024-03-22
+                                                        cboComDvc7.Text = strComSerial10;
+                                                        strDvc7Port = strComSerial10;
+                                                        Dvc7Serial = serialPort10;
                                                     }
-                                                    cboComDvc7.Text = strComSerial[iDvcArrCnt]; //2024-03-22
                                                 }
                                             }
                                             else if (iDvcId == 6)  //2022-11-15: Device_6
@@ -5842,76 +5788,65 @@ namespace Ado
                                                     cboComDvc6.Text = ""; cboComDvc6.Items.Clear();
                                                     if (iAtVerCmdStep == 3)
                                                     {
-                                                        //cboComDvc6.Text = strComSerial1;
-                                                        //strDvc6Com = strComSerial1;    //-->Remember the ComPort of Device
-                                                        //Dvc6Serial = serialPort1;   //-->Remember the serialPort of Device
-                                                        iDvcArrCnt = 0; //2024-03-22
+                                                        cboComDvc6.Text = strComSerial1;
+                                                        strDvc6Port = strComSerial1;    //-->Remember the ComPort of Device
+                                                        Dvc6Serial = serialPort1;   //-->Remember the serialPort of Device
                                                     }
                                                     if (iAtVerCmdStep == 13)
                                                     {
-                                                        //cboComDvc6.Text = strComSerial2;
-                                                        //strDvc6Com = strComSerial2;
-                                                        //Dvc6Serial = serialPort2;
-                                                        iDvcArrCnt = 1; //2024-03-22
+                                                        cboComDvc6.Text = strComSerial2;
+                                                        strDvc6Port = strComSerial2;
+                                                        Dvc6Serial = serialPort2;
                                                     }
                                                     if (iAtVerCmdStep == 23)
                                                     {
-                                                        //cboComDvc6.Text = strComSerial3;
-                                                        //strDvc6Com = strComSerial3;
-                                                        //Dvc6Serial = serialPort3;
-                                                        iDvcArrCnt = 2; //2024-03-22
+                                                        cboComDvc6.Text = strComSerial3;
+                                                        strDvc6Port = strComSerial3;
+                                                        Dvc6Serial = serialPort3;
                                                     }
 
                                                     if (iAtVerCmdStep == 33)
                                                     {
-                                                        //cboComDvc6.Text = strComSerial4;
-                                                        //strDvc6Com = strComSerial4;
-                                                        //Dvc6Serial = serialPort4;
-                                                        iDvcArrCnt = 3; //2024-03-22
+                                                        cboComDvc6.Text = strComSerial4;
+                                                        strDvc6Port = strComSerial4;
+                                                        Dvc6Serial = serialPort4;
                                                     }
                                                     if (iAtVerCmdStep == 43)
                                                     {
-                                                        //cboComDvc6.Text = strComSerial5;
-                                                        //strDvc6Com = strComSerial5;
-                                                        //Dvc6Serial = serialPort5;
-                                                        iDvcArrCnt = 4; //2024-03-22
+                                                        cboComDvc6.Text = strComSerial5;
+                                                        strDvc6Port = strComSerial5;
+                                                        Dvc6Serial = serialPort5;
                                                     }
                                                     if (iAtVerCmdStep == 53)
                                                     {
-                                                        //cboComDvc6.Text = strComSerial6;
-                                                        //strDvc6Com = strComSerial6;
-                                                        //Dvc6Serial = serialPort6;
-                                                        iDvcArrCnt = 5; //2024-03-22
+                                                        cboComDvc6.Text = strComSerial6;
+                                                        strDvc6Port = strComSerial6;
+                                                        Dvc6Serial = serialPort6;
                                                     }
                                                     if (iAtVerCmdStep == 63)
                                                     {
-                                                        //cboComDvc6.Text = strComSerial7;
-                                                        //strDvc6Com = strComSerial7;
-                                                        //Dvc6Serial = serialPort7;
-                                                        iDvcArrCnt = 6; //2024-03-22
+                                                        cboComDvc6.Text = strComSerial7;
+                                                        strDvc6Port = strComSerial7;
+                                                        Dvc6Serial = serialPort7;
                                                     }
                                                     if (iAtVerCmdStep == 73)
                                                     {
-                                                        //cboComDvc6.Text = strComSerial8;
-                                                        //strDvc6Com = strComSerial8;
-                                                        //Dvc6Serial = serialPort8;
-                                                        iDvcArrCnt = 7; //2024-03-22
+                                                        cboComDvc6.Text = strComSerial8;
+                                                        strDvc6Port = strComSerial8;
+                                                        Dvc6Serial = serialPort8;
                                                     }
                                                     if (iAtVerCmdStep == 83)
                                                     {
-                                                        //cboComDvc6.Text = strComSerial9;
-                                                        //strDvc6Com = strComSerial9;
-                                                        //Dvc6Serial = serialPort9;
-                                                        iDvcArrCnt = 8; //2024-03-22
+                                                        cboComDvc6.Text = strComSerial9;
+                                                        strDvc6Port = strComSerial9;
+                                                        Dvc6Serial = serialPort9;
                                                     }
                                                     if (iAtVerCmdStep == 93)
                                                     {
-                                                        //cboComDvc6.Text = strComSerial10;
-                                                        //strDvc6Com = strComSerial10;
-                                                        //Dvc6Serial = serialPort10;
-                                                        iDvcArrCnt = 9; //2024-03-22
+                                                        cboComDvc6.Text = strComSerial10;
+                                                        strDvc6Port = strComSerial10;
+                                                        Dvc6Serial = serialPort10;
                                                     }
-                                                    cboComDvc6.Text = strComSerial[iDvcArrCnt]; //2024-03-22
                                                 }
                                             }
                                             else if (iDvcId == 5)  //2022-11-15: Device_5
@@ -5926,76 +5861,65 @@ namespace Ado
                                                     cboComDvc5.Text = ""; cboComDvc5.Items.Clear();
                                                     if (iAtVerCmdStep == 3)
                                                     {
-                                                        //cboComDvc5.Text = strComSerial1;
-                                                        //strDvc5Com = strComSerial1;    //-->Remember the ComPort of Device
-                                                        //Dvc5Serial = serialPort1;   //-->Remember the serialPort of Device
-                                                        iDvcArrCnt = 0; //2024-03-22
+                                                        cboComDvc5.Text = strComSerial1;
+                                                        strDvc5Port = strComSerial1;    //-->Remember the ComPort of Device
+                                                        Dvc5Serial = serialPort1;   //-->Remember the serialPort of Device
                                                     }
                                                     if (iAtVerCmdStep == 13)
                                                     {
-                                                        //cboComDvc5.Text = strComSerial2;
-                                                        //strDvc5Com = strComSerial2;
-                                                        //Dvc5Serial = serialPort2;
-                                                        iDvcArrCnt = 1; //2024-03-22
+                                                        cboComDvc5.Text = strComSerial2;
+                                                        strDvc5Port = strComSerial2;
+                                                        Dvc5Serial = serialPort2;
                                                     }
                                                     if (iAtVerCmdStep == 23)
                                                     {
-                                                        //cboComDvc5.Text = strComSerial3;
-                                                        //strDvc5Com = strComSerial3;
-                                                        //Dvc5Serial = serialPort3;
-                                                        iDvcArrCnt = 2; //2024-03-22
+                                                        cboComDvc5.Text = strComSerial3;
+                                                        strDvc5Port = strComSerial3;
+                                                        Dvc5Serial = serialPort3;
                                                     }
 
                                                     if (iAtVerCmdStep == 33)
                                                     {
-                                                        //cboComDvc5.Text = strComSerial4;
-                                                        //strDvc5Com = strComSerial4;
-                                                        //Dvc5Serial = serialPort4;
-                                                        iDvcArrCnt = 3; //2024-03-22
+                                                        cboComDvc5.Text = strComSerial4;
+                                                        strDvc5Port = strComSerial4;
+                                                        Dvc5Serial = serialPort4;
                                                     }
                                                     if (iAtVerCmdStep == 43)
                                                     {
-                                                        //cboComDvc5.Text = strComSerial5;
-                                                        //strDvc5Com = strComSerial5;
-                                                        //Dvc5Serial = serialPort5;
-                                                        iDvcArrCnt = 4; //2024-03-22
+                                                        cboComDvc5.Text = strComSerial5;
+                                                        strDvc5Port = strComSerial5;
+                                                        Dvc5Serial = serialPort5;
                                                     }
                                                     if (iAtVerCmdStep == 53)
                                                     {
-                                                        //cboComDvc5.Text = strComSerial6;
-                                                        //strDvc5Com = strComSerial6;
-                                                        //Dvc5Serial = serialPort6;
-                                                        iDvcArrCnt = 5; //2024-03-22
+                                                        cboComDvc5.Text = strComSerial6;
+                                                        strDvc5Port = strComSerial6;
+                                                        Dvc5Serial = serialPort6;
                                                     }
                                                     if (iAtVerCmdStep == 63)
                                                     {
-                                                        //cboComDvc5.Text = strComSerial7;
-                                                        //strDvc5Com = strComSerial7;
-                                                        //Dvc5Serial = serialPort7;
-                                                        iDvcArrCnt = 6; //2024-03-22
+                                                        cboComDvc5.Text = strComSerial7;
+                                                        strDvc5Port = strComSerial7;
+                                                        Dvc5Serial = serialPort7;
                                                     }
                                                     if (iAtVerCmdStep == 73)
                                                     {
-                                                        //cboComDvc5.Text = strComSerial8;
-                                                        //strDvc5Com = strComSerial8;
-                                                        //Dvc5Serial = serialPort8;
-                                                        iDvcArrCnt = 7; //2024-03-22
+                                                        cboComDvc5.Text = strComSerial8;
+                                                        strDvc5Port = strComSerial8;
+                                                        Dvc5Serial = serialPort8;
                                                     }
                                                     if (iAtVerCmdStep == 83)
                                                     {
-                                                        //cboComDvc5.Text = strComSerial9;
-                                                        //strDvc5Com = strComSerial9;
-                                                        //Dvc5Serial = serialPort9;
-                                                        iDvcArrCnt = 8; //2024-03-22
+                                                        cboComDvc5.Text = strComSerial9;
+                                                        strDvc5Port = strComSerial9;
+                                                        Dvc5Serial = serialPort9;
                                                     }
                                                     if (iAtVerCmdStep == 93)
                                                     {
-                                                        //cboComDvc5.Text = strComSerial10;
-                                                        //strDvc5Com = strComSerial10;
-                                                        //Dvc5Serial = serialPort10;
-                                                        iDvcArrCnt = 9; //2024-03-22
+                                                        cboComDvc5.Text = strComSerial10;
+                                                        strDvc5Port = strComSerial10;
+                                                        Dvc5Serial = serialPort10;
                                                     }
-                                                    cboComDvc5.Text = strComSerial[iDvcArrCnt]; //2024-03-22
                                                 }
                                             }
                                             else if (iDvcId == 4)  //2022-11-09: Device_4
@@ -6010,79 +5934,68 @@ namespace Ado
                                                     cboComDvc4.Text = ""; cboComDvc4.Items.Clear();
                                                     if (iAtVerCmdStep == 3)
                                                     {
-                                                        //cboComDvc4.Text = strComSerial1;
-                                                        //strDvc4Com = strComSerial1;    //-->Remember the ComPort of Device
-                                                        //Dvc4Serial = serialPort1;   //-->Remember the serialPort of Device
-                                                        iDvcArrCnt = 0; //2024-03-22
+                                                        cboComDvc4.Text = strComSerial1;
+                                                        strDvc4Port = strComSerial1;    //-->Remember the ComPort of Device
+                                                        Dvc4Serial = serialPort1;   //-->Remember the serialPort of Device
                                                     }
                                                     if (iAtVerCmdStep == 13)
                                                     {
-                                                        //cboComDvc4.Text = strComSerial2;
-                                                        //strDvc4Com = strComSerial2;
-                                                        //Dvc4Serial = serialPort2;
-                                                        iDvcArrCnt = 1; //2024-03-22
+                                                        cboComDvc4.Text = strComSerial2;
+                                                        strDvc4Port = strComSerial2;
+                                                        Dvc4Serial = serialPort2;
                                                     }
                                                     if (iAtVerCmdStep == 23)
                                                     {
-                                                        //cboComDvc4.Text = strComSerial3;
-                                                        //strDvc4Com = strComSerial3;
-                                                        //Dvc4Serial = serialPort3;
-                                                        iDvcArrCnt = 2; //2024-03-22
+                                                        cboComDvc4.Text = strComSerial3;
+                                                        strDvc4Port = strComSerial3;
+                                                        Dvc4Serial = serialPort3;
                                                     }
                                                     //2022-11-16:Dvc3-strComSerial4~10
 #region
                                                     if (iAtVerCmdStep == 33)
                                                     {
-                                                        //cboComDvc4.Text = strComSerial4;
-                                                        //strDvc4Com = strComSerial4;
-                                                        //Dvc4Serial = serialPort4;
-                                                        iDvcArrCnt = 3; //2024-03-22
+                                                        cboComDvc4.Text = strComSerial4;
+                                                        strDvc4Port = strComSerial4;
+                                                        Dvc4Serial = serialPort4;
                                                     }
                                                     if (iAtVerCmdStep == 43)
                                                     {
-                                                        //cboComDvc4.Text = strComSerial5;
-                                                        //strDvc4Com = strComSerial5;
-                                                        //Dvc4Serial = serialPort5;
-                                                        iDvcArrCnt = 4; //2024-03-22
+                                                        cboComDvc4.Text = strComSerial5;
+                                                        strDvc4Port = strComSerial5;
+                                                        Dvc4Serial = serialPort5;
                                                     }
                                                     if (iAtVerCmdStep == 53)
                                                     {
-                                                        //cboComDvc4.Text = strComSerial6;
-                                                        //strDvc4Com = strComSerial6;
-                                                        //Dvc4Serial = serialPort6;
-                                                        iDvcArrCnt = 5; //2024-03-22
+                                                        cboComDvc4.Text = strComSerial6;
+                                                        strDvc4Port = strComSerial6;
+                                                        Dvc4Serial = serialPort6;
                                                     }
                                                     if (iAtVerCmdStep == 63)
                                                     {
-                                                        //cboComDvc4.Text = strComSerial7;
-                                                        //strDvc4Com = strComSerial7;
-                                                        //Dvc4Serial = serialPort7;
-                                                        iDvcArrCnt = 6; //2024-03-22
+                                                        cboComDvc4.Text = strComSerial7;
+                                                        strDvc4Port = strComSerial7;
+                                                        Dvc4Serial = serialPort7;
                                                     }
                                                     if (iAtVerCmdStep == 73)
                                                     {
-                                                        //cboComDvc4.Text = strComSerial8;
-                                                        //strDvc4Com = strComSerial8;
-                                                        //Dvc4Serial = serialPort8;
-                                                        iDvcArrCnt = 7; //2024-03-22
+                                                        cboComDvc4.Text = strComSerial8;
+                                                        strDvc4Port = strComSerial8;
+                                                        Dvc4Serial = serialPort8;
                                                     }
                                                     if (iAtVerCmdStep == 83)
                                                     {
-                                                        //cboComDvc4.Text = strComSerial9;
-                                                        //strDvc4Com = strComSerial9;
-                                                        //Dvc4Serial = serialPort9;
-                                                        iDvcArrCnt = 8; //2024-03-22
+                                                        cboComDvc4.Text = strComSerial9;
+                                                        strDvc4Port = strComSerial9;
+                                                        Dvc4Serial = serialPort9;
                                                     }
                                                     if (iAtVerCmdStep == 93)
                                                     {
-                                                        //cboComDvc4.Text = strComSerial10;
-                                                        //strDvc4Com = strComSerial10;
-                                                        //Dvc4Serial = serialPort10;
-                                                        iDvcArrCnt = 9; //2024-03-22
+                                                        cboComDvc4.Text = strComSerial10;
+                                                        strDvc4Port = strComSerial10;
+                                                        Dvc4Serial = serialPort10;
                                                     }
-                                                    cboComDvc4.Text = strComSerial[iDvcArrCnt]; //2024-03-22
-                                                    #endregion
-                                                }                                                
+#endregion
+                                                }
                                             }
                                             else if (iDvcId == 3)  //2022-11-09: Device_3
                                             {
@@ -6096,78 +6009,67 @@ namespace Ado
                                                     cboComDvc3.Text = ""; cboComDvc3.Items.Clear();
                                                     if (iAtVerCmdStep == 3) 
                                                     {
-                                                        //cboComDvc3.Text = strComSerial1;
-                                                        //strDvc3Com = strComSerial1;    //-->Remember the ComPort of Device
-                                                        //Dvc3Serial = serialPort1;   //-->Remember the serialPort of Device
-                                                        iDvcArrCnt = 0; //2024-03-22
+                                                        cboComDvc3.Text = strComSerial1;
+                                                        strDvc3Port = strComSerial1;    //-->Remember the ComPort of Device
+                                                        Dvc3Serial = serialPort1;   //-->Remember the serialPort of Device
                                                     }
                                                     if (iAtVerCmdStep == 13)
                                                     {
-                                                        //cboComDvc3.Text = strComSerial2;
-                                                        //strDvc3Com = strComSerial2;   
-                                                        //Dvc3Serial = serialPort2; 
-                                                        iDvcArrCnt = 1; //2024-03-22
+                                                        cboComDvc3.Text = strComSerial2;
+                                                        strDvc3Port = strComSerial2;   
+                                                        Dvc3Serial = serialPort2; 
                                                     }
                                                     if (iAtVerCmdStep == 23)
                                                     {
-                                                        //cboComDvc3.Text = strComSerial3;
-                                                        //strDvc3Com = strComSerial3;   
-                                                        //Dvc3Serial = serialPort3;
-                                                        iDvcArrCnt = 2; //2024-03-22
+                                                        cboComDvc3.Text = strComSerial3;
+                                                        strDvc3Port = strComSerial3;   
+                                                        Dvc3Serial = serialPort3;  
                                                     }
                                                     //2022-11-16:Dvc3 strComSerial4~10
 #region
                                                     if (iAtVerCmdStep == 33)
                                                     {
-                                                        //cboComDvc3.Text = strComSerial4;
-                                                        //strDvc3Com = strComSerial4;
-                                                        //Dvc3Serial = serialPort4;
-                                                        iDvcArrCnt = 3; //2024-03-22
+                                                        cboComDvc3.Text = strComSerial4;
+                                                        strDvc3Port = strComSerial4;
+                                                        Dvc3Serial = serialPort4;
                                                     }
                                                     if (iAtVerCmdStep == 43)
                                                     {
-                                                        //cboComDvc3.Text = strComSerial5;
-                                                        //strDvc3Com = strComSerial5;
-                                                        //Dvc3Serial = serialPort5;
-                                                        iDvcArrCnt = 4; //2024-03-22
+                                                        cboComDvc3.Text = strComSerial5;
+                                                        strDvc3Port = strComSerial5;
+                                                        Dvc3Serial = serialPort5;
                                                     }
                                                     if (iAtVerCmdStep == 53)
                                                     {
-                                                        //cboComDvc3.Text = strComSerial6;
-                                                        //strDvc3Com = strComSerial6;
-                                                        //Dvc3Serial = serialPort6;
-                                                        iDvcArrCnt = 5; //2024-03-22
+                                                        cboComDvc3.Text = strComSerial6;
+                                                        strDvc3Port = strComSerial6;
+                                                        Dvc3Serial = serialPort6;
                                                     }
                                                     if (iAtVerCmdStep == 63)
                                                     {
-                                                        //cboComDvc3.Text = strComSerial7;
-                                                        //strDvc3Com = strComSerial7;
-                                                        //Dvc3Serial = serialPort7;
-                                                        iDvcArrCnt = 6; //2024-03-22
+                                                        cboComDvc3.Text = strComSerial7;
+                                                        strDvc3Port = strComSerial7;
+                                                        Dvc3Serial = serialPort7;
                                                     }
                                                     if (iAtVerCmdStep == 73)
                                                     {
-                                                        //cboComDvc3.Text = strComSerial8;
-                                                        //strDvc3Com = strComSerial8;
-                                                        //Dvc3Serial = serialPort8;
-                                                        iDvcArrCnt = 7; //2024-03-22
+                                                        cboComDvc3.Text = strComSerial8;
+                                                        strDvc3Port = strComSerial8;
+                                                        Dvc3Serial = serialPort8;
                                                     }
                                                     if (iAtVerCmdStep == 83)
                                                     {
-                                                        //cboComDvc3.Text = strComSerial9;
-                                                        //strDvc3Com = strComSerial9;
-                                                        //Dvc3Serial = serialPort9;
-                                                        iDvcArrCnt = 8; //2024-03-22
+                                                        cboComDvc3.Text = strComSerial9;
+                                                        strDvc3Port = strComSerial9;
+                                                        Dvc3Serial = serialPort9;
                                                     }
                                                     if (iAtVerCmdStep == 93)
                                                     {
-                                                        //cboComDvc3.Text = strComSerial10;
-                                                        //strDvc3Com = strComSerial10;
-                                                        //Dvc3Serial = serialPort10;
-                                                        iDvcArrCnt = 9; //2024-03-22
+                                                        cboComDvc3.Text = strComSerial10;
+                                                        strDvc3Port = strComSerial10;
+                                                        Dvc3Serial = serialPort10;
                                                     }
-                                                    cboComDvc3.Text = strComSerial[iDvcArrCnt]; //2024-03-22
-                                                    #endregion
+#endregion
                                                 }
                                             }
                                             else if (iDvcId == 2)  //2022-08-08: Device_2
@@ -6182,80 +6084,67 @@ namespace Ado
                                                     cboComDvc2.Text = ""; cboComDvc2.Items.Clear();
                                                     if (iAtVerCmdStep == 3)    //2022-08-10
                                                     {
-                                                        //cboComDvc2.Text = strComSerial1;
-                                                        //strDvc2Com = strComSerial1;    //2022-08-18 -->Remember the ComPort of Device2
-                                                        //Dvc2Serial = serialPort1;   //2022-08-18 -->Remember the serialPort of Device2
-                                                        //2024-03-21: iDvcId = 2
-                                                        iDvcArrCnt = 0; //2024-03-21
+                                                        cboComDvc2.Text = strComSerial1;
+                                                        strDvc2Port = strComSerial1;    //2022-08-18 -->Remember the ComPort of Device2
+                                                        Dvc2Serial = serialPort1;   //2022-08-18 -->Remember the serialPort of Device2
                                                     }
                                                     if (iAtVerCmdStep == 13)
                                                     {
-                                                        //cboComDvc2.Text = strComSerial2;
-                                                        //strDvc2Com = strComSerial2;    //2022-08-18
-                                                        //Dvc2Serial = serialPort2;   //2022-08-18
-                                                        iDvcArrCnt = 1; //2024-03-21
-                                                        //cboComDvc2.Text = strComSerial[iDvcArrCnt]; //2024-03-22
+                                                        cboComDvc2.Text = strComSerial2;
+                                                        strDvc2Port = strComSerial2;    //2022-08-18
+                                                        Dvc2Serial = serialPort2;   //2022-08-18
                                                     }
                                                     if (iAtVerCmdStep == 23)
                                                     {
-                                                        //cboComDvc2.Text = strComSerial3;
-                                                        //strDvc2Com = strComSerial3;    //2022-08-18
-                                                        //Dvc2Serial = serialPort3;   //2022-08-18
-                                                        iDvcArrCnt = 2; //2024-03-21
+                                                        cboComDvc2.Text = strComSerial3;
+                                                        strDvc2Port = strComSerial3;    //2022-08-18
+                                                        Dvc2Serial = serialPort3;   //2022-08-18
                                                     }
                                                     //2022-11-16:Dvc2-strComSerial4~10
 #region
                                                     if (iAtVerCmdStep == 33)
                                                     {
-                                                        //cboComDvc2.Text = strComSerial4;
-                                                        //strDvc2Com = strComSerial4;
-                                                        //Dvc2Serial = serialPort4;
-                                                        iDvcArrCnt = 3; //2024-03-21
+                                                        cboComDvc2.Text = strComSerial4;
+                                                        strDvc2Port = strComSerial4;
+                                                        Dvc2Serial = serialPort4;
                                                     }
                                                     if (iAtVerCmdStep == 43)
                                                     {
-                                                        //cboComDvc2.Text = strComSerial5;
-                                                        //strDvc2Com = strComSerial5;
-                                                        //Dvc2Serial = serialPort5;
-                                                        iDvcArrCnt = 4; //2024-03-21
+                                                        cboComDvc2.Text = strComSerial5;
+                                                        strDvc2Port = strComSerial5;
+                                                        Dvc2Serial = serialPort5;
                                                     }
                                                     if (iAtVerCmdStep == 53)
                                                     {
-                                                        //cboComDvc2.Text = strComSerial6;
-                                                        //strDvc2Com = strComSerial6;
-                                                        //Dvc2Serial = serialPort6;
-                                                        iDvcArrCnt = 5; //2024-03-21
+                                                        cboComDvc2.Text = strComSerial6;
+                                                        strDvc2Port = strComSerial6;
+                                                        Dvc2Serial = serialPort6;
                                                     }
                                                     if (iAtVerCmdStep == 63)
                                                     {
-                                                        //cboComDvc2.Text = strComSerial7;
-                                                        //strDvc2Com = strComSerial7;
-                                                        //Dvc2Serial = serialPort7;
-                                                        iDvcArrCnt = 6; //2024-03-21
+                                                        cboComDvc2.Text = strComSerial7;
+                                                        strDvc2Port = strComSerial7;
+                                                        Dvc2Serial = serialPort7;
                                                     }
                                                     if (iAtVerCmdStep == 73)
                                                     {
-                                                        //cboComDvc2.Text = strComSerial8;
-                                                        //strDvc2Com = strComSerial8;
-                                                        //Dvc2Serial = serialPort8;
-                                                        iDvcArrCnt = 7; //2024-03-21
+                                                        cboComDvc2.Text = strComSerial8;
+                                                        strDvc2Port = strComSerial8;
+                                                        Dvc2Serial = serialPort8;
                                                     }
                                                     if (iAtVerCmdStep == 83)
                                                     {
-                                                        //cboComDvc2.Text = strComSerial9;
-                                                        //strDvc2Com = strComSerial9;
-                                                        //Dvc2Serial = serialPort9;
-                                                        iDvcArrCnt = 8; //2024-03-21
+                                                        cboComDvc2.Text = strComSerial9;
+                                                        strDvc2Port = strComSerial9;
+                                                        Dvc2Serial = serialPort9;
                                                     }
                                                     if (iAtVerCmdStep == 93)
                                                     {
-                                                        //cboComDvc2.Text = strComSerial10;
-                                                        //strDvc2Com = strComSerial10;
-                                                        //Dvc2Serial = serialPort10;
-                                                        iDvcArrCnt = 9; //2024-03-21
+                                                        cboComDvc2.Text = strComSerial10;
+                                                        strDvc2Port = strComSerial10;
+                                                        Dvc2Serial = serialPort10;
                                                     }
-                                                    cboComDvc2.Text = strComSerial[iDvcArrCnt]; //2024-03-22
-                                                    #endregion
+#endregion
                                                 }
                                             }
                                             else if (iDvcId == 1)    //Device_1
@@ -6270,76 +6159,65 @@ namespace Ado
                                                     cboComDvc1.Text = ""; cboComDvc1.Items.Clear();
                                                     if (iAtVerCmdStep == 3)    //2022-08-10
                                                     {
-                                                        //cboComDvc1.Text = strComSerial1;
-                                                        //strDvc1Com = strComSerial1;    //2022-08-18 -->Remember the ComPort of Device1
-                                                        //Dvc1Serial = serialPort1;   //2022-08-18 -->Remember the serialPort of Device1
-                                                        iDvcArrCnt = 0; //2024-03-21
+                                                        cboComDvc1.Text = strComSerial1;
+                                                        strDvc1Port = strComSerial1;    //2022-08-18 -->Remember the ComPort of Device1
+                                                        Dvc1Serial = serialPort1;   //2022-08-18 -->Remember the serialPort of Device1
                                                     }
                                                     if (iAtVerCmdStep == 13)
                                                     {
-                                                        //cboComDvc1.Text = strComSerial2;
-                                                        //strDvc1Com = strComSerial2;    //2022-08-18
-                                                        //Dvc1Serial = serialPort2;   //2022-08-18
-                                                        iDvcArrCnt = 1; //2024-03-21
+                                                        cboComDvc1.Text = strComSerial2;
+                                                        strDvc1Port = strComSerial2;    //2022-08-18
+                                                        Dvc1Serial = serialPort2;   //2022-08-18
                                                     }
                                                     if (iAtVerCmdStep == 23)
                                                     {
-                                                        //cboComDvc1.Text = strComSerial3;
-                                                        //strDvc1Com = strComSerial3;    //2022-08-18
-                                                        //Dvc1Serial = serialPort3;   //2022-08-18
-                                                        iDvcArrCnt = 2; //2024-03-21
+                                                        cboComDvc1.Text = strComSerial3;
+                                                        strDvc1Port = strComSerial3;    //2022-08-18
+                                                        Dvc1Serial = serialPort3;   //2022-08-18
                                                     }
                                                     //2022-11-16:Dvc1-strComSerial4~10
                                                     if (iAtVerCmdStep == 33)
                                                     {
-                                                        //cboComDvc1.Text = strComSerial4;
-                                                        //strDvc1Com = strComSerial4;
-                                                        //Dvc1Serial = serialPort4;
-                                                        iDvcArrCnt = 3; //2024-03-21
+                                                        cboComDvc1.Text = strComSerial4;
+                                                        strDvc1Port = strComSerial4;
+                                                        Dvc1Serial = serialPort4;
                                                     }
                                                     if (iAtVerCmdStep == 43)
                                                     {
-                                                        //cboComDvc1.Text = strComSerial5;
-                                                        //strDvc1Com = strComSerial5;
-                                                        //Dvc1Serial = serialPort5;
-                                                        iDvcArrCnt = 4; //2024-03-21
+                                                        cboComDvc1.Text = strComSerial5;
+                                                        strDvc1Port = strComSerial5;
+                                                        Dvc1Serial = serialPort5;
                                                     }
                                                     if (iAtVerCmdStep == 53)
                                                     {
-                                                        //cboComDvc1.Text = strComSerial6;
-                                                        //strDvc1Com = strComSerial6;
-                                                        //Dvc1Serial = serialPort6;
-                                                        iDvcArrCnt = 5; //2024-03-21
+                                                        cboComDvc1.Text = strComSerial6;
+                                                        strDvc1Port = strComSerial6;
+                                                        Dvc1Serial = serialPort6;
                                                     }
                                                     if (iAtVerCmdStep == 63)
                                                     {
-                                                        //cboComDvc1.Text = strComSerial7;
-                                                        //strDvc1Com = strComSerial7;
-                                                        //Dvc1Serial = serialPort7;
-                                                        iDvcArrCnt = 6; //2024-03-21
+                                                        cboComDvc1.Text = strComSerial7;
+                                                        strDvc1Port = strComSerial7;
+                                                        Dvc1Serial = serialPort7;
                                                     }
                                                     if (iAtVerCmdStep == 73)
                                                     {
-                                                        //cboComDvc1.Text = strComSerial8;
-                                                        //strDvc1Com = strComSerial8;
-                                                        //Dvc1Serial = serialPort8;
-                                                        iDvcArrCnt = 7; //2024-03-21
+                                                        cboComDvc1.Text = strComSerial8;
+                                                        strDvc1Port = strComSerial8;
+                                                        Dvc1Serial = serialPort8;
                                                     }
                                                     if (iAtVerCmdStep == 83)
                                                     {
-                                                        //cboComDvc1.Text = strComSerial9;
-                                                        //strDvc1Com = strComSerial9;
-                                                        //Dvc1Serial = serialPort9;
-                                                        iDvcArrCnt = 8; //2024-03-21
+                                                        cboComDvc1.Text = strComSerial9;
+                                                        strDvc1Port = strComSerial9;
+                                                        Dvc1Serial = serialPort9;
                                                     }
                                                     if (iAtVerCmdStep == 93)
                                                     {
-                                                        //cboComDvc1.Text = strComSerial10;
-                                                        //strDvc1Com = strComSerial10;
-                                                        //Dvc1Serial = serialPort10;
-                                                        iDvcArrCnt = 9; //2024-03-21
+                                                        cboComDvc1.Text = strComSerial10;
+                                                        strDvc1Port = strComSerial10;
+                                                        Dvc1Serial = serialPort10;
                                                     }
-                                                    cboComDvc1.Text = strComSerial[iDvcArrCnt]; //2024-03-22
                                                 }
                                             }
                                             else if (iDvcId == 0)    //Device_0
@@ -6355,93 +6233,70 @@ namespace Ado
                                                     //this.tabControl1.TabPages[0].Text = "Device0";  //2022-09-13
                                                     if (iAtVerCmdStep == 3)    //2022-08-10
                                                     {
-                                                        //cboComDvc0.Text = strComSerial1;
-                                                        //strDvc0Com = strComSerial1;    //2022-08-18 -->Remember the ComPort of Device0
-                                                        //Dvc0Serial = serialPort1;   //2022-08-18 -->Remember the serialPort of Device0
-                                                        ////2024-03-19: iDvcId = 0
-                                                        iDvcArrCnt = 0;
-                                                        //strComDvc[iDvcId] = strComSerial[iArrCnt]; //2024-03-19 -->Remember the ComPort of Device0
-                                                        //serialDvc[iDvcId] = serialPortN[iArrCnt];  //2024-03-19 -->Remember the serialPort of Device0
-                                                        //serialPortN[iArrCnt].Close(); //test if serialPort announcement is correct
+                                                        cboComDvc0.Text = strComSerial1;
+                                                        strDvc0Port = strComSerial1;    //2022-08-18 -->Remember the ComPort of Device0
+                                                        Dvc0Serial = serialPort1;   //2022-08-18 -->Remember the serialPort of Device0
                                                     }
                                                     if (iAtVerCmdStep == 13)
                                                     {
-                                                        //cboComDvc0.Text = strComSerial2;
-                                                        //strDvc0Com = strComSerial2;    //2022-08-18
-                                                        //Dvc0Serial = serialPort2;   //2022-08-18
-                                                        ////2024-03-19: iDvcId = 0
-                                                        iDvcArrCnt = 1; //2024-03-21
-                                                        //strComDvc[iDvcId] = strComSerial[iArrCnt]; //2024-03-19 -->Remember the ComPort of Device0
-                                                        //serialDvc[iDvcId] = serialPortN[iArrCnt];  //2024-03-19 -->Remember the serialPort of Device0
-                                                        //serialPortN[iArrCnt].Close(); //test if serialPort announcement is correct
+                                                        cboComDvc0.Text = strComSerial2;
+                                                        strDvc0Port = strComSerial2;    //2022-08-18
+                                                        Dvc0Serial = serialPort2;   //2022-08-18
                                                     }
                                                     if (iAtVerCmdStep == 23)
                                                     {
-                                                        //cboComDvc0.Text = strComSerial3;
-                                                        //strDvc0Com = strComSerial3;    //2022-08-18
-                                                        //Dvc0Serial = serialPort3;   //2022-08-18
-                                                        iDvcArrCnt = 2; //2024-03-21
+                                                        cboComDvc0.Text = strComSerial3;
+                                                        strDvc0Port = strComSerial3;    //2022-08-18
+                                                        Dvc0Serial = serialPort3;   //2022-08-18
                                                     }
                                                     //2022-11-16:Dvc0-strComSerial4~10
 #region
                                                     if (iAtVerCmdStep == 33)
                                                     {
-                                                        //cboComDvc0.Text = strComSerial4;
-                                                        //strDvc0Com = strComSerial4;
-                                                        //Dvc0Serial = serialPort4;
-                                                        iDvcArrCnt = 3; //2024-03-21
+                                                        cboComDvc0.Text = strComSerial4;
+                                                        strDvc0Port = strComSerial4;
+                                                        Dvc0Serial = serialPort4;
                                                     }
                                                     if (iAtVerCmdStep == 43)
                                                     {
-                                                        //cboComDvc0.Text = strComSerial5;
-                                                        //strDvc0Com = strComSerial5;
-                                                        //Dvc0Serial = serialPort5;
-                                                        iDvcArrCnt = 4; //2024-03-21
+                                                        cboComDvc0.Text = strComSerial5;
+                                                        strDvc0Port = strComSerial5;
+                                                        Dvc0Serial = serialPort5;
                                                     }
                                                     if (iAtVerCmdStep == 53)
                                                     {
-                                                        //cboComDvc0.Text = strComSerial6;
-                                                        //strDvc0Com = strComSerial6;
-                                                        //Dvc0Serial = serialPort6;
-                                                        iDvcArrCnt = 5; //2024-03-21
+                                                        cboComDvc0.Text = strComSerial6;
+                                                        strDvc0Port = strComSerial6;
+                                                        Dvc0Serial = serialPort6;
                                                     }
                                                     if (iAtVerCmdStep == 63)
                                                     {
-                                                        //cboComDvc0.Text = strComSerial7;
-                                                        //strDvc0Com = strComSerial7;
-                                                        //Dvc0Serial = serialPort7;
-                                                        iDvcArrCnt = 6; //2024-03-21
+                                                        cboComDvc0.Text = strComSerial7;
+                                                        strDvc0Port = strComSerial7;
+                                                        Dvc0Serial = serialPort7;
                                                     }
                                                     if (iAtVerCmdStep == 73)
                                                     {
-                                                        //cboComDvc0.Text = strComSerial8;
-                                                        //strDvc0Com = strComSerial8;
-                                                        //Dvc0Serial = serialPort8;
-                                                        iDvcArrCnt = 7; //2024-03-21
+                                                        cboComDvc0.Text = strComSerial8;
+                                                        strDvc0Port = strComSerial8;
+                                                        Dvc0Serial = serialPort8;
                                                     }
                                                     if (iAtVerCmdStep == 83)
                                                     {
-                                                        //cboComDvc0.Text = strComSerial9;
-                                                        //strDvc0Com = strComSerial9;
-                                                        //Dvc0Serial = serialPort9;
-                                                        iDvcArrCnt = 8; //2024-03-21
+                                                        cboComDvc0.Text = strComSerial9;
+                                                        strDvc0Port = strComSerial9;
+                                                        Dvc0Serial = serialPort9;
                                                     }
                                                     if (iAtVerCmdStep == 93)
                                                     {
-                                                        //cboComDvc0.Text = strComSerial10;
-                                                        //strDvc0Com = strComSerial10;
-                                                        //Dvc0Serial = serialPort10;
-                                                        iDvcArrCnt = 9; //2024-03-21
+                                                        cboComDvc0.Text = strComSerial10;
+                                                        strDvc0Port = strComSerial10;
+                                                        Dvc0Serial = serialPort10;
                                                     }
-                                                    cboComDvc0.Text = strComSerial[iDvcArrCnt]; //2024-03-22
-                                                    #endregion
+#endregion
                                                 }
                                             }
-                                            //2024-03-21                                            
-                                            serialDvc[iDvcId] = serialPortN[iDvcArrCnt];  //2024-03-19 -->Remember the serialPort of Device0
-                                            strComDvc[iDvcId] = strComSerial[iDvcArrCnt]; //2024-03-19 -->Remember the ComPort of Device0
-                                            serialPortN[iDvcArrCnt].Close(); //test if serialPort announcement is correct
-                                            
+
                                             if (bAtVerSent) //2022-08-16
                                             { bAtVerSent = false;   bAtVerAns = true; }
                                         }
@@ -6511,9 +6366,7 @@ namespace Ado
                                             { richBox.AppendText("Station " + /*rJA.id*/iStaId.ToString() + " connected." + "\r\n"); }
 
                                             cboStaSet.SelectedIndex = iStaId/*rJA.id*/; //2022-07-01
-                                            Console.WriteLine(cboDevNo.Items.IndexOf(iDvcId));  //2024-03-29
-                                            if (cboDevNo.Items.IndexOf(iDvcId) < 0) //2024-03-29
-                                            { cboDevNo.Items.Add(iDvcId); } //2022-11-08
+                                            cboDevNo.Items.Add(iDvcId); //2022-11-08
                                             cboDevNo.Text = iDvcId.ToString();   //2022-11-09
                                             if (!b4Customer) { richBox.AppendText("Device_ID = " + iDvcId.ToString() + "\r\n"); }   //2022-07-19
                                         }
@@ -6972,7 +6825,7 @@ namespace Ado
                         foreach (String s in SerialPort.GetPortNames())
                         {
                             if (names.Contains(s))
-                            {                                
+                            {
                                 cboComList.Text = s; // COMPort[i];
                                 iDvcCnt = iDvcCnt + 1;    //2022-08-08
                                 richBox.AppendText(cboComList.Text.ToString() + "  Connected.\r\n");  //Eric
@@ -6983,57 +6836,57 @@ namespace Ado
                                 if (iDvcCnt == 1)    //2022-08-16
                                 {
                                     //cboComDvc0.Text = ""; cboComDvc0.Items.Clear();
-                                    strComSerial1 = s; //2022-08-08: serialPort1
+                                    strComSerial1 = s; //2022-08-08                                    
                                 }
                                 if (iDvcCnt == 2)    //2022-08-16
                                 {
                                     //cboComDvc1.Text = ""; cboComDvc1.Items.Clear();
-                                    strComSerial2 = s; //2022-08-08: serialPort2
+                                    strComSerial2 = s; //2022-08-08
                                 }
                                 if (iDvcCnt == 3)    //2022-08-16
                                 {
                                     //cboComDvc2.Text = ""; cboComDvc2.Items.Clear();
-                                    strComSerial3 = s; //2022-08-08: serialPort3
+                                    strComSerial3 = s; //2022-08-08
                                 }
                                 if (iDvcCnt == 4)    //2022-11-09
                                 {
                                     //cboComDvc3.Text = ""; cboComDvc3.Items.Clear();
-                                    strComSerial4 = s;  //serialPort4
+                                    strComSerial4 = s;
                                 }
                                 if (iDvcCnt == 5)    //2022-11-09
                                 {
                                     //cboComDvc4.Text = ""; cboComDvc4.Items.Clear();
-                                    strComSerial5 = s;  //serialPort5
+                                    strComSerial5 = s;
                                 }
                                 //For Device_6~10:2022-11-15
 #region                                
                                 if (iDvcCnt == 6)
                                 {
                                     //cboComDvc5.Text = ""; cboComDvc5.Items.Clear();
-                                    strComSerial6 = s;  //serialPort6
+                                    strComSerial6 = s;
                                 }
                                 if (iDvcCnt == 7)
                                 {
                                     //cboComDvc6.Text = ""; cboComDvc6.Items.Clear();
-                                    strComSerial7 = s;  //serialPort7
+                                    strComSerial7 = s;
                                 }
                                 if (iDvcCnt == 8)
                                 {
                                     //cboComDvc7.Text = ""; cboComDvc7.Items.Clear();
-                                    strComSerial8 = s;  //serialPort8
+                                    strComSerial8 = s;
                                 }
                                 if (iDvcCnt == 9)
                                 {
                                     //cboComDvc8.Text = ""; cboComDvc8.Items.Clear();
-                                    strComSerial9 = s;  //serialPort9
+                                    strComSerial9 = s;
                                 }
                                 if (iDvcCnt == 10)
                                 {
                                     //cboComDvc9.Text = ""; cboComDvc9.Items.Clear();
-                                    strComSerial10 = s; //serialPort10
+                                    strComSerial10 = s;
                                 }
                                 #endregion
-                                strComSerial.Add(s);    //2023-10-19 -> 2024-03-11
+                                lstComSerial.Add(s);    //2023-10-19
                                 Console.WriteLine("Insert ComPort = " + s);    //2023-10-19
                                 //timer15.Enabled = true; //2023-07-19
                             }
@@ -7066,7 +6919,7 @@ namespace Ado
                 else
                 {
                     len = COMPort.Length;
-                    //Console.WriteLine("Device count Number = " + lstComSerial.Count.ToString());    //2023-10-19
+                    Console.WriteLine("Device count Number = " + lstComSerial.Count.ToString());    //2023-10-19
                     //AtVerAskQueue(false);    //2023-07-19
                 }
 
@@ -7079,218 +6932,6 @@ namespace Ado
                 serialPort1.Close();    //2022-05-30    //for sta3 close
             }            
             //BurnInQueue(); //2022-11-21
-        }
-
-        private void utilVerChk()    //2024-03-07
-        {
-            try
-            {
-                int k = 0;
-                string[] COMPort = System.IO.Ports.SerialPort.GetPortNames();
-                Console.WriteLine("COMPort.count= " + COMPort.Count());
-                foreach (String s in SerialPort.GetPortNames())    //2024-03-08
-                { 
-                    toolStripStatusLabel1.Text += s + " inserted. ";
-                    strComNowConnect.Add(s);    //2024-03-11:for test
-                    Array.Resize(ref strComConnect, strComConnect.Length + 1);
-                    strComConnect[k] = s; k++;
-                    //strComConnect.Append(s);
-                }
-                Console.WriteLine(strComNowConnect.Count); //Console.WriteLine(strComConnect[k-1].Length); 
-
-                for (int i = 0; i < COMPort.Length; i++)    //2024-03-11：SerailPort(i+1)=strComSerial[i+1] for test
-                { Console.WriteLine("SerialPort " + (i + 1) + " Insert ComPort = " + COMPort[i]); }
-
-                if (T != len)   //if(len>T)=>New COM added, if(T>len)=>Certain COM removed
-                {
-                    //string strVID = "0416"; string strPID = "B1B2";
-                    //List<string> names = ComPortNames(/*"0416"*/strVID, strPID/*"B1B2"*/);  //E1Plus { VID, PID };  //Eric:2022-5-10
-
-                    int i = COMPort.Length - 1; //2022-08-08
-                    T = COMPort.Length;
-                    cboComList.Text = "";
-                    cboComList.Items.Clear();
-                    cboComList.Items.AddRange(System.IO.Ports.SerialPort.GetPortNames());
-                    cboDevNo.Items.Clear(); //2022-11-22, avoid repeat cboDevNo
-                    lblDevIdDvc0.Text = ""; lblDevIdDvc1.Text = ""; lblDevIdDvc2.Text = ""; //2022-09-19
-                    lblDevIdDvc3.Text = ""; lblDevIdDvc4.Text = ""; lblDevIdDvc5.Text = ""; lblDevIdDvc6.Text = ""; //2022-11-21
-                    lblDevIdDvc7.Text = ""; lblDevIdDvc8.Text = ""; lblDevIdDvc9.Text = ""; //2022-11-21
-                    if ((i >= 0) && (VidPidNames.Count > 0))  //Eric
-                    {
-                        foreach (String s in SerialPort.GetPortNames())
-                        {
-                            if (VidPidNames.Contains(s))
-                            {
-                                cboComList.Text = s; // COMPort[i];
-                                iDvcCnt = iDvcCnt + 1;    //2022-08-08
-                                richBox.AppendText(cboComList.Text.ToString() + "  Connected.\r\n");  //Eric
-                                strComSelected = cboComList.Text;    //Eric
-                                len = COMPort.Length;
-                                cboComList.BackColor = Color.White;
-
-                                if (iDvcCnt == 1)    //2022-08-16
-                                {
-                                    //cboComDvc0.Text = ""; cboComDvc0.Items.Clear();
-                                    strComSerial1 = s; //2022-08-08: serialPort1
-                                    strComConnect[iDvcCnt - 1] = s;    //2024-03-19
-                                }
-                                if (iDvcCnt == 2)    //2022-08-16
-                                {
-                                    //cboComDvc1.Text = ""; cboComDvc1.Items.Clear();
-                                    strComSerial2 = s; //2022-08-08: serialPort2
-                                    strComConnect[iDvcCnt - 1] = s;    //2024-03-19
-                                }
-                                if (iDvcCnt == 3)    //2022-08-16
-                                {
-                                    //cboComDvc2.Text = ""; cboComDvc2.Items.Clear();
-                                    strComSerial3 = s; //2022-08-08: serialPort3
-                                }
-                                if (iDvcCnt == 4)    //2022-11-09
-                                {
-                                    //cboComDvc3.Text = ""; cboComDvc3.Items.Clear();
-                                    strComSerial4 = s;  //serialPort4
-                                }
-                                if (iDvcCnt == 5)    //2022-11-09
-                                {
-                                    //cboComDvc4.Text = ""; cboComDvc4.Items.Clear();
-                                    strComSerial5 = s;  //serialPort5
-                                }
-                                //For Device_6~10:2022-11-15
-                                #region                                
-                                if (iDvcCnt == 6)
-                                {
-                                    //cboComDvc5.Text = ""; cboComDvc5.Items.Clear();
-                                    strComSerial6 = s;  //serialPort6
-                                }
-                                if (iDvcCnt == 7)
-                                {
-                                    //cboComDvc6.Text = ""; cboComDvc6.Items.Clear();
-                                    strComSerial7 = s;  //serialPort7
-                                }
-                                if (iDvcCnt == 8)
-                                {
-                                    //cboComDvc7.Text = ""; cboComDvc7.Items.Clear();
-                                    strComSerial8 = s;  //serialPort8
-                                }
-                                if (iDvcCnt == 9)
-                                {
-                                    //cboComDvc8.Text = ""; cboComDvc8.Items.Clear();
-                                    strComSerial9 = s;  //serialPort9
-                                }
-                                if (iDvcCnt == 10)
-                                {
-                                    //cboComDvc9.Text = ""; cboComDvc9.Items.Clear();
-                                    strComSerial10 = s; //serialPort10
-                                }
-                                #endregion
-                                strComSerial.Add(s);    //2023-10-19 -> 2024-03-11
-                                Console.WriteLine("Insert ComPort = " + s);    //2023-10-19
-                                Console.WriteLine("strComSerial[" + (iDvcCnt - 1) + "]= " + strComSerial[iDvcCnt - 1]);  //2024-03-13
-                                timer15.Enabled = true; //2024-03-21
-                            }
-                            //for (int j = 0; j < COMPort.Length; j++)    //2024-03-11：SerailPort(j+1)=strComSerial[j]
-                            //{ Console.WriteLine("SerialPort " + (j + 1) + " Insert ComPort = " + s); }                            
-                        }
-                        //timer15.Enabled = true; //2023-10-19
-                    }
-                    else
-                    {
-                        Console.WriteLine("Line 7046...No com port or the right PID device connected.");    //just remark.
-                        //richTxtFwResponse.AppendText(strComSelected/*cboCom.Text.ToString()*/ + "  disconnected.\r\n");  //Eric
-                        //serialPort1.Close();    //2022-06-06
-                    }
-#if false   //2022-12-04
-#region
-                    if (cboComList.Text != strComSelected)
-                    {
-                        serialPort1.Close();    //2022-05-30
-                        cboComDvc0.Text = "";   lblDevIdDvc0.Text = "Device_ID";   //2022-08-09
-                        serialPort2.Close(); cboComDvc1.Text = ""; serialPort3.Close(); cboComDvc2.Text = "";    //2022-08-09
-                        btnTestDvc0.Enabled = false;    //Eric
-                        serialPort4.Close(); cboComDvc3.Text = ""; serialPort5.Close(); cboComDvc4.Text = "";   //2022-11-21
-                        serialPort6.Close(); cboComDvc5.Text = ""; serialPort7.Close(); cboComDvc6.Text = "";   //2022-11-21
-                        serialPort8.Close(); cboComDvc7.Text = ""; serialPort9.Close(); cboComDvc8.Text = "";   //2022-11-21
-                        serialPort10.Close(); cboComDvc9.Text = "";  //2022-11-21
-                        richBox.AppendText(strComSelected/*cboCom.Text.ToString()*/ + "  disconnected.\r\n");  //Eric
-                    }
-#endregion
-#endif
-                }
-                else
-                {
-                    len = COMPort.Length;
-                    //Console.WriteLine("Device count Number = " + lstComSerial.Count.ToString());    //2023-10-19
-                    //AtVerAskQueue(false);    //2023-07-19
-                }
-
-            }
-            catch (Exception /*ex*/)
-            {
-                lblFinalDvc0.Text = "";
-                // ex.Message = 索引在陣列的界限之外。
-                serialPort1.Dispose();
-                serialPort1.Close();    //2022-05-30    //for sta3 close
-            }
-            //BurnInQueue(); //2022-11-21
-        }
-
-        private void utilAtVerChk(string Com2Quest)    //2024-03-20
-        {
-            try
-            {
-
-            }
-            catch
-            {
-
-            }
-        }
-
-        private void DvcRemovedUiRefresh()    //2024-03-22：Refresh UI to add/remove COM/Dvc0_id... when insert or remove Device
-        {
-            for(int i=0; i < 10; i++)
-            {
-                if (strComDvc[i] == "")
-                {
-                    switch (i)
-                    { 
-                        case 0:
-                            cboComDvc0.Text = ""; cboComDvc0.Items.Clear(); lblDevIdDvc0.Text = ""; radSta3Dvc0.Checked = false;
-                            break;
-                        case 1:
-                            cboComDvc1.Text = ""; cboComDvc1.Items.Clear(); lblDevIdDvc1.Text = ""; radSta3Dvc1.Checked = false;
-                            break;
-                        case 2:
-                            cboComDvc2.Text = ""; cboComDvc2.Items.Clear(); lblDevIdDvc2.Text = ""; radSta3Dvc2.Checked = false;
-                            break;
-                        case 3:
-                            cboComDvc3.Text = ""; cboComDvc3.Items.Clear(); lblDevIdDvc3.Text = ""; radSta3Dvc3.Checked = false;
-                            break;
-                        case 4:
-                            cboComDvc4.Text = ""; cboComDvc4.Items.Clear(); lblDevIdDvc4.Text = ""; radSta3Dvc4.Checked = false;
-                            break;
-                        case 5:
-                            cboComDvc5.Text = ""; cboComDvc5.Items.Clear(); lblDevIdDvc5.Text = ""; radSta3Dvc5.Checked = false;
-                            break;
-                        case 6:
-                            cboComDvc6.Text = ""; cboComDvc6.Items.Clear(); lblDevIdDvc6.Text = ""; radSta3Dvc6.Checked = false;
-                            break;
-                        case 7:
-                            cboComDvc7.Text = ""; cboComDvc7.Items.Clear(); lblDevIdDvc7.Text = ""; radSta3Dvc7.Checked = false;
-                            break;
-                        case 8:
-                            cboComDvc8.Text = ""; cboComDvc8.Items.Clear(); lblDevIdDvc8.Text = ""; radSta3Dvc8.Checked = false;
-                            break;
-                        case 9:
-                            cboComDvc9.Text = ""; cboComDvc9.Items.Clear(); lblDevIdDvc9.Text = ""; radSta3Dvc9.Checked = false;
-                            break;
-                        default:
-                            richBox.AppendText("Function UiRefresh unusual COM removed.\n");
-                            break;
-                    }
-                    //cboDevNo.Items.Remove(i); /*cboComList.Items.Remove(i);*/    //2024-03-26
-                }
-            }
         }
 
         private void BurnInQueue()  //2022-11-21
@@ -7310,7 +6951,7 @@ namespace Ado
                     { iBurnInQueStep += 1; btnBurnAll.Enabled = false; }    //2022-11-28
                     break;
                 case 1:
-                    if (strDvc0Com != null)    //Device_0
+                    if (strDvc0Port != null)    //Device_0
                     {
                         iBurnInQueStep += 1;
                         btnBurn1hr_Click(null, null);
@@ -7337,7 +6978,7 @@ namespace Ado
                     }
                     break;
                 case 11:
-                    if (strDvc1Com != null)    //Device_1
+                    if (strDvc1Port != null)    //Device_1
                     {
                         iBurnInQueStep += 1;
                         btnBurn1hrDvc1_Click(null, null);   //2022-11-23(avoid report repeat open)
@@ -7364,7 +7005,7 @@ namespace Ado
                     }
                     break;
                 case 21:
-                    if (strDvc2Com != null)    //Device_2
+                    if (strDvc2Port != null)    //Device_2
                     {
                         iBurnInQueStep += 1;
                         btnBurn1hrDvc2_Click(null, null);   //2022-11-23(avoid report repeat open)
@@ -7392,7 +7033,7 @@ namespace Ado
                     }
                     break;
                 case 31:
-                    if (strDvc3Com != null)    //Device_3
+                    if (strDvc3Port != null)    //Device_3
                     {
                         iBurnInQueStep += 1;
                         btnBurn1hrDvc3_Click(null, null);   //2022-11-23(avoid report repeat open)
@@ -7420,7 +7061,7 @@ namespace Ado
                     }
                     break;
                 case 41:
-                    if (strDvc4Com != null)    //Device_4
+                    if (strDvc4Port != null)    //Device_4
                     {
                         iBurnInQueStep += 1;
                         btnBurn1hrDvc4_Click(null, null);   //2022-11-23(avoid report repeat open)
@@ -7448,7 +7089,7 @@ namespace Ado
                     }
                     break;
                 case 51:
-                    if (strDvc5Com != null)    //Device_5
+                    if (strDvc5Port != null)    //Device_5
                     {
                         iBurnInQueStep += 1;
                         btnBurn1hrDvc5_Click(null, null);   //2022-11-23(avoid report repeat open)
@@ -7476,7 +7117,7 @@ namespace Ado
                     }
                     break;
                 case 61:
-                    if (strDvc6Com != null)    //Device_6
+                    if (strDvc6Port != null)    //Device_6
                     {
                         iBurnInQueStep += 1;
                         btnBurn1hrDvc6_Click(null, null);   //2022-11-23(avoid report repeat open)
@@ -7504,7 +7145,7 @@ namespace Ado
                     }
                     break;
                 case 71:
-                    if (strDvc7Com != null)    //Device_7
+                    if (strDvc7Port != null)    //Device_7
                     {
                         iBurnInQueStep += 1;
                         btnBurn1hrDvc7_Click(null, null);   //2022-11-23(avoid report repeat open)
@@ -7532,7 +7173,7 @@ namespace Ado
                     }
                     break;
                 case 81:
-                    if (strDvc8Com != null)    //Device_8
+                    if (strDvc8Port != null)    //Device_8
                     {
                         iBurnInQueStep += 1;
                         btnBurn1hrDvc8_Click(null, null);   //2022-11-23(avoid report repeat open)
@@ -7560,7 +7201,7 @@ namespace Ado
                     }
                     break;
                 case 91:
-                    if (strDvc9Com != null)    //Device_9
+                    if (strDvc9Port != null)    //Device_9
                     {
                         iBurnInQueStep += 1;
                         btnBurn1hrDvc9_Click(null, null);   //2022-11-23(avoid report repeat open)
@@ -8203,11 +7844,11 @@ namespace Ado
             richBox.ForeColor = Color.FromArgb(255, 255, 128);
 
             //2023-06-17
-            //OpenPort(Dvc0Serial, strDvc0Com);
+            //OpenPort(Dvc0Serial, strDvc0Port);
             utilDvcxSerialWrite(eCPort.cPort0, "AT+CURR 146" + "\r\n");
             timerDelay1ms(500);
 
-            if (IsOpenPort(Dvc0Serial, strDvc0Com)) //(IsOpenPort(serialPort1, strComSerial1))   //2022-08-18
+            if (IsOpenPort(Dvc0Serial, strDvc0Port)) //(IsOpenPort(serialPort1, strComSerial1))   //2022-08-18
             {
              utilDvcxSerialWrite(eCPort.cPort0, "AT+RET" + "\n\r");
                 dts0 = DateTime.Now; //2023-02-15
@@ -8215,7 +7856,7 @@ namespace Ado
                 //Console.WriteLine(strDateTimeDvc0);    //2023-02-17
             }  //==> Sometimes no sending?
             else   //2022-11-21
-            { MessageBox.Show("Dvc0:Test not finished for COM port " + strDvc0Com + " was not opened.\r\n"); }
+            { MessageBox.Show("Dvc0:Test not finished for COM port " + strDvc0Port + " was not opened.\r\n"); }
             timerDelay1s(2);    //2023-06-27
             if (bBurnFinished)  //2022-06-17
             { 
@@ -8485,43 +8126,43 @@ namespace Ado
             switch (cboDevNo.Text)   //2022-11-17    //(cboDevNo.SelectedIndex) //2022-08-24
             {
                 case "0":
-                    IsOpenPort(Dvc0Serial, strDvc0Com);
+                    IsOpenPort(Dvc0Serial, strDvc0Port);
                     utilDvcxSerialWrite(eCPort.cPort0, cboCmdList.Text + "\r\n");
                     break;
                 case "1":
-                    IsOpenPort(Dvc1Serial, strDvc1Com);
+                    IsOpenPort(Dvc1Serial, strDvc1Port);
                     utilDvcxSerialWrite(eCPort.cPort1, cboCmdList.Text + "\r\n");
                     break;
                 case "2":
-                    IsOpenPort(Dvc2Serial, strDvc2Com);
+                    IsOpenPort(Dvc2Serial, strDvc2Port);
                     utilDvcxSerialWrite(eCPort.cPort2, cboCmdList.Text + "\r\n");
                     break;
                 case "3":
-                    IsOpenPort(Dvc3Serial, strDvc3Com);
+                    IsOpenPort(Dvc3Serial, strDvc3Port);
                     utilDvcxSerialWrite(eCPort.cPort3, cboCmdList.Text + "\r\n");
                     break;
                 case "4":
-                    IsOpenPort(Dvc4Serial, strDvc4Com);
+                    IsOpenPort(Dvc4Serial, strDvc4Port);
                     utilDvcxSerialWrite(eCPort.cPort4, cboCmdList.Text + "\r\n");
                     break;
                 case "5":
-                    IsOpenPort(Dvc5Serial, strDvc5Com);
+                    IsOpenPort(Dvc5Serial, strDvc5Port);
                     utilDvcxSerialWrite(eCPort.cPort5, cboCmdList.Text + "\r\n");
                     break;
                 case "6":
-                    IsOpenPort(Dvc6Serial, strDvc6Com);
+                    IsOpenPort(Dvc6Serial, strDvc6Port);
                     utilDvcxSerialWrite(eCPort.cPort6, cboCmdList.Text + "\r\n");
                     break;
                 case "7":
-                    IsOpenPort(Dvc7Serial, strDvc7Com);
+                    IsOpenPort(Dvc7Serial, strDvc7Port);
                     utilDvcxSerialWrite(eCPort.cPort7, cboCmdList.Text + "\r\n");
                     break;
                 case "8":
-                    IsOpenPort(Dvc8Serial, strDvc8Com);
+                    IsOpenPort(Dvc8Serial, strDvc8Port);
                     utilDvcxSerialWrite(eCPort.cPort8, cboCmdList.Text + "\r\n");
                     break;
                 case "9":
-                    IsOpenPort(Dvc9Serial, strDvc9Com);
+                    IsOpenPort(Dvc9Serial, strDvc9Port);
                     utilDvcxSerialWrite(eCPort.cPort9, cboCmdList.Text + "\r\n");
                     break;
             }            
@@ -8558,47 +8199,34 @@ namespace Ado
                 switch (cboDevNo.Text)  //2022-11-08
                 {
                     case "0":
-                        cboComList.Text = serialDvc[0].PortName;    //2024-03-22
-                        //cboComList.Text = Dvc0Serial.PortName;
+                        cboComList.Text = Dvc0Serial.PortName;
                         break;
                     case "1":
-                        cboComList.Text = serialDvc[1].PortName;    //2024-03-22
-                        //cboComList.Text = Dvc1Serial.PortName;
+                        cboComList.Text = Dvc1Serial.PortName;
                         break;
                     case "2":
-                        cboComList.Text = serialDvc[2].PortName;    //2024-03-21
-                        //cboComList.Text = Dvc2Serial.PortName;
+                        cboComList.Text = Dvc2Serial.PortName;
                         break;
                     case "3":   //2022-11-15
-                        cboComList.Text = serialDvc[3].PortName;    //2024-03-22
-                        //cboComList.Text = Dvc3Serial.PortName;
+                        cboComList.Text = Dvc3Serial.PortName;
                         break;
                     case "4":   //2022-11-15
-                        cboComList.Text = serialDvc[4].PortName;    //2024-03-22
-                        //cboComList.Text = Dvc4Serial.PortName;
+                        cboComList.Text = Dvc4Serial.PortName;
                         break;
                     case "5":   //2022-11-15
-                        cboComList.Text = serialDvc[5].PortName;    //2024-03-22
-                        //cboComList.Text = Dvc5Serial.PortName;
+                        cboComList.Text = Dvc5Serial.PortName;
                         break;
                     case "6":   //2022-11-15
-                        cboComList.Text = serialDvc[6].PortName;    //2024-03-22
-                        //cboComList.Text = Dvc6Serial.PortName;
+                        cboComList.Text = Dvc6Serial.PortName;
                         break;
                     case "7":   //2022-11-15
-                        cboComList.Text = serialDvc[7].PortName;    //2024-03-22
-                        //cboComList.Text = Dvc7Serial.PortName;
+                        cboComList.Text = Dvc7Serial.PortName;
                         break;
                     case "8":   //2022-11-15
-                        cboComList.Text = serialDvc[8].PortName;    //2024-03-22
-                        //cboComList.Text = Dvc8Serial.PortName;
+                        cboComList.Text = Dvc8Serial.PortName;
                         break;
                     case "9":   //2022-11-15
-                        cboComList.Text = serialDvc[9].PortName;    //2024-03-22
-                        //cboComList.Text = Dvc9Serial.PortName;
-                        break;
-                    default:
-                        cboComList.Text = "";    //2024-03-29
+                        cboComList.Text = Dvc9Serial.PortName;
                         break;
                 }            
             }
@@ -8611,7 +8239,7 @@ namespace Ado
             {
                 btnBurnStopDvc2.Enabled = false;
                 richBox.AppendText("interrupting...Device_2燒機提早停止，請稍候...\r\n");
-                //OpenPort(Dvc2Serial, strDvc2Com);
+                //OpenPort(Dvc2Serial, strDvc2Port);
                 //Dvc2Serial.Write("AT+BIS 0" + "\r\n"); 
                 //timerDelay1ms(500);
 
@@ -8674,7 +8302,7 @@ namespace Ado
 
                 #region
                 case 10:
-                    if (IsOpenPort(Dvc1Serial, strDvc1Com))    //2023-02-16
+                    if (IsOpenPort(Dvc1Serial, strDvc1Port))    //2023-02-16
                     {
                         utilDvcxSerialWrite(eCPort.cPort1, "AT+BIT " + 0 + "\r\n"); //set mirror not open
                     }
@@ -8687,13 +8315,13 @@ namespace Ado
 
                     if (bTempOver50Dvc1 && !bWaitCoolDvc1)
                     {
-                        //IsOpenPort(Dvc1Serial, strDvc1Com);
+                        //IsOpenPort(Dvc1Serial, strDvc1Port);
                         utilDvcxSerialWrite(eCPort.cPort1, "AT+CURR 0" + "\r\n");
                         iBurnStopStepDvc1 = 12;
                     }
                     else if (bTempUnder40Dvc1 && bWaitCoolDvc1)
                     {
-                        //IsOpenPort(Dvc1Serial, strDvc1Com);
+                        //IsOpenPort(Dvc1Serial, strDvc1Port);
                         utilDvcxSerialWrite(eCPort.cPort1, "AT+CURR 146" + "\r\n");
                         iBurnStopStepDvc1 = 13;
                     }
@@ -8701,7 +8329,7 @@ namespace Ado
                     if (iBurnTimeDvc1 > iBurnMin || bBurnStopDvc1)  //2022-09-19
                     {
                         bBurnFinishedDvc1 = true;
-                        //OpenPort(Dvc1Serial, strDvc1Com);
+                        //OpenPort(Dvc1Serial, strDvc1Port);
                         utilDvcxSerialWrite(eCPort.cPort1, "AT+BIS 0" + "\r\n");
                         timerDelay1ms(300);  //2022-12-01
                         iBurnStopStepDvc1 = 20;
@@ -8741,14 +8369,14 @@ namespace Ado
                     }
                     //if ((iBurnTimeDvc1 > iTempChkTime) && !bTempChkInBurnDvc1)   //2023-02-15:To check temperature after certain time
                     //{
-                    //    //OpenPort(Dvc1Serial, strDvc1Com);
+                    //    //OpenPort(Dvc1Serial, strDvc1Port);
                     //    utilDvcxSerialWrite(eCPort.cPort1, "AT+TEMP?" + "\r\n");
                     //    bTempChkInBurnDvc1 = true;
                     //}                  
                     if (iBurnTimeDvc1 > iBurnMin || bBurnStopDvc1)  //2022-09-19
                     {
                         bBurnFinishedDvc1 = true;
-                        //OpenPort(Dvc1Serial, strDvc1Com);
+                        //OpenPort(Dvc1Serial, strDvc1Port);
                         utilDvcxSerialWrite(eCPort.cPort1, "AT+BIS 0" + "\r\n");
                         timerDelay1ms(300);  //2022-12-01
                         iBurnStopStepDvc1 = 20;
@@ -8869,7 +8497,7 @@ namespace Ado
 
                 #region
                 case 10:
-                    if (IsOpenPort(Dvc2Serial, strDvc2Com))
+                    if (IsOpenPort(Dvc2Serial, strDvc2Port))
                     {
                         utilDvcxSerialWrite(eCPort.cPort2, "AT+BIT " + 0 + "\r\n"); //set mirror not open
                     }
@@ -8893,7 +8521,7 @@ namespace Ado
                     if (iBurnTimeDvc2 > iBurnMin || bBurnStopDvc2)  //2022-09-19
                     {
                         bBurnFinishedDvc2 = true;
-                        //OpenPort(Dvc2Serial, strDvc2Com);
+                        //OpenPort(Dvc2Serial, strDvc2Port);
                         utilDvcxSerialWrite(eCPort.cPort2, "AT+BIS 0" + "\r\n");
                         timerDelay1ms(300);  //2022-12-01
                         iBurnStopStepDvc2 = 20;
@@ -8933,14 +8561,14 @@ namespace Ado
                     }
                     //if ((iBurnTimeDvc2 > iTempChkTime) && !bTempChkInBurnDvc2)   //2023-02-15:To check temperature after certain time
                     //{
-                    //    //OpenPort(Dvc2Serial, strDvc2Com);
+                    //    //OpenPort(Dvc2Serial, strDvc2Port);
                     //    utilDvcxSerialWrite(eCPort.cPort2, "AT+TEMP?" + "\r\n");
                     //    bTempChkInBurnDvc2 = true;
                     //}
                     if (iBurnTimeDvc2 > iBurnMin || bBurnStopDvc2)  //2022-09-19
                     {
                         bBurnFinishedDvc2 = true;
-                        //OpenPort(Dvc2Serial, strDvc2Com);
+                        //OpenPort(Dvc2Serial, strDvc2Port);
                         utilDvcxSerialWrite(eCPort.cPort2, "AT+BIS 0" + "\r\n");
                         timerDelay1ms(300);  //2022-12-01
                         iBurnStopStepDvc2 = 20;
@@ -9012,7 +8640,7 @@ namespace Ado
             {
                 btnBurnStopDvc1.Enabled = false;  
                 richBox.AppendText("interrupting...Device_1燒機提早停止，請稍候...\r\n");
-                //OpenPort(Dvc1Serial, strDvc1Com);  //openport();
+                //OpenPort(Dvc1Serial, strDvc1Port);  //openport();
                 //Dvc1Serial.Write("AT+BIS 0" + "\r\n"); 
                 //timerDelay1ms(500);
 
@@ -9045,43 +8673,43 @@ namespace Ado
             switch (cboDevNo.Text/*SelectedIndex*/)  //2022-11-14
             {
                 case "0":
-                    IsOpenPort(Dvc0Serial, strDvc0Com);
+                    IsOpenPort(Dvc0Serial, strDvc0Port);
                     utilDvcxSerialWrite(eCPort.cPort0, "AT+BIS " + cboBis.Text + "\r\n");
                     break;
                 case "1":
-                    IsOpenPort(Dvc1Serial, strDvc1Com);
+                    IsOpenPort(Dvc1Serial, strDvc1Port);
                     utilDvcxSerialWrite(eCPort.cPort1, "AT+BIS " + cboBis.Text + "\r\n");
                     break;
                 case "2":
-                    IsOpenPort(Dvc2Serial, strDvc2Com);
+                    IsOpenPort(Dvc2Serial, strDvc2Port);
                     utilDvcxSerialWrite(eCPort.cPort2, "AT+BIS " + cboBis.Text + "\r\n");
                     break;
                 case "3":
-                    IsOpenPort(Dvc3Serial, strDvc3Com);
+                    IsOpenPort(Dvc3Serial, strDvc3Port);
                     utilDvcxSerialWrite(eCPort.cPort3, "AT+BIS " + cboBis.Text + "\r\n");
                     break;
                 case "4":
-                    IsOpenPort(Dvc4Serial, strDvc4Com);
+                    IsOpenPort(Dvc4Serial, strDvc4Port);
                     utilDvcxSerialWrite(eCPort.cPort4, "AT+BIS " + cboBis.Text + "\r\n");
                     break;
                 case "5":
-                    IsOpenPort(Dvc5Serial, strDvc5Com);
+                    IsOpenPort(Dvc5Serial, strDvc5Port);
                     utilDvcxSerialWrite(eCPort.cPort5, "AT+BIS " + cboBis.Text + "\r\n");
                     break;
                 case "6":
-                    IsOpenPort(Dvc6Serial, strDvc6Com);
+                    IsOpenPort(Dvc6Serial, strDvc6Port);
                     utilDvcxSerialWrite(eCPort.cPort6, "AT+BIS " + cboBis.Text + "\r\n");
                     break;
                 case "7":
-                    IsOpenPort(Dvc7Serial, strDvc7Com);
+                    IsOpenPort(Dvc7Serial, strDvc7Port);
                     utilDvcxSerialWrite(eCPort.cPort7, "AT+BIS " + cboBis.Text + "\r\n");
                     break;
                 case "8":
-                    IsOpenPort(Dvc8Serial, strDvc8Com);
+                    IsOpenPort(Dvc8Serial, strDvc8Port);
                     utilDvcxSerialWrite(eCPort.cPort8, "AT+BIS " + cboBis.Text + "\r\n");
                     break;
                 case "9":
-                    IsOpenPort(Dvc9Serial, strDvc9Com);
+                    IsOpenPort(Dvc9Serial, strDvc9Port);
                     utilDvcxSerialWrite(eCPort.cPort9, "AT+BIS " + cboBis.Text + "\r\n");
                     break;
             }
@@ -9106,13 +8734,13 @@ namespace Ado
             richBox.AppendText("\r\n......Burn-in starting : " + "\r\n");    //2022-09-13
             btnBurn1hrDvc2.Enabled = false;
             txtTestRmkDvc2.Text = "";   //2023-06-19
-            //if (IsOpenPort(Dvc2Serial, strDvc2Com))    //2022-11-28
+            //if (IsOpenPort(Dvc2Serial, strDvc2Port))    //2022-11-28
             //{
             //    utilDvcxSerialWrite(eCPort.cPort2, "AT+BIT " + (iBurnMin) + "\r\n");
             //}     //burn-in setting    
             //timerDelay1ms(100);  //2022-11-28
 
-            //OpenPort(Dvc2Serial, strDvc2Com);  //2022-10-31
+            //OpenPort(Dvc2Serial, strDvc2Port);  //2022-10-31
             utilDvcxSerialWrite(eCPort.cPort2, "AT+BIS 1" + "\r\n");
             timerDelay1ms(200);  //2022-11-28
 
@@ -9136,43 +8764,43 @@ namespace Ado
             switch(cboDevNo.Text/*SelectedIndex*/)  //2022-11-14
             {
                 case "0": //0:
-                    IsOpenPort(Dvc0Serial, strDvc0Com);
+                    IsOpenPort(Dvc0Serial, strDvc0Port);
                     utilDvcxSerialWrite(eCPort.cPort0, "AT+BIS?" + "\r\n");
                     break;
                 case "1": //1:
-                    IsOpenPort(Dvc1Serial, strDvc1Com);
+                    IsOpenPort(Dvc1Serial, strDvc1Port);
                     utilDvcxSerialWrite(eCPort.cPort1, "AT+BIS?" + "\r\n");
                     break;
                 case "2": //2:
-                    IsOpenPort(Dvc2Serial, strDvc2Com);
+                    IsOpenPort(Dvc2Serial, strDvc2Port);
                     utilDvcxSerialWrite(eCPort.cPort2, "AT+BIS?" + "\r\n");
                     break;
                 case "3": //3: //2022-11-14
-                    IsOpenPort(Dvc3Serial, strDvc3Com);
+                    IsOpenPort(Dvc3Serial, strDvc3Port);
                     utilDvcxSerialWrite(eCPort.cPort3, "AT+BIS?" + "\r\n");
                     break;
                 case "4": //4: //2022-11-14
-                    IsOpenPort(Dvc4Serial, strDvc4Com);
+                    IsOpenPort(Dvc4Serial, strDvc4Port);
                     utilDvcxSerialWrite(eCPort.cPort4, "AT+BIS?" + "\r\n");
                     break;
                 case "5": //2022-11-22
-                    IsOpenPort(Dvc5Serial, strDvc5Com);
+                    IsOpenPort(Dvc5Serial, strDvc5Port);
                     utilDvcxSerialWrite(eCPort.cPort5, "AT+BIS?" + "\r\n");
                     break;
                 case "6": //2022-11-22
-                    IsOpenPort(Dvc6Serial, strDvc6Com);
+                    IsOpenPort(Dvc6Serial, strDvc6Port);
                     utilDvcxSerialWrite(eCPort.cPort6, "AT+BIS?" + "\r\n");
                     break;
                 case "7": //2022-11-22
-                    IsOpenPort(Dvc7Serial, strDvc7Com);
+                    IsOpenPort(Dvc7Serial, strDvc7Port);
                     utilDvcxSerialWrite(eCPort.cPort7, "AT+BIS?" + "\r\n");
                     break;
                 case "8": //2022-11-22
-                    IsOpenPort(Dvc8Serial, strDvc8Com);
+                    IsOpenPort(Dvc8Serial, strDvc8Port);
                     utilDvcxSerialWrite(eCPort.cPort8, "AT+BIS?" + "\r\n");
                     break;
                 case "9": //2022-11-22
-                    IsOpenPort(Dvc9Serial, strDvc9Com);
+                    IsOpenPort(Dvc9Serial, strDvc9Port);
                     utilDvcxSerialWrite(eCPort.cPort9, "AT+BIS?" + "\r\n");
                     break;
             }
@@ -9261,13 +8889,13 @@ namespace Ado
             richBox.AppendText("\r\nDevice_0......Burn-in starting : " + "\r\n");    //2022-09-13
             btnBurn1hrDvc0.Enabled = false;  //2022-06-07
             txtTestRmkDvc0.Text = "";   //2023-06-19
-            //if (IsOpenPort(Dvc1Serial, strDvc1Com))    //2022-11-28
+            //if (IsOpenPort(Dvc1Serial, strDvc1Port))    //2022-11-28
             //{
             //    utilDvcxSerialWrite(eCPort.cPort1, "AT+BIT " + (iBurnMin) + "\r\n");
             //}     //burn-in setting    
             //timerDelay1ms(100);
 
-            //OpenPort(Dvc0Serial, strDvc0Com);  //2022-10-31
+            //OpenPort(Dvc0Serial, strDvc0Port);  //2022-10-31
             utilDvcxSerialWrite(eCPort.cPort0, "AT+BIS 1" + "\r\n");
             timerDelay1ms(200);  //2022-11-28
 
@@ -9309,13 +8937,13 @@ namespace Ado
             richBox.AppendText("\r\nDevice_1......Burn-in starting : " + "\r\n");    //2022-09-13
             btnBurn1hrDvc1.Enabled = false;
             txtTestRmkDvc1.Text = "";   //2023-06-19
-            if (IsOpenPort(Dvc1Serial, strDvc1Com))    //2022-11-28
+            if (IsOpenPort(Dvc1Serial, strDvc1Port))    //2022-11-28
             {
                 utilDvcxSerialWrite(eCPort.cPort1, "AT+BIT " + (iBurnMin) + "\r\n");
             }     //burn-in setting    
             timerDelay1ms(100);  //2022-11-28
 
-            //OpenPort(Dvc1Serial, strDvc1Com);  //2022-10-31
+            //OpenPort(Dvc1Serial, strDvc1Port);  //2022-10-31
             utilDvcxSerialWrite(eCPort.cPort1, "AT+BIS 1" + "\r\n");
             timerDelay1ms(200);  //2022-11-28
 
@@ -9362,19 +8990,19 @@ namespace Ado
             richBox.ForeColor = Color.FromArgb(255, 255, 128);
 
             //2023-06-17
-            //OpenPort(Dvc2Serial, strDvc2Com);
+            //OpenPort(Dvc2Serial, strDvc2Port);
             utilDvcxSerialWrite(eCPort.cPort2, "AT+CURR 146" + "\r\n");
             timerDelay1ms(500); //2023-06-27
 
-            //OpenPort(Dvc2Serial, strDvc2Com);  //2022-12-02: One more port open for sure
-            if (IsOpenPort(Dvc2Serial, strDvc2Com)) //2022-08-18
+            //OpenPort(Dvc2Serial, strDvc2Port);  //2022-12-02: One more port open for sure
+            if (IsOpenPort(Dvc2Serial, strDvc2Port)) //2022-08-18
             {
                 utilDvcxSerialWrite(eCPort.cPort2, "AT+RET" + "\r\n");
                 dts2 = DateTime.Now; //2023-02-15
                 strDateTimeDvc2 = /*DateTime.Now*/dts2.ToString("yyyy-MM-dd-HH:mm:ss"); //2023-02-15
             }
             else   //2022-11-21
-            { MessageBox.Show("Dvc2:Test not finished for COM port " + strDvc2Com + " was not opened.\r\n"); }
+            { MessageBox.Show("Dvc2:Test not finished for COM port " + strDvc2Port + " was not opened.\r\n"); }
             timerDelay1s(2); //2023-06-27
             if (bBurnFinishedDvc2)
             { 
@@ -9413,18 +9041,18 @@ namespace Ado
             richBox.ForeColor = Color.FromArgb(255, 255, 128);
 
             //2023-06-17
-            //OpenPort(Dvc1Serial, strDvc1Com);
+            //OpenPort(Dvc1Serial, strDvc1Port);
             utilDvcxSerialWrite(eCPort.cPort1, "AT+CURR 146" + "\r\n");
             timerDelay1ms(500);
 
-            if (IsOpenPort(Dvc1Serial, strDvc1Com)) //2022-08-18
+            if (IsOpenPort(Dvc1Serial, strDvc1Port)) //2022-08-18
             {
                 utilDvcxSerialWrite(eCPort.cPort1, "AT+RET" + "\r\n");
                 dts1 = DateTime.Now; //2023-02-15
                 strDateTimeDvc1 = /*DateTime.Now*/dts1.ToString("yyyy-MM-dd-HH:mm:ss"); //2023-02-15
             }
             else   //2022-11-21
-            { MessageBox.Show("Dvc1:Test not finished for COM port " + strDvc1Com + " was not opened.\r\n"); }
+            { MessageBox.Show("Dvc1:Test not finished for COM port " + strDvc1Port + " was not opened.\r\n"); }
             timerDelay1s(2);    //2023-06-27
             if (bBurnFinishedDvc1)  
             { 
@@ -9488,7 +9116,7 @@ namespace Ado
 
                 #region
                 case 10:    //case 10~case 13 could use with FW <v1.6, shut down LD when temerature over 50
-                    if (IsOpenPort(Dvc0Serial, strDvc0Com))    //2023-02-16
+                    if (IsOpenPort(Dvc0Serial, strDvc0Port))    //2023-02-16
                     {
                         utilDvcxSerialWrite(eCPort.cPort0, "AT+BIT " + 0 + "\r\n"); //set mirror not open
                     }
@@ -9501,13 +9129,13 @@ namespace Ado
 
                     if (bTempOver50Dvc0 && !bWaitCoolDvc0)
                     {
-                        //IsOpenPort(Dvc0Serial, strDvc0Com);
+                        //IsOpenPort(Dvc0Serial, strDvc0Port);
                         utilDvcxSerialWrite(eCPort.cPort0, "AT+CURR 0" + "\r\n");
                         iBurnStopStepDvc0 = 12;
                     }
                     else if (bTempUnder40Dvc0 && bWaitCoolDvc0)
                     {
-                        //IsOpenPort(Dvc0Serial, strDvc0Com);
+                        //IsOpenPort(Dvc0Serial, strDvc0Port);
                         utilDvcxSerialWrite(eCPort.cPort0, "AT+CURR 146" + "\r\n");
                         iBurnStopStepDvc0 = 13;
                     }
@@ -9515,7 +9143,7 @@ namespace Ado
                     if (iBurnTimeDvc0 > iBurnMin || bBurnStopDvc0)  //2022-09-19
                     {
                         bBurnFinished = true;
-                        //OpenPort(Dvc0Serial, strDvc0Com);
+                        //OpenPort(Dvc0Serial, strDvc0Port);
                         utilDvcxSerialWrite(eCPort.cPort0, "AT+BIS 0" + "\r\n");
                         timerDelay1ms(300);  //2022-12-01
                         iBurnStopStepDvc0 = 20;
@@ -9554,14 +9182,14 @@ namespace Ado
                     }
                     //if ((iBurnTimeDvc0 > iTempChkTime) && !bTempChkInBurnDvc0)   //2023-02-15:To check temperature after certain time
                     //{
-                    //    //OpenPort(Dvc0Serial, strDvc0Com);
+                    //    //OpenPort(Dvc0Serial, strDvc0Port);
                     //    utilDvcxSerialWrite(eCPort.cPort0, "AT+TEMP?" + "\r\n");
                     //    bTempChkInBurnDvc0 = true;
                     //}
                     if (iBurnTimeDvc0 > iBurnMin || bBurnStopDvc0)  //2022-09-19
                     {
                         bBurnFinished = true;
-                        //OpenPort(Dvc0Serial, strDvc0Com);
+                        //OpenPort(Dvc0Serial, strDvc0Port);
                         utilDvcxSerialWrite(eCPort.cPort0, "AT+BIS 0" + "\r\n");
                         timerDelay1ms(300);  //2022-12-01
                         iBurnStopStepDvc0 = 20;
@@ -9642,43 +9270,43 @@ namespace Ado
             switch (cboDevNo.Text)   //2022-11-17    // (cboDevNo.SelectedIndex) //2022-08-24
             {
                 case "0":
-                    IsOpenPort(Dvc0Serial, strDvc0Com);
+                    IsOpenPort(Dvc0Serial, strDvc0Port);
                     utilDvcxSerialWrite(eCPort.cPort0, cboAtSetCmd.Text + " " + iParameter/*txtParameter.Text*/ + "\r\n");
                     break;
                 case "1":
-                    IsOpenPort(Dvc1Serial, strDvc1Com);
+                    IsOpenPort(Dvc1Serial, strDvc1Port);
                     utilDvcxSerialWrite(eCPort.cPort1, cboAtSetCmd.Text + " " + iParameter/*txtParameter.Text*/ + "\r\n");
                     break;
                 case "2":
-                    IsOpenPort(Dvc2Serial, strDvc2Com);
+                    IsOpenPort(Dvc2Serial, strDvc2Port);
                     utilDvcxSerialWrite(eCPort.cPort2, cboAtSetCmd.Text + " " + iParameter/*txtParameter.Text*/ + "\r\n");
                     break;
                 case "3":
-                    IsOpenPort(Dvc3Serial, strDvc3Com);
+                    IsOpenPort(Dvc3Serial, strDvc3Port);
                     utilDvcxSerialWrite(eCPort.cPort3, cboAtSetCmd.Text + " " + iParameter/*txtParameter.Text*/ + "\r\n");
                     break;
                 case "4":
-                    IsOpenPort(Dvc4Serial, strDvc4Com);
+                    IsOpenPort(Dvc4Serial, strDvc4Port);
                     utilDvcxSerialWrite(eCPort.cPort4, cboAtSetCmd.Text + " " + iParameter/*txtParameter.Text*/ + "\r\n");
                     break;
                 case "5":
-                    IsOpenPort(Dvc5Serial, strDvc5Com);
+                    IsOpenPort(Dvc5Serial, strDvc5Port);
                     utilDvcxSerialWrite(eCPort.cPort5, cboAtSetCmd.Text + " " + iParameter/*txtParameter.Text*/ + "\r\n");
                     break;
                 case "6":
-                    IsOpenPort(Dvc6Serial, strDvc6Com);
+                    IsOpenPort(Dvc6Serial, strDvc6Port);
                     utilDvcxSerialWrite(eCPort.cPort6, cboAtSetCmd.Text + " " + iParameter/*txtParameter.Text*/ + "\r\n");
                     break;
                 case "7":
-                    IsOpenPort(Dvc7Serial, strDvc7Com);
+                    IsOpenPort(Dvc7Serial, strDvc7Port);
                     utilDvcxSerialWrite(eCPort.cPort7, cboAtSetCmd.Text + " " + iParameter/*txtParameter.Text*/ + "\r\n");
                     break;
                 case "8":
-                    IsOpenPort(Dvc8Serial, strDvc8Com);
+                    IsOpenPort(Dvc8Serial, strDvc8Port);
                     utilDvcxSerialWrite(eCPort.cPort8, cboAtSetCmd.Text + " " + iParameter/*txtParameter.Text*/ + "\r\n");
                     break;
                 case "9":
-                    IsOpenPort(Dvc9Serial, strDvc9Com);
+                    IsOpenPort(Dvc9Serial, strDvc9Port);
                     utilDvcxSerialWrite(eCPort.cPort9, cboAtSetCmd.Text + " " + iParameter/*txtParameter.Text*/ + "\r\n");
                     break;
             }            
@@ -9736,7 +9364,7 @@ namespace Ado
                 btnBurnStopDvc0.Enabled = false;    //2022-06-20
                 richBox.AppendText("interrupting...Device_0燒機提早停止，請稍候...\r\n"); //2022-06-20
 
-                //if(!IsOpenPort(Dvc0Serial,strDvc0Com)) { Dvc0Serial.Open(); }  //2022-09-13
+                //if(!IsOpenPort(Dvc0Serial,strDvc0Port)) { Dvc0Serial.Open(); }  //2022-09-13
                 //Dvc0Serial.Write("AT+BIS 0" + "\r\n");  //2022-08-30
                 //timerDelay1ms(500);
 
@@ -9771,146 +9399,220 @@ namespace Ado
                         // DBT_DEVICEARRIVAL Event : 裝置插入並且可以使用時，產生的系統訊息
                         case DBT_DEVICEARRIVAL:
                             string[] portnames = SerialPort.GetPortNames();
-                            int k = 0;
-                            if (portnames.Length != strComNowConnect.Count) //2024-03-11
+                            for (int i = 0; i < portnames.Length; i++)
                             {
-                                foreach (string s in portnames)
+                                if (strComSerial1 == portnames[i])
                                 {
-                                    if (strComNowConnect/*strComConnect*/.Contains(s))  //2024-03-12
-                                    { k++; }
-                                    else
+                                    /* arrival connected port */
+                                    if (!serialPort1.IsOpen)
                                     {
-                                        //Array.Resize(ref strComConnect, strComConnect.Length + 1);
-                                        //strComConnect[k] = s; Console.WriteLine(strComConnect[k - 1].Length);
-                                        strComNowConnect.Add(s); Console.WriteLine(strComNowConnect.Count);
-                                        toolStripStatusLabel1.Text = s + " inserted";
-                                        if (VidPidNames.Contains(s))
-                                        {
-                                            Console.WriteLine("Insert Device COM= " + s);
-                                            for(int i = 0; i < serialDvc.Length; i++)   //2024-03-21
-                                            {
-                                                if (serialDvc[i] == null)
-                                                {
-                                                    IsOpenPort(serialPortN[i], s);
-                                                    serialPortN[i].Write("AT+VER?" + "\r\n");
-                                                    if (strComSerial.IndexOf(s) < 0)    //2024-03-29
-                                                    {
-                                                        strComSerial.Add(s);    //2024-03-21
-                                                        
-                                                    }
-                                                    cboComList.Items.Add(s);    //2024-03-29
-                                                    cboComList.Text = s;    //2024-03-29
-                                                    break;
-                                                }
-                                            }
-                                        }
+                                        richBox.AppendText(strComSerial1 + " has been reconnected.\n");
+                                        serialPort1.Open();
                                     }
+                                }
+                                else if (strComSerial2 == portnames[i])
+                                {                                    
+                                    if (!serialPort2.IsOpen)    /* arrival connected port */
+                                    {
+                                        richBox.AppendText(strComSerial2 + " has been reconnected.\n");
+                                        serialPort2.Open();
+                                    }
+                                }
+                                else if (strComSerial3 == portnames[i])
+                                {
+                                    if (!serialPort3.IsOpen)    /* arrival connected port */
+                                    {
+                                        richBox.AppendText(strComSerial3 + " has been reconnected.\n");
+                                        serialPort3.Open();
+                                    }
+                                }
+                                else if (strComSerial4 == portnames[i]) //2023-10-19
+                                {
+                                    if (!serialPort4.IsOpen)    /* arrival connected port */
+                                    {
+                                        richBox.AppendText(strComSerial4 + " has been reconnected.\n");
+                                        serialPort4.Open();
+                                    }
+                                }
+                                else if (strComSerial5 == portnames[i]) //2023-10-19
+                                {
+                                    if (!serialPort5.IsOpen)    /* arrival connected port */
+                                    {
+                                        richBox.AppendText(strComSerial5 + " has been reconnected.\n");
+                                        serialPort5.Open();
+                                    }
+                                }
+                                else if (strComSerial6 == portnames[i]) //2023-10-19
+                                {
+                                    if (!serialPort6.IsOpen)    /* arrival connected port */
+                                    {
+                                        richBox.AppendText(strComSerial6 + " has been reconnected.\n");
+                                        serialPort6.Open();
+                                    }
+                                }
+                                else if (strComSerial7 == portnames[i]) //2023-10-19
+                                {
+                                    if (!serialPort7.IsOpen)    /* arrival connected port */
+                                    {
+                                        richBox.AppendText(strComSerial7 + " has been reconnected.\n");
+                                        serialPort7.Open();
+                                    }
+                                }
+                                else if (strComSerial8 == portnames[i]) //2023-10-19
+                                {
+                                    if (!serialPort8.IsOpen)    /* arrival connected port */
+                                    {
+                                        richBox.AppendText(strComSerial8 + " has been reconnected.\n");
+                                        serialPort8.Open();
+                                    }
+                                }
+                                else if (strComSerial9 == portnames[i]) //2023-10-19
+                                {
+                                    if (!serialPort9.IsOpen)    /* arrival connected port */
+                                    {
+                                        richBox.AppendText(strComSerial9 + " has been reconnected.\n");
+                                        serialPort9.Open();
+                                    }
+                                }
+                                else if (strComSerial10 == portnames[i]) //2023-10-19
+                                {
+                                    if (!serialPort10.IsOpen)    /* arrival connected port */
+                                    {
+                                        richBox.AppendText(strComSerial10 + " has been reconnected.\n");
+                                        serialPort10.Open();
+                                    }
+                                }
+                                else
+                                {
+                                    cboComList.Items.Add(portnames[i]);  //comboBoxComAddP1(portnames[i]);
+                                    richBox.AppendText("There is a new " + portnames[i] + " inserted.");
+                                }
+
+                                if (strComSerial2 == portnames[i])
+                                {
+                                    ///* arrival connected port */                                       
+                                    //if (!serialPort2.IsOpen)
+                                    //{
+                                    //    stPrintfP2(connectedPortNameP2 + " has been reconnected.", true, Color.Black);
+                                    //    serialPort2.Open();
+                                    //    //wComPortFlagP2 = false;
+                                    //    buttonP2SendData.Enabled = true;
+                                    //    if (bLoadPassP2)
+                                    //    {
+                                    //        buttonP2BurninStart.Enabled = true;
+                                    //        buttonP2BurninStart.Text = constrBurninState[(int)BurninState.bsRun];
+                                    //    }
+                                    //}
+                                }
+                                else
+                                {
+                                    //comboBoxComAddP2(portnames[i]);
+                                    //stPrintfP2("There is a new " + portnames[i] + " inserted.", true, Color.Black);                                    
+                                }
+
+                                if (strComSerial3 == portnames[i])
+                                {
+                                    ///* arrival connected port */    
+                                    //if (!serialPort3.IsOpen)
+                                    //{
+                                    //    stPrintfP3(connectedPortNameP3 + " has been reconnected.", true, Color.Black);
+                                    //    serialPort3.Open();
+                                    //    //wComPortFlagP3 = false;
+                                    //    buttonP3SendData.Enabled = true;
+                                    //    if (bLoadPassP3)
+                                    //    {
+                                    //        buttonP3BurninStart.Enabled = true;
+                                    //        buttonP3BurninStart.Text = constrBurninState[(int)BurninState.bsRun];
+                                    //    }
+                                    //}
+                                }
+                                else
+                                {
+                                    //comboBoxComAddP3(portnames[i]);
+                                    //stPrintfP3("There is a new " + portnames[i] + " inserted.", true, Color.Black);                                    
                                 }
                             }
                             break;
 
                         // DBT_DEVICEREMOVECOMPLETE Event : 裝置卸載或移除時產生的系統訊息
                         case DBT_DEVICEREMOVECOMPLETE:
-                            portnames = SerialPort.GetPortNames();
-                            k = 0;
-                            if (portnames.Length != /*strComConnect.Length*/strComNowConnect.Count) //2024-03-12
+                            if (serialPort1.IsOpen)
                             {
-                                if (portnames.Length != 0)
+                                richBox.AppendText("Some COM ports were removed out.\n");
+                                //comboBoxComRenewP1();
+                            }
+                            else
+                            {
+                                if (strComSerial1 != null)
                                 {
-                                    foreach (string s1 in strComNowConnect.ToArray())   //2024-03-13:ToArray
-                                    {
-                                        foreach (string s in portnames)
-                                        {
-#if true
-                                            if (s1 != s)    //2024-03-13
-                                            {
-                                                strComNowConnect.Remove(s1); Console.WriteLine(strComNowConnect.Count);
-                                                toolStripStatusLabel1.Text = s1 + " removed.\n";
-                                                for (int i = 0; i < cboComList.Items.Count; i++)    //2024-03-28
-                                                {
-                                                    string a = cboComList.Items[i].ToString();
-                                                    if (cboComList.Items[i].ToString().Contains(s1))
-                                                    {
-                                                        cboComList.Items.Remove(a);
-                                                    }
-                                                }
-                                                for (int i = 0; i < strComDvc.Length; i++)
-                                                {
-                                                    if (s1 == strComDvc[i])
-                                                    {
-                                                        richBox.AppendText("Device_" + i + " was removed.\n");
-                                                        Console.WriteLine("Device " + i + " was removed.");
-                                                        strComDvc[i] = "";  //2024-03-21
-                                                        DvcRemovedUiRefresh();    //2024-03-22
-                                                        for (int j = 0; j < cboDevNo.Items.Count; j++)  //2024-03-26
-                                                        {
-                                                            string b = cboDevNo.Items[j] + "";
-                                                            if (/*cboDevNo.Items[j].ToString()*/b.Contains(i.ToString())) //2024-03-29
-                                                            {
-                                                                //cboDevNo.Items.Remove(b);
-                                                                cboDevNo.Text = "";
-                                                                cboDevNo.Items.RemoveAt(j);
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }                                            
-#else
-                                            if (s1.Contains(s)) 
-                                            { }
-                                            else
-                                            {
-                                                //Console.WriteLine("Before length resize =" + strComConnect.Length);
-                                                //Array.Resize(ref strComConnect, strComConnect.Length + 1);
-                                                //Console.WriteLine("After length resize =" + strComConnect.Length);
-                                                //strComConnect[k].Remove(k); Console.WriteLine(strComConnect[k - 1].Length);
-                                                strComNowConnect.Remove(s1); Console.WriteLine(strComNowConnect.Count);
-                                                toolStripStatusLabel1.Text = s1 + " removed";
-                                            }
-#endif
-                                        }
-                                                                                
-                                    }
+                                    // removed connecting port
+                                    richBox.AppendText("The connected " + strComSerial1 + " port has been removed.\n");
+                                    //buttonP1SendData.Enabled = false;
+                                    //buttonP1BurninStart.Text = constrBurninState[(int)BurninState.bsRun];
+                                    //textBoxP1BurninTime.Enabled = true;
+                                    //textBoxP1Send.Text = "";
+                                    //timer1.Enabled = false;
+                                    //timer2.Enabled = false;
+                                    //wComPortFlagP1 = false;
+                                    /* 連線中不能突然移除, 所以使用手動ScanPort更新 */
+                                    //comboBoxComRemove(connectedPortNameP1);
+                                    //connectedPortNameP1 = null;
                                 }
-                                else
-                                {
-                                    foreach (string s2 in /*strComConnect*/strComNowConnect.ToArray())
-                                    {
-                                        //strComConnect[k].Remove(k); Console.WriteLine(strComConnect[k - 1].Length);
-                                        strComNowConnect.Remove(s2); Console.WriteLine("strComNowConnect.Count= " + strComNowConnect.Count);
-                                        toolStripStatusLabel1.Text = s2 + " removed";
-                                        for (int i = 0; i < strComDvc.Length; i++)
-                                        {
-                                            if (s2 == strComDvc[i])
-                                            {
-                                                richBox.AppendText("Device_" + i + " was removed.\n");
-                                                Console.WriteLine("Device " + i + " was removed.");
-                                                strComDvc[i] = "";  //2024-03-21
-                                                DvcRemovedUiRefresh();    //2024-03-22
-                                                for (int j = 0; j < cboComList.Items.Count; j++)  //2024-03-26
-                                                {
-                                                    string a = cboComList.Items[j].ToString();
-                                                    if (cboComList.Items[j].ToString().Contains(s2))
-                                                    {
-                                                        cboComList.Items.Remove(a);
-                                                        cboComList.Text = "";
-                                                    }
-                                                }
-                                                for (int j = 0; j < cboDevNo.Items.Count; j++)    //2024-03-28
-                                                {
-                                                    string b = cboDevNo.Items[j] + "";
-                                                    if (b.Contains(i.ToString())) //2024-03-29
-                                                    {
-                                                        cboDevNo.Text = ""; //2024-03-29
-                                                        cboDevNo.Items.RemoveAt(j);
-                                                    }
-                                                }
-                                            }
-                                        }                                        
-                                    }
-                                }                                
+                                //else
+                                    //comboBoxComRenewP1();
                             }
 
+                            if (serialPort2.IsOpen)
+                            {
+                                //    stPrintfP2("Some COM ports were removed out.", true, Color.Black);
+                                //    //comboBoxComRenewP2();
+                            }
+                            else
+                            {
+                                //    if (connectedPortNameP2 != null)
+                                //    {
+                                //        // removed connecting port
+                                //        stPrintfP2("The connected " + connectedPortNameP2 + " port has been removed.", true, Color.Black);
+                                //        buttonP2SendData.Enabled = false;
+                                //        buttonP2BurninStart.Text = constrBurninState[(int)BurninState.bsRun];
+                                //        textBoxP2BurninTime.Enabled = true;
+                                //        textBoxP2Send.Text = "";
+                                //        timer3.Enabled = false;
+                                //        timer4.Enabled = false;
+                                //        //wComPortFlagP2 = false;
+                                //        /* 連線中不能突然移除, 所以使用手動ScanPort更新 */
+                                //        //comboBoxComRemove(connectedPortNameP2);
+                                //        //connectedPortNameP2 = null;
+                                //    }
+                                //    else
+                                //        comboBoxComRenewP2();
+                            }
+
+                            if (serialPort3.IsOpen)
+                            {
+                                //    stPrintfP3("Some COM ports were removed out.", true, Color.Black);
+                                //    //comboBoxComRenewP3();
+                            }
+                            else
+                            {
+                                //    if (connectedPortNameP3 != null)
+                                //    {
+                                //        // removed connecting port
+                                //        stPrintfP3("The connected " + connectedPortNameP3 + " port has been removed.", true, Color.Black);
+                                //        buttonP3SendData.Enabled = false;
+                                //        buttonP3BurninStart.Text = constrBurninState[(int)BurninState.bsRun];
+                                //        textBoxP3BurninTime.Enabled = true;
+                                //        textBoxP3Send.Text = "";
+                                //        timer5.Enabled = false;
+                                //        timer6.Enabled = false;
+                                //        //wComPortFlagP3 = false;
+                                //        /* 連線中不能突然移除, 所以使用手動ScanPort更新 */
+                                //        //comboBoxComRemove(connectedPortNameP3);
+                                //        //connectedPortNameP3 = null;
+                                //    }
+                                //    else
+                                //        comboBoxComRenewP3();
+                            }
                             break;
                     }
                 }
@@ -9935,43 +9637,43 @@ namespace Ado
                         {
                             if (MessageBox.Show("Set LD curr to 0？", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                             {
-                                if (IsOpenPort(Dvc0Serial, strDvc0Com))
+                                if (IsOpenPort(Dvc0Serial, strDvc0Port))
                                 {
                                     utilDvcxSerialWrite(eCPort.cPort0, "AT+CURR 0" + "\r\n");
                                 }
-                                if (IsOpenPort(Dvc1Serial, strDvc1Com))
+                                if (IsOpenPort(Dvc1Serial, strDvc1Port))
                                 {
                                     utilDvcxSerialWrite(eCPort.cPort1, "AT+CURR 0" + "\r\n");
                                 }
-                                if (IsOpenPort(Dvc2Serial, strDvc2Com))
+                                if (IsOpenPort(Dvc2Serial, strDvc2Port))
                                 {
                                     utilDvcxSerialWrite(eCPort.cPort2, "AT+CURR 0" + "\r\n");
                                 }
-                                if (IsOpenPort(Dvc3Serial, strDvc3Com))
+                                if (IsOpenPort(Dvc3Serial, strDvc3Port))
                                 {
                                     utilDvcxSerialWrite(eCPort.cPort3, "AT+CURR 0" + "\r\n");
                                 }
-                                if (IsOpenPort(Dvc4Serial, strDvc4Com))
+                                if (IsOpenPort(Dvc4Serial, strDvc4Port))
                                 {
                                     utilDvcxSerialWrite(eCPort.cPort4, "AT+CURR 0" + "\r\n");
                                 }
-                                if (IsOpenPort(Dvc5Serial, strDvc5Com))
+                                if (IsOpenPort(Dvc5Serial, strDvc5Port))
                                 {
                                     utilDvcxSerialWrite(eCPort.cPort5, "AT+CURR 0" + "\r\n");
                                 }
-                                if (IsOpenPort(Dvc6Serial, strDvc6Com))
+                                if (IsOpenPort(Dvc6Serial, strDvc6Port))
                                 {
                                     utilDvcxSerialWrite(eCPort.cPort6, "AT+CURR 0" + "\r\n");
                                 }
-                                if (IsOpenPort(Dvc7Serial, strDvc7Com))
+                                if (IsOpenPort(Dvc7Serial, strDvc7Port))
                                 {
                                     utilDvcxSerialWrite(eCPort.cPort7, "AT+CURR 0" + "\r\n");
                                 }
-                                if (IsOpenPort(Dvc8Serial, strDvc8Com))
+                                if (IsOpenPort(Dvc8Serial, strDvc8Port))
                                 {
                                     utilDvcxSerialWrite(eCPort.cPort8, "AT+CURR 0" + "\r\n");
                                 }
-                                if (IsOpenPort(Dvc9Serial, strDvc9Com))
+                                if (IsOpenPort(Dvc9Serial, strDvc9Port))
                                 {
                                     utilDvcxSerialWrite(eCPort.cPort9, "AT+CURR 0" + "\r\n");
                                 }
@@ -9982,43 +9684,43 @@ namespace Ado
                         {
                             if (MessageBox.Show("Set LD curr to 80mA？", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                             {
-                                if (IsOpenPort(Dvc0Serial, strDvc0Com))
+                                if (IsOpenPort(Dvc0Serial, strDvc0Port))
                                 {
                                     utilDvcxSerialWrite(eCPort.cPort0, "AT+CURR " + iCurr80mA + "\r\n");
                                 }
-                                if (IsOpenPort(Dvc1Serial, strDvc1Com))
+                                if (IsOpenPort(Dvc1Serial, strDvc1Port))
                                 {
                                     utilDvcxSerialWrite(eCPort.cPort1, "AT+CURR " + iCurr80mA + "\r\n");
                                 }
-                                if (IsOpenPort(Dvc2Serial, strDvc2Com))
+                                if (IsOpenPort(Dvc2Serial, strDvc2Port))
                                 {
                                     utilDvcxSerialWrite(eCPort.cPort2, "AT+CURR " + iCurr80mA + "\r\n");
                                 }
-                                if (IsOpenPort(Dvc3Serial, strDvc3Com))
+                                if (IsOpenPort(Dvc3Serial, strDvc3Port))
                                 {
                                     utilDvcxSerialWrite(eCPort.cPort3, "AT+CURR " + iCurr80mA + "\r\n");
                                 }
-                                if (IsOpenPort(Dvc4Serial, strDvc4Com))
+                                if (IsOpenPort(Dvc4Serial, strDvc4Port))
                                 {
                                     utilDvcxSerialWrite(eCPort.cPort4, "AT+CURR " + iCurr80mA + "\r\n");
                                 }
-                                if (IsOpenPort(Dvc5Serial, strDvc5Com))
+                                if (IsOpenPort(Dvc5Serial, strDvc5Port))
                                 {
                                     utilDvcxSerialWrite(eCPort.cPort5, "AT+CURR " + iCurr80mA + "\r\n");
                                 }
-                                if (IsOpenPort(Dvc6Serial, strDvc6Com))
+                                if (IsOpenPort(Dvc6Serial, strDvc6Port))
                                 {
                                     utilDvcxSerialWrite(eCPort.cPort6, "AT+CURR " + iCurr80mA + "\r\n");
                                 }
-                                if (IsOpenPort(Dvc7Serial, strDvc7Com))
+                                if (IsOpenPort(Dvc7Serial, strDvc7Port))
                                 {
                                     utilDvcxSerialWrite(eCPort.cPort7, "AT+CURR " + iCurr80mA + "\r\n");
                                 }
-                                if (IsOpenPort(Dvc8Serial, strDvc8Com))
+                                if (IsOpenPort(Dvc8Serial, strDvc8Port))
                                 {
                                     utilDvcxSerialWrite(eCPort.cPort8, "AT+CURR " + iCurr80mA + "\r\n");
                                 }
-                                if (IsOpenPort(Dvc9Serial, strDvc9Com))
+                                if (IsOpenPort(Dvc9Serial, strDvc9Port))
                                 {
                                     utilDvcxSerialWrite(eCPort.cPort9, "AT+CURR " + iCurr80mA + "\r\n");
                                 }
@@ -10326,17 +10028,7 @@ namespace Ado
                     break;
                 }
             }
-            macAddresses = AddSpaceEveryNChar(macAddresses, 2); //2025-06-19
             return macAddresses;
-        }
-        static string AddSpaceEveryNChar(string str, int split)   //2023-08-11
-        {
-            for (int a = 2; a <= str.Length - 1; a = a + split + 1)
-            {
-                str = str.Insert(a, "-");
-            }
-            Console.WriteLine(str);
-            return str;
         }
         public static String GetRebootTime()   //2023-02-03
         {
