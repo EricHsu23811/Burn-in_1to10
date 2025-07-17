@@ -9,6 +9,8 @@ Fucntion:
 1.Edit IP_addr display by add AddSpaceEveryNChar()
 2.strDvc0Port-->strDvc0Com, strDvc1Port-->strDvc1Com, ...strDvc9Port-->strDvc9Com, 
 3.Add statusStrip1
+Known issue：
+1.Alert worng Removed ComPort when test with over 2 devices.---2025/07/10
 
 *****2023/09/07**********
 SW: "Mercury_E-Burn_in-v1.2.7.3-1PcTo10"

@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.IO.Ports;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,6 +17,7 @@ namespace Ado
         ctInvalid   //  used for enumerated type range
                     // checking (DO NOT REMOVE)
     }
+    
     public class ReciveJData {
 		public string jver {get; set; }
 		public string dev {get; set; }	//"mcy"=Mecury
@@ -107,6 +109,11 @@ namespace Ado
         public int FUNC_SN_LENGTH { get; set; }	//2023-07-13
 
         public int checksum { get; set; }
+    }
+    public class JigDevice  //2022-5-6:Jig Devices' Serialport and Comport
+    {
+        public SerialPort DvcSerail { get; set; } //2022-5-6:Device Serialprot
+        public string strDvcCom { get; set; } //2022-5-6:Device Comport
     }
     static class Program
     {

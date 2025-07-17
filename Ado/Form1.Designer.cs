@@ -31,7 +31,6 @@ namespace Ado
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.richBox = new System.Windows.Forms.RichTextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
@@ -314,8 +313,6 @@ namespace Ado
             this.btnCmdSend = new System.Windows.Forms.Button();
             this.tbxAtReturn = new System.Windows.Forms.TextBox();
             this.timer3 = new System.Windows.Forms.Timer(this.components);
-            this.serialPort2 = new System.IO.Ports.SerialPort(this.components);
-            this.serialPort3 = new System.IO.Ports.SerialPort(this.components);
             this.timer4 = new System.Windows.Forms.Timer(this.components);
             this.timer5 = new System.Windows.Forms.Timer(this.components);
             this.lblVerPs = new System.Windows.Forms.Label();
@@ -368,10 +365,6 @@ namespace Ado
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // serialPort1
-            // 
-            this.serialPort1.BaudRate = 115200;
-            // 
             // richBox
             // 
             this.richBox.BackColor = System.Drawing.SystemColors.InfoText;
@@ -388,7 +381,6 @@ namespace Ado
             // 
             // timer1
             // 
-            this.timer1.Enabled = true;
             this.timer1.Interval = 200;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
@@ -3705,14 +3697,6 @@ namespace Ado
             this.timer3.Interval = 1000;
             this.timer3.Tick += new System.EventHandler(this.timer3_Tick);
             // 
-            // serialPort2
-            // 
-            this.serialPort2.BaudRate = 115200;
-            // 
-            // serialPort3
-            // 
-            this.serialPort3.BaudRate = 115200;
-            // 
             // timer4
             // 
             this.timer4.Interval = 1000;
@@ -3870,6 +3854,7 @@ namespace Ado
             this.txtMac.Name = "txtMac";
             this.txtMac.Size = new System.Drawing.Size(151, 25);
             this.txtMac.TabIndex = 90;
+            this.txtMac.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label13
             // 
@@ -3974,8 +3959,6 @@ namespace Ado
         }
 
         #endregion
-
-        private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.RichTextBox richBox;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Timer timer2;
@@ -4053,8 +4036,6 @@ namespace Ado
         private System.Windows.Forms.Button btnTestDvc1;
         private System.Windows.Forms.ComboBox cboComDvc0;
         private System.Windows.Forms.ComboBox cboComList;
-        private System.IO.Ports.SerialPort serialPort2;
-        private System.IO.Ports.SerialPort serialPort3;
         private System.Windows.Forms.Label lblBurnRestDvc1;
         private System.Windows.Forms.Label lblFinalDvc1;
         private System.Windows.Forms.Button btnBurnStopDvc1;
