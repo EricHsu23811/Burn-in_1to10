@@ -69,7 +69,8 @@
 **  Remodify details to be more stable. //2023-02-21
 **  Modify { VID, PID } detection method.   //2023-03-30
 **  macAddresses = AddSpaceEveryNChar(macAddresses, 2); //2025-06-19
-**  Add bDeviceArrival to check if device is connected.  //2025-07-17
+**  Add bDeviceArrival to check if device is connected. DvcNo to DvcSerial & DvcCom.  //2025-07-17
+**  WndProc\DeviceArrival fixed.  //2025-07-18
 ******************************************************************************/
 using System;
 using System.Collections.Generic;
@@ -271,14 +272,15 @@ namespace Ado
         string strComSerial1, strComSerial2, strComSerial3 = "";   //2022-08-08:SerailPort?對應到com?
         string strComSerial4, strComSerial5, strComSerial6, 
             strComSerial7, strComSerial8, strComSerial9, strComSerial10 = "";   //2022-11-08
-        
-        List<string> JigComSerial = new List<string>(); //2023-10-19:List of Com
-        List<string> strComSerial = new List<string>(); //2024-03-11：List of Com for SerialPort 1~10
-        string[] strComConnect = new string[] { };   //2024-03-11:Connected Com
+
+        List<string> JigComSerial = new List<string>(); //2023-10-19:List of Com connect to Jig (but connect to which DvcNo unknown)
+        //List<string> strComSerial = new List<string>(); //2024-03-11：List of Com for SerialPort 1~10
+        //string[] strComConnect = new string[] { };   //2024-03-11:Connected Com
+        List<string> strComConnect = new List<string>(); //2025-07-17:Connected Com (but not sure if connect to device)
         //---create list<T>...2024-03-11----
         //string strVID = "0416"; string strPID = "B1B2";
         List<string> VidPidNames = ComPortNames("0416", "B1B2");
-        List<string> strComNowConnect = new List<string>(); //2024-03-12:Com that Connecting
+        //List<string> strComNowConnect = new List<string>(); //2024-03-12:Com that Connecting
 
         Boolean bAtVerSent, bAtVerAns = false;  //2022-08-16
         int iAtVerCmdStep = 0;  //2022-08-16
@@ -287,6 +289,9 @@ namespace Ado
         //2024-03-13:SerialDvc? -> SerialPort? name to array
         static SerialPort Dvc0Serial, Dvc1Serial, Dvc2Serial;  //2022-08-18=>The serialPort of devices
         static SerialPort Dvc3Serial, Dvc4Serial, Dvc5Serial, Dvc6Serial, Dvc7Serial, Dvc8Serial, Dvc9Serial;  //2022-11-08: Device? get SerialPort?
+        static SerialPort ComInsertSerial= new SerialPort();  //2025-07-18:SerialPort for ComInsert
+        string strComInsert;    //2025-07-18
+
         //List<SerialPort> SerialDvc = new List<SerialPort>();  //Device[N].Serial:2024-03-11
         //SerialPort[] serialDvc = { Dvc0Serial, Dvc1Serial, Dvc2Serial, Dvc3Serial, Dvc4Serial,
         //    Dvc5Serial, Dvc6Serial, Dvc7Serial, Dvc8Serial, Dvc9Serial};  //2024-03-13:Dvc?->SerialPortN
@@ -5658,6 +5663,12 @@ namespace Ado
                                                         strDvc9Com = strComSerial10;
                                                         Dvc9Serial = serialPort10;
                                                     }
+                                                    if (bDeviceArrival)     //2025-07-18
+                                                    {
+                                                        cboComDvc9.Text = strComInsert;
+                                                        strDvc9Com = strComInsert;
+                                                        bDeviceArrival = false;
+                                                    }
                                                     richBox.AppendText("Device_9 ComPort = " + strDvc9Com + ", ");    //2025-07-17
                                                 }
                                             }
@@ -5731,6 +5742,12 @@ namespace Ado
                                                         cboComDvc8.Text = strComSerial10;
                                                         strDvc8Com = strComSerial10;
                                                         Dvc8Serial = serialPort10;
+                                                    }
+                                                    if (bDeviceArrival)     //2025-07-18
+                                                    {
+                                                        cboComDvc8.Text = strComInsert;
+                                                        strDvc8Com = strComInsert;
+                                                        bDeviceArrival = false;
                                                     }
                                                     richBox.AppendText("Device_8 ComPort = " + strDvc8Com + ", ");    //2025-07-17
                                                 }
@@ -5806,6 +5823,12 @@ namespace Ado
                                                         strDvc7Com = strComSerial10;
                                                         Dvc7Serial = serialPort10;
                                                     }
+                                                    if (bDeviceArrival)     //2025-07-18
+                                                    {
+                                                        cboComDvc7.Text = strComInsert;
+                                                        strDvc7Com = strComInsert;
+                                                        bDeviceArrival = false;
+                                                    }
                                                     richBox.AppendText("Device_7 ComPort = " + strDvc7Com + ", ");    //2025-07-17
                                                 }
                                             }
@@ -5879,6 +5902,12 @@ namespace Ado
                                                         cboComDvc6.Text = strComSerial10;
                                                         strDvc6Com = strComSerial10;
                                                         Dvc6Serial = serialPort10;
+                                                    }
+                                                    if (bDeviceArrival)     //2025-07-18
+                                                    {
+                                                        cboComDvc6.Text = strComInsert;
+                                                        strDvc6Com = strComInsert;
+                                                        bDeviceArrival = false;
                                                     }
                                                     richBox.AppendText("Device_6 ComPort = " + strDvc6Com + ", ");    //2025-07-17
                                                 }
@@ -5954,6 +5983,12 @@ namespace Ado
                                                         strDvc5Com = strComSerial10;
                                                         Dvc5Serial = serialPort10;
                                                     }
+                                                    if (bDeviceArrival)     //2025-07-18
+                                                    {
+                                                        cboComDvc5.Text = strComInsert;
+                                                        strDvc5Com = strComInsert;
+                                                        bDeviceArrival = false;
+                                                    }
                                                     richBox.AppendText("Device_5 ComPort = " + strDvc5Com + ", ");    //2025-07-17
                                                 }
                                             }
@@ -6027,6 +6062,12 @@ namespace Ado
                                                         cboComDvc4.Text = strComSerial10;
                                                         strDvc4Com = strComSerial10;
                                                         Dvc4Serial = serialPort10;
+                                                    }
+                                                    if (bDeviceArrival)     //2025-07-18
+                                                    {
+                                                        cboComDvc4.Text = strComInsert;
+                                                        strDvc4Com = strComInsert;
+                                                        bDeviceArrival = false;
                                                     }
                                                     richBox.AppendText("Device_4 ComPort = " + strDvc4Com + ", ");    //2025-07-17
                                                     #endregion
@@ -6104,6 +6145,12 @@ namespace Ado
                                                         strDvc3Com = strComSerial10;
                                                         Dvc3Serial = serialPort10;
                                                     }
+                                                    if (bDeviceArrival)     //2025-07-18
+                                                    {
+                                                        cboComDvc3.Text = strComInsert;
+                                                        strDvc3Com = strComInsert;
+                                                        bDeviceArrival = false;
+                                                    }
                                                     richBox.AppendText("Device_3 ComPort = " + strDvc3Com + ", ");    //2025-07-17
                                                     #endregion
                                                 }
@@ -6180,6 +6227,12 @@ namespace Ado
                                                         strDvc2Com = strComSerial10;
                                                         Dvc2Serial = serialPort10;
                                                     }
+                                                    if (bDeviceArrival)     //2025-07-18
+                                                    {
+                                                        cboComDvc2.Text = strComInsert;
+                                                        strDvc2Com = strComInsert;
+                                                        bDeviceArrival = false;
+                                                    }
                                                     richBox.AppendText("Device_2 ComPort = " + strDvc2Com + ", ");    //2025-07-17
                                                     #endregion
                                                 }
@@ -6254,6 +6307,12 @@ namespace Ado
                                                         cboComDvc1.Text = strComSerial10;
                                                         strDvc1Com = strComSerial10;
                                                         Dvc1Serial = serialPort10;
+                                                    }
+                                                    if (bDeviceArrival)     //2025-07-18
+                                                    {
+                                                        cboComDvc1.Text = strComInsert;
+                                                        strDvc1Com = strComInsert;
+                                                        bDeviceArrival = false;
                                                     }
                                                     richBox.AppendText("Device_1 ComPort = " + strDvc1Com + ", ");    //2025-07-17
                                                 }
@@ -6330,6 +6389,12 @@ namespace Ado
                                                         cboComDvc0.Text = strComSerial10;
                                                         strDvc0Com = strComSerial10;
                                                         Dvc0Serial = serialPort10;
+                                                    }
+                                                    if (bDeviceArrival)     //2025-07-18
+                                                    {
+                                                        cboComDvc0.Text = strComInsert;
+                                                        strDvc0Com = strComInsert;
+                                                        bDeviceArrival=false; 
                                                     }
                                                     richBox.AppendText("Device_0 ComPort = " + strDvc0Com + ", ");   //2025-07-17
                                                     #endregion
@@ -6408,7 +6473,7 @@ namespace Ado
                                             Console.WriteLine(cboDevNo.Items.IndexOf(iDvcId));  //2024-03-29
                                             if (cboDevNo.Items.IndexOf(iDvcId) < 0) //2024-03-29
                                             { cboDevNo.Items.Add(iDvcId); } //2022-11-08
-                                            cboDevNo.Text = iDvcId.ToString();   //2022-11-09
+                                            //cboDevNo.Text = iDvcId.ToString();   //2022-11-09 //remarked:2025-07-18
                                             if (!b4Customer)
                                             { 
                                                 //richBox.AppendText("Device_ID = " + iDvcId.ToString() + "\r\n");    //2022-07-19
@@ -6931,7 +6996,7 @@ namespace Ado
                                     strComSerial10 = s;
                                 }
                                 #endregion
-                                strComSerial.Add(s);    //2023-10-19
+                                /*strComSerial*/JigComSerial.Add(s);    //2023-10-19-->2025-07-17
                                 Console.WriteLine("Insert ComPort = " + s);    //2023-10-19
                                 //toolStripStatusLabel1.Text = "Insert ComPort = " + s;   //2025-07-08
                             }
@@ -6994,13 +7059,13 @@ namespace Ado
                 { 
                     toolStripStatusLabel1.Text += s + " inserted. ";
                     Console.WriteLine("Insert ComPort = " + s);    //2025-07-16
-                    strComNowConnect.Add(s);    //2024-03-11:for test
-                    Array.Resize(ref strComConnect, strComConnect.Length + 1);
-                    strComConnect[k] = s; k++;
+                    strComConnect.Add(s);    //2024-03-11:for test
+                    //Array.Resize(ref strComConnect, strComConnect.Count + 1);
+                    //strComConnect[k] = s; k++;
                     //strComConnect.Append(s);
                 }
-                Console.WriteLine("ComPorts all = "+strComNowConnect.Count); //Console.WriteLine(strComConnect[k-1].Length); 
-                Console.WriteLine("ComPorts all = " + strComConnect.Length);
+                //Console.WriteLine("ComPorts all = "+strComConnect.Count); //Console.WriteLine(strComConnect[k-1].Length); 
+                Console.WriteLine("ComPorts all = " + strComConnect.Count);
                 //for (int i = 0; i < COMPort.Length; i++)    //2024-03-11：SerailPort(i+1)=strComSerial[i+1] for test
                 //{ Console.WriteLine("SerialPort " + (i + 1) + " Insert ComPort = " + COMPort[i]); }
 
@@ -8451,34 +8516,34 @@ namespace Ado
                 switch (cboDevNo.Text)  //2022-11-08
                 {
                     case "0":
-                        cboComList.Text = Dvc0Serial.PortName;
+                        cboComList.Text = strDvc0Com;   //Dvc0Serial.PortName;
                         break;
                     case "1":
-                        cboComList.Text = Dvc1Serial.PortName;
+                        cboComList.Text = strDvc1Com;   //Dvc1Serial.PortName;
                         break;
                     case "2":
-                        cboComList.Text = Dvc2Serial.PortName;
+                        cboComList.Text = strDvc2Com;   //Dvc2Serial.PortName;
                         break;
                     case "3":   //2022-11-15
-                        cboComList.Text = Dvc3Serial.PortName;
+                        cboComList.Text = strDvc3Com;   //Dvc3Serial.PortName;
                         break;
                     case "4":   //2022-11-15
-                        cboComList.Text = Dvc4Serial.PortName;
+                        cboComList.Text = strDvc4Com;   //Dvc4Serial.PortName;
                         break;
                     case "5":   //2022-11-15
-                        cboComList.Text = Dvc5Serial.PortName;
+                        cboComList.Text = strDvc5Com;   //Dvc5Serial.PortName;
                         break;
                     case "6":   //2022-11-15
-                        cboComList.Text = Dvc6Serial.PortName;
+                        cboComList.Text = strDvc6Com;   //Dvc6Serial.PortName;
                         break;
                     case "7":   //2022-11-15
-                        cboComList.Text = Dvc7Serial.PortName;
+                        cboComList.Text = strDvc7Com;   //Dvc7Serial.PortName;
                         break;
                     case "8":   //2022-11-15
-                        cboComList.Text = Dvc8Serial.PortName;
+                        cboComList.Text = strDvc8Com;   //Dvc8Serial.PortName;
                         break;
                     case "9":   //2022-11-15
-                        cboComList.Text = Dvc9Serial.PortName;
+                        cboComList.Text = strDvc9Com;   //Dvc9Serial.PortName;
                         break;
                     default:
                         cboComList.Text = "";    //2024-03-29
@@ -9654,6 +9719,90 @@ namespace Ado
                         // DBT_DEVICEARRIVAL Event : 裝置插入並且可以使用時，產生的系統訊息
                         case DBT_DEVICEARRIVAL:
                             string[] portnames = SerialPort.GetPortNames();
+                            bDeviceArrival = true;   //2025-07-17
+                            int k = 0;
+                            foreach (string s in portnames)
+                            {
+                                if (strComConnect.Contains(s))
+                                { k++; }
+                                else
+                                {
+                                    strComConnect.Add(s); Console.WriteLine(strComConnect.Count);
+                                    toolStripStatusLabel1.Text = s + " inserted";
+                                    Console.WriteLine(s + " inserted\r");
+                                    
+                                    if (VidPidNames.Contains(s))
+                                    {
+                                        Console.WriteLine("New inserted Device's COM= " + s);
+                                        strComInsert = s;
+
+                                        if (ComInsertSerial != null)
+                                        {                              
+                                            try
+                                            {
+                                                if(IsOpenPort(serialPort1, strComInsert/*s*/))
+                                                { serialPort1.Write("AT+VER?" + "\r\n"); }
+                                                else if(IsOpenPort(serialPort2, strComInsert/*s*/))
+                                                { serialPort2.Write("AT+VER?" + "\r\n"); }
+                                                else if (IsOpenPort(serialPort3, strComInsert/*s*/))
+                                                { serialPort3.Write("AT+VER?" + "\r\n"); }
+                                                else if (IsOpenPort(serialPort4, strComInsert/*s*/))
+                                                { serialPort4.Write("AT+VER?" + "\r\n"); }
+
+                                            }
+                                            catch (UnauthorizedAccessException)
+                                            {
+                                                Console.WriteLine($"串口 {strComInsert/*s*/} 正在被其他應用程序使用。");
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                Console.WriteLine($"串口 {strComInsert/*s*/} 無法打開，錯誤信息: {ex.Message}");
+                                            }
+
+                                            if (JigComSerial.IndexOf(s) < 0)
+                                            {
+                                                JigComSerial.Add(s);
+                                            }
+                                            cboComList.Items.Add(s);
+                                            //cboComList.Text = s;  //2025-07-18
+                                            return;
+                                        }
+                                        else if (serialPort2 == null)
+                                        {
+                                            richBox.AppendText(s + " has been reconnected.\n");
+                                            strComSerial2 = s;
+                                            IsOpenPort(serialPort2, s);
+                                            serialPort2.Write("AT+VER?" + "\r\n");
+                                            if (JigComSerial.IndexOf(s) < 0)
+                                            {
+                                                JigComSerial.Add(s);
+                                            }
+                                            cboComList.Items.Add(s);
+                                            cboComList.Text = s;  //2025-07-18
+                                            return;
+                                        }
+                                        else if(Dvc9Serial != null)
+                                        {
+                                            richBox.AppendText(s + " has been reconnected.\n");
+                                            strComSerial10 = s;
+                                            IsOpenPort(serialPort10, s);
+                                            serialPort10.Write("AT+VER?" + "\r\n");
+                                            if (JigComSerial.IndexOf(s) < 0)
+                                            {
+                                                JigComSerial.Add(s);
+                                            }
+                                            cboComList.Items.Add(s);
+                                            cboComList.Text = s;  //2025-07-18
+                                            return;
+                                        }
+                                    }
+                                }
+                            }
+                            if (portnames.Length != strComConnect.Count) //2025-07-17
+                            {
+                                
+                            }
+#if false
                             for (int i = 0; i < portnames.Length; i++)
                             {
                                 if (strComSerial1 == portnames[i])
@@ -9742,60 +9891,16 @@ namespace Ado
                                     cboComList.Items.Add(portnames[i]);  //comboBoxComAddP1(portnames[i]);
                                     richBox.AppendText("There is a new " + portnames[i] + " inserted.\n");
                                 }
-
-                                if (strComSerial2 == portnames[i])
-                                {
-                                    ///* arrival connected port */                                       
-                                    //if (!serialPort2.IsOpen)
-                                    //{
-                                    //    stPrintfP2(connectedPortNameP2 + " has been reconnected.", true, Color.Black);
-                                    //    serialPort2.Open();
-                                    //    //wComPortFlagP2 = false;
-                                    //    buttonP2SendData.Enabled = true;
-                                    //    if (bLoadPassP2)
-                                    //    {
-                                    //        buttonP2BurninStart.Enabled = true;
-                                    //        buttonP2BurninStart.Text = constrBurninState[(int)BurninState.bsRun];
-                                    //    }
-                                    //}
-                                }
-                                else
-                                {
-                                    //comboBoxComAddP2(portnames[i]);
-                                    //stPrintfP2("There is a new " + portnames[i] + " inserted.", true, Color.Black);                                    
-                                }
-
-                                if (strComSerial3 == portnames[i])
-                                {
-                                    ///* arrival connected port */    
-                                    //if (!serialPort3.IsOpen)
-                                    //{
-                                    //    stPrintfP3(connectedPortNameP3 + " has been reconnected.", true, Color.Black);
-                                    //    serialPort3.Open();
-                                    //    //wComPortFlagP3 = false;
-                                    //    buttonP3SendData.Enabled = true;
-                                    //    if (bLoadPassP3)
-                                    //    {
-                                    //        buttonP3BurninStart.Enabled = true;
-                                    //        buttonP3BurninStart.Text = constrBurninState[(int)BurninState.bsRun];
-                                    //    }
-                                    //}
-                                }
-                                else
-                                {
-                                    //comboBoxComAddP3(portnames[i]);
-                                    //stPrintfP3("There is a new " + portnames[i] + " inserted.", true, Color.Black);                                    
-                                }
                             }
-                            bDeviceArrival = true;   //2025-07-17
+#endif
                             utilVerChk();
                             break;
 
                         // DBT_DEVICEREMOVECOMPLETE Event : 裝置卸載或移除時產生的系統訊息
                         case DBT_DEVICEREMOVECOMPLETE:   //2025-07-16
                             portnames = SerialPort.GetPortNames();
-                            int k = 0;
-                            if (portnames.Length != strComConnect.Length)
+                            //int k = 0;
+                            if (portnames.Length != strComConnect.Count)
                             {
 
                             }
