@@ -3456,7 +3456,6 @@ namespace Ado
             // 
             // cboComList
             // 
-            this.cboComList.Enabled = false;
             this.cboComList.FormattingEnabled = true;
             this.cboComList.Location = new System.Drawing.Point(331, 4);
             this.cboComList.Margin = new System.Windows.Forms.Padding(4);
